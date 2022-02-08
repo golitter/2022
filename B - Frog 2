@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int M=5e5+3;
+int l[M];
+int dp[M];
+int main()
+{
+  int n,m;
+  cin>>n>>m;
+  for(int i = 1; i <= n; i++) cin>>l[i];
+  for(int i = 1; i <= m; i++) dp[i] = abs(l[i]-l[1]);
+  for(int i = m+1; i <= n; i++) {
+     int j=i-1;
+     int mina=INT_MAX;
+     int e=m;
+     while(e--) {
+        mina=min(dp[j]+abs(l[i]-l[j]),mina);
+        j--;
+     }
+     dp[i]=mina;
+       } 
+  cout<<dp[n];
+}
