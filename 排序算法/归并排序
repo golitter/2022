@@ -12,9 +12,9 @@ void merge(int l,int r,int mid)
   }
   while(i<mid) za[p++] = a[i++];
   while(j<=r) za[p++] = a[j++];
-  p = 1;i = 1;
-  while(p<=r)
-  a[i++] = za[p++];
+  p = 1;i = 1;//
+  while(p<=r)//     这三步也重要，记录每一步排序后的顺序；
+  a[i++] = za[p++];// 我这点没明白，导致za == a;找了好久；
 }
 void merge_sort(int l,int r)
 {
@@ -28,11 +28,14 @@ void merge_sort(int l,int r)
 int main()
 {
   int n = 6;
-  merge_sort(1,6);
+  merge_sort(1,6);//这是一；
 
-  for(int i=1;i<=n;i++) cout<<za[i]<<endl;
+  for(int i=1;i<=n;i++) cout<<za[i]<<endl;//这也是一；
 }
 
 /*
-  
+  这个排序很有意思；这个花了这么多时间，绝对会了；；；
+  个人感觉归并排序比较不错的教学视频：https://www.bilibili.com/video/BV1sE411w7GZ
+  这个视频的代码，已经敲出来了，就是上面的（嘿嘿；
+  视频前面的图也通俗易懂；
 */
