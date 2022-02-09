@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int a[6]={3,6,13,31,9,27};
+  int n = 6;
+  int j;
+  for(int i = 0; i <n; i++) 
+  {
+    if(a[i+1]<a[i]){
+      int tmp = a[i+1];
+      int left,right,mid;
+      left = 0;right = i;
+      while(left<=right) { //二分哦；
+        mid=(left+right)/2;           // 3  6  13  31  9   27;
+        if(a[mid]<tmp) left = mid+1;  // 0  1  2   3   4   5 ;
+        else right = mid-1;           // a[4]<<a[3];二分得 left = 2;
+      }                               // 没推的时候感觉是left = 1；
+      for( j=i;j>=left;j--) a[j+1]=a[j];// 所以做题不要凭感觉啊，要靠算；
+      a[left]=tmp;
+    }
+  }
+  for(int i=0;i<n;i++) cout<<a[i]<<endl;
+}
+
+/*
+  二分插入排序：该程序是找到小于a[i+1]的临界值(left)
+  错误思路在上面已经发现并批注了；
+  
+*/
