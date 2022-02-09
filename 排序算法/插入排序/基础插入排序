@@ -1,0 +1,20 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int a[6]={3,6,13,31,9,27};
+  int n = 6;
+  int j;
+  for(int i = 0; i <n; i++) 
+  {
+    if(a[i+1]<a[i]){
+      int tmp = a[i+1];
+      for( j=i;tmp<a[j];j--) a[j+1]=a[j];
+      a[j+1]=tmp;
+    }
+  }
+  for(int i=0;i<n;i++) cout<<a[i]<<endl;
+}
+/*
+  基础插入排序：挺宽展思维的，不知道有啥用（；
+*/
