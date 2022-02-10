@@ -11,7 +11,7 @@ void qsort(int*a,int l,int r) //l == left ；r == right；
     if(i<j) a[i++] = a[j];
     while(i<j && a[i]<point) i++;
     if(i<j) a[j--] = a[i];
-    a[i] = point;
+    a[i] = point;// 排序老是忘写这行；
     qsort(a,l,i-1);//很重要 6 5 7 4 1；推出需要这一行；
     qsort(a,i+1,r);//很重要
   }
@@ -20,7 +20,7 @@ int main()
 {
   int a[6]={3,6,13,31,9,27};// 
   int n = 6;
-  qsort(a,0,5);
+  qsort(a,0,5);       //n-1;
   for(int i=0;i<n;i++) cout<<a[i]<<endl;
 }
 
