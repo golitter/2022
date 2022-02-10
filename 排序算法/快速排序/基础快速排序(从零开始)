@@ -1,31 +1,65 @@
 #include<bits/stdc++.h>
-using namespace std;  
-void qsort(int*a,int l,int r) //l == left ；r == right；
+using namespace std;
+const int M=3e5+34;
+int a[M];
+void quicksort(int *b,int l,int r)
 {
-  if(l<r) {
-    int i,j,point;
-    i = l;
-    j = r;
-    point = a[l];
-    while(i<j && a[j]>=point) j--;
-    if(i<j) a[i++] = a[j];
-    while(i<j && a[i]<point) i++;
-    if(i<j) a[j--] = a[i];
-    a[i] = point;// 排序老是忘写这行；
-    qsort(a,l,i-1);//很重要 6 5 7 4 1；推出需要这一行；
-    qsort(a,i+1,r);//很重要
-  }
+    if(l<r) {
+        int i = l;
+        int j = r;
+        int point = b[l];
+        while(i<j) {//myerror i<l
+            while(i<j && point <= b[j]) j--;
+            while(i<j && point >= b[i]) i++;//myerror i--
+            if(i<j) {
+                int t = b[i]; b[i] = b[j]; b[j] = t;
+            }
+        }
+        b[l] = b[i];
+        b[i] = point;
+        quicksort(b,l,i-1);
+        quicksort(b,i+1,r);
+    }
 }
 int main()
 {
-  int a[6]={3,6,13,31,9,27};// 
-  int n = 6;
-  qsort(a,0,5);       //n-1;
-  for(int i=0;i<n;i++) cout<<a[i]<<endl;
+    int n;
+    cin>>n;
+    for(int i = 0; i < n; i++) cin>>a[i];
+    quicksort(a,0,n-1);
+    for(int i = 0; i < n; i++) cout<<a[i]<<" ";
 }
+
+// #include<bits/stdc++.h>  虽然这是错的，写的还不精简；但是有对我反思有意义；
+// using namespace std;  
+// void qsort(int*a,int l,int r) //l == left ；r == right；
+// {
+//   if(l<r) {
+//     int i,j,point;
+//     i = l;
+//     j = r;
+//     point = a[l];
+//     while(i<j && a[j]>=point) j--;
+//     if(i<j) a[i++] = a[j];
+//     while(i<j && a[i]<point) i++;
+//     if(i<j) a[j--] = a[i];
+//     a[i] = point;// 排序老是忘写这行；
+//     qsort(a,l,i-1);//很重要 6 5 7 4 1；推出需要这一行；
+//     qsort(a,i+1,r);//很重要
+//   }
+// }
+// int main()
+// {
+//   int a[6]={3,6,13,31,9,27};// 
+//   int n = 6;
+//   qsort(a,0,5);       //n-1;
+//   for(int i=0;i<n;i++) cout<<a[i]<<endl;
+// }
 
 /*
   基础快排，理解了思路，还看了动画演示，看着代码还真是一点不懂啊；怪不得老师说要多看看；
   而且这还是基础；；；
   不过还是有所理解。
+  现在第一个刚开始有很多错误；myerror；
+  对快排更加理解了；
 */
