@@ -1,9 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 const int SIZE = 10;
-int t1ree[4*SIZE];
-void Build(int data[],int start,int end, int tree[], int p) {
-  int mid;
+int SegTree[4*SIZE];//一般要开四倍才可以；
+int tag[4*SIZE];//lazy懒惰标记；
+void Build(int data[],int start,int end, int tree[], int p) {//建树（数组）
+  int mid;  //（数组，起始位置，终止位置，结点数组，结点）
   mid = (start+end)/2;
   if(start == end) {
     tree[p] = data[start];
@@ -13,37 +14,88 @@ void Build(int data[],int start,int end, int tree[], int p) {
   tree[p] = tree[2*p+1] + tree[2*p+2];
   }
 }
-void update(int*data, int *tree, int p, int start, int end, int idx, int val) {
-    int mid;
+void Update(int*data, int *tree, int p, int start, int end, int idx, int val) {//二分查找idx，改单一元素
+    int mid;    //（数组，结点数组，结点，起始位置，终止位置，要改的单一元素位置下标，变化量）
     mid = (start+end)/2;
     if(start == end) {
       data[start] =data[start] + val;
-      tree[p] = data[start];
+      tree[p] = data[idx];
     }else{
-    if(idx <= mid) update(data, tree, 2*p+1, start,mid,idx,val);
-    else update(data, tree, 2*p+2, mid+1,end,idx,val);
+    if(idx <= mid) Update(data, tree, 2*p+1, start,mid,idx,val);
+    else Update(data, tree, 2*p+2, mid+1,end,idx,val);
     tree[p]=tree[2*p+1]+tree[2*p+2];
     }
 }
-int addseg(int data[], int tree[], int p, int start, int end, int L, int R) {
-  if(R<start || L>end) { return 0;}
+int IntervalCheckSeg(int data[], int tree[], int p, int start, int end, int L, int R) {//区间求和，
+  if(R<start || L>end) { return 0;} //（数组，结点数组，结点，起始位置，终止位置，相加下标左临界，右临界）
   else if(start == end) {return tree[p];}
   else {
     int mid = (start+end)/2;
-    int sumL = addseg(data, tree, 2*p+1, start, mid, L, R);
-    int sumR = addseg(data, tree, 2*p+2, mid+1, end, L, R);
+    int sumL = IntervalCheckSeg(data, tree, 2*p+1, start, mid, L, R);
+    int sumR = IntervalCheckSeg(data, tree, 2*p+2, mid+1, end, L, R);
     return sumL+sumR;
   }
 }
 
+void push_down(int tree[], int p, int start, int end, int mid) {//就是个懒惰标记，
+  if(tag[p]) {//&& start < end 
+    tree[2*p+1] += tag[p]*(mid-start+1);tree[2*p+2] += tag[p]*(end - mid);
+    tag[2*p+1] += tag[p]; tag[2*p+2] += tag[p];
+    tag[p] = 0;
+  }
+}
+
+void IntervalChange(int data[], int tree[], int start, int end, int L, int R, int c, int p) {//区间修改，
+  if(L<=start && end<=R) { //（数组，结点数组，起始位置，终止位置，左临界，右临界，变化量，结点）
+    tree[p] += (end - start + 1)*c; tag[p] +=c; return ;
+  }
+  int mid = (start +end)/2;
+  if(tag[p]) {//&& start < end//这个可换push down；
+    tree[2*p+1] += tag[p]*(mid-start+1);tree[2*p+2] += tag[p]*(end - mid);
+    tag[2*p+1] += tag[p]; tag[2*p+2] += tag[p];
+    tag[p] = 0;
+  }                             //递归hh
+  if(L<=mid) IntervalChange(data,tree, start, mid, L, R, c, 2*p+1);
+  if(mid<R) IntervalChange(data,tree, mid+1, end, L, R, c, 2*p+2);
+  tree[p] = tree[2*p+1] + tree[2*p+2];
+}
+
+int IntervalCheck(int data[], int tree[], int p, int start, int end, int L, int R) {//区间求和或区间检查；
+  if(L<=start && end<=R) {return tree[p];} //（数组，结点数组，结点，起始位置，终止位置，左临界，右临界）
+  int mid = (start+end)/2;
+  int ans = 0;
+  if(tag[p]) {//&& start < end//可用push down函数
+    tree[2*p+1] += tag[p]*(mid-start+1);tree[2*p+2] += tag[p]*(end - mid);
+    tag[2*p+1] += tag[p]; tag[2*p+2] += tag[p];
+    tag[p] = 0;
+  }
+  if(L<=mid) ans = IntervalCheck(data, tree, 2*p+1, start, mid, L, R);
+  if(mid<R) ans += IntervalCheck(data, tree, 2*p+2, mid+1, end, L, R);
+  return ans;
+}
 int main()
 {
   int b;
   int a[10] = {1,2,3,4,5,6,7,8,9,10};
-  Build(a,0,9,t1ree,0);
-  //for(int i = 0; i < 40;i++) cout<<t1ree[i]<<endl;
-  update(a,t1ree,0,0,9,9,9);
-  //for(int i = 0; i < 40;i++) cout<<t1ree[i]<<endl;
-  int qq = addseg(a, t1ree, 0,0,9,2,3);
+  Build(a,0,9,SegTree,0);     //建树；
+
+  cout<<SegTree[0];//根节点为众和；
+
+  //for(int i = 0; i < 40;i++) cout<<SegTree[i]<<endl;
+  Update(a,SegTree,0,0,9,2,9); //更新；
+  //for(int i = 0; i < 40;i++) cout<<SegTree[i]<<endl; 
+  cout<<IntervalCheckSeg(a,SegTree,0,0,9,2,3);
+
+  IntervalChange(a, SegTree, 0,9,0,9,3,0);
+
+  cout<<SegTree[0];
+
+  int qq = IntervalCheckSeg(a, SegTree, 0,0,9,2,3);
+
   cout<<qq;
+  cout<<IntervalCheck(a, SegTree,0,0,9,2,3);
+  cout<<SegTree[2];
 }
+/*
+  目前学的树的第二个类型：线段树；
+*/
