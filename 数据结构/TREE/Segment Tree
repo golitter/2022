@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int SIZE = 10;
+int t1ree[4*SIZE];
+void Build(int data[],int strat,int end, int tree[], int p) {
+  int mid;
+  mid = (strat+end)/2;
+  if(strat == end) {
+    tree[p] = data[strat];
+  }else {
+  Build(data, strat, mid, tree, 2*p+1);
+  Build(data, mid+1, end, tree, 2*p+2);
+  tree[p] = tree[2*p+1] + tree[2*p+2];
+  }
+}
+void update(int*data, int *tree, int p, int strat, int end, int idx, int val) {
+    int mid;
+    mid = (strat+end)/2;
+    if(strat == end) {
+      data[strat] =data[strat] + val;
+      tree[p] = data[strat];
+    }else{
+    if(idx <= mid) update(data, tree, 2*p+1, strat,mid,idx,val);
+    else update(data, tree, 2*p+2, mid+1,end,idx,val);
+    tree[p]=tree[2*p+1]+tree[2*p+2];
+    }
+}
+int addseg(int data[], int tree[], int p, int strat, int end, int L, int R) {
+  if(R<strat || L>end) { return 0;}
+  else if(strat == end) {return tree[p];}
+  else {
+    int mid = (strat+end)/2;
+    int sumL = addseg(data, tree, 2*p+1, strat, mid, L, R);
+    int sumR = addseg(data, tree, 2*p+2, mid+1, end, L, R);
+    return sumL+sumR;
+  }
+}
+
+int main()
+{
+  int b;
+  int a[10] = {1,2,3,4,5,6,7,8,9,10};
+  Build(a,0,9,t1ree,0);
+  //for(int i = 0; i < 40;i++) cout<<t1ree[i]<<endl;
+  update(a,t1ree,0,0,9,9,9);
+  //for(int i = 0; i < 40;i++) cout<<t1ree[i]<<endl;
+  int qq = addseg(a, t1ree, 0,0,9,2,3);
+  cout<<qq;
+}
