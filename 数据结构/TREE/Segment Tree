@@ -98,4 +98,13 @@ int main()
 }
 /*
   目前学的树的第二个类型：线段树；
+  
+  我给图书馆儿童区看到了编程入门书，感觉小时候没学好差劲；
+  学了一些代码的规范； eg：#include <bits/stdc++.h> 空一格；还有
+  if ( 这个，
+  还有命名规范，驼峰命名法之类的；‘
+  我以后要注意命名规范和代码规范；
+  em把这当作自己记笔记的地方吧，顺便以后用英语写·，improve my code ability;
+  come on; 
+  this is my description about my lrean prograrm;
 */
