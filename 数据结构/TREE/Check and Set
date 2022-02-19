@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int root[344444];
+
+void Init(int fa[], int size) {
+    for(int i = 0; i <size; i++) fa[i] = i;
+    return ;
+}
+
+int Find(int fa[], int x) { //路径压缩;// find father root is who
+    if(x != fa[x]) fa[x] = Find(fa, fa[x]);//is this;
+    return fa[x];
+}
+
+void Union(int fa[],int x, int y) {
+    x = Find(fa,x);
+    y = Find(fa,y);
+    fa[x] = y;
+}
+
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    Init(root,n);//1 to n-1 assignment i;
+    while(m--) {
+        int a1,a2,a3;
+        cin>>a1>>a2>>a3;
+        if(a1 == 1) {
+            Union(root,a2,a3); //merge;
+        }else {
+            if( Find(root,a2) == Find(root,a3)) cout<<"Y"<<endl;
+            else cout<<"N"<<endl;
+        }
+    }
+}
+
+/*
+  oh,is easy problem ,beacause its basics ;
+*/
