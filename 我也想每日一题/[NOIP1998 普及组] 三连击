@@ -1,0 +1,63 @@
+// the fifth ?
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int b,c;
+    for(int i = 192; i < 333; i++) {
+        b = i*2; c = i*3;
+        if(i/100 + i/10%10 + i%10 + b/100 + b/10%10 + b%10 + c/100 + c/10%10 + c%10 == 1+2+3+4+5+6+7+8+9)
+            if( (i/100)*(i/10%10)*(i%10)*(b/100)*(b/10%10)*(b%10)*(c/100)*(c/10%10)*(c%10) == 1*2*3*4*5*6*7*8*9) {
+                cout<<i<<" "<<b<<" "<<c<<endl;;
+            }
+    }
+}
+
+/*
+  above content is easy and clear answer to me;
+  and I first answer is so difficually
+  has many "if" balabala...
+  #include<stdio.h>
+int main()
+{
+    int i = 192;
+
+    for(i = 192; i < 333; i++) {
+        if(i%10 != (2*i%100)/10)//i3==ii2?
+            if(i%10 != (3*i%100)/10)//i3==iii2?
+                if( (i%100)/10 != 2*i%10)//i2==ii3?
+                    if( (i%100)/10 != 3*i%10)//i2==iii3?
+                        if(i/100 != (2*i%100)/10)//i1==ii2?
+                            if(i/100 != (3*i%100)/10)//i1==iii2?
+                                if(i/100 != 2*i%10)//i1==ii3?
+                                    if(i/100 != 3*i%10)//i1==iii3?
+                                        if(2*i/100 != (3*i%100)/10)//ii1==iii2?
+                                            if(2*i/100 != 3*i%10)//ii1==iii3?
+                                                if(i/100 != (i%100)/10)//i1==i2?
+                                                    if( (i%100)/10 != i%10)//i2==i3?
+                                                        if(i/100 != i%10)//i1==i3?
+                                                            if((2*i%100)/10 != (3*i/100))//ii2==iii1?
+                                                                if( (2*i%100)/10 != 3*i%10)//ii2==iii3?
+                                                                    if( (2*i%100)/10 != (3*i%100)/10)//ii2==iii2?
+                                                                        if(2*i%10 != (3*i/100))//ii3==iii1?
+                                                                            if( 2*i%10 != (3*i%100)/10)//ii3==iii2? // perfect me @_@;
+                                                                                if( 2*i%10 != 3*i%10)//ii3==iii3?
+                                                                                if(2*i/100 != (2*i%100)/10)//ii1==ii2
+                                                                                    if(2*i/100 != 2*i%10)//ii1==ii3?
+                                                                                        if( (2*i%100)/10 != 2*i%10)//ii2==ii3?
+                                                                                            if(3*i/100 != (3*i%100)/10)//iii1==iii2?
+                                                                                                if(3*i/100 != 3*i%10)//iii1==iii3?
+                                                                                                    if( (3*i%100)/10 != 3*i%10)//iii2==iii3?
+                                                                                                     if( (i%100)/10 != 0)
+                                                                                                        if(i%10 != 0)
+                                                                                                            if(2*i%10 != 0)
+                                                                                                                if( (2*i%100)/10 != 0)
+                                                                                                                    if( (3*i%100)/10 != 0)
+                                                                                                                        if(3*i%10 != 0)
+                                                                                                                            printf("%d %d %d\n",i,2*i,3*i); }
+
+    return 0;
+}
+*/
