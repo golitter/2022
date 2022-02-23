@@ -1,0 +1,76 @@
+//yeah, the third 
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int L[5001];
+
+int main()
+{
+    int l,n;
+    cin>>l>>n;
+    int soid;
+    for(int i = 0; i < n; i++) {
+        
+        cin>>soid;
+        L[soid] = 1;
+    }
+    if(n == 0) {
+        cout<<"0 0";
+    }
+    else if(n == 1) {
+        int a1 = soid;
+        int a2 = (l-soid+1);
+        if(a1 < a2) {
+            cout<<a1<<" "<<a2;
+        } else {
+            cout<<a2<<" "<<a1;
+        }
+    }
+    else {
+        // the lest time;
+        int mid = l/2;
+        int Ltime,Rtime;
+        for(int i = mid; i >= 1 ; i--) {
+            if(L[i] == 1) {
+                Ltime = i;break;
+            }
+        }
+        for(int i = mid+1; i <= l; i++) {
+            if(L[i] == 1) {
+                Rtime = (l-i+1);break;
+            }
+        }
+        int MinTime;
+        if(Ltime > Rtime) {
+            MinTime = Ltime;
+        }else {
+            MinTime = Rtime;
+        }
+        //maxtime;
+        int maxLtime,maxRtime;
+        for(int i = 1; i <= l; i++) {
+            if(L[i] == 1) {
+                maxLtime = (l-i+1);break;
+            }
+        }
+        for(int i = l; i >= 1; i--) {// No,this i think of l as 1;
+            if(L[i] == 1) { //So next do it, I separate l from 1;
+                maxRtime = i;break;
+            }
+        }
+        int MaxTime;
+        if(maxLtime > maxRtime) {
+            MaxTime = maxLtime;
+        }else {
+            MaxTime = maxRtime;
+        }
+        cout<<MinTime<<" "<<MaxTime;
+    }
+}
+/*
+  How easy wsa this originally
+  whatever the MinTime or MaxTime ,
+  if two soldiers meet, then, can think they swaq soul,
+  because this is meaning of question
+*/
