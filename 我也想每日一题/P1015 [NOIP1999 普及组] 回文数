@@ -67,4 +67,11 @@ int main()
   JUST added them in the opposite order;
   234 + 432 == 432 + 234;
   commutative law of addition 
+  
+  I look at the other solutions,
+  find STL algorithm;
+     string a = "123"; string class;
+    reverse(a.begin(),a.end());
+    int b[3] = {1,2,3}; array class;
+    reverse(b+0,b+3);
 */
