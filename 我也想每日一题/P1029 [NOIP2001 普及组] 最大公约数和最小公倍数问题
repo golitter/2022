@@ -5,7 +5,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int gcd(int a, int b) {
+int gcd(int a, int b) {  // equal to STL algorithm , __gcd();
     if(a > b) {
         swap(a,b);
     }
