@@ -1,0 +1,37 @@
+// about this question , DON'T USE double circulation , and is that make an unnecessary move
+// one circulation can resolve it
+// and notice less tan or equal to sqrt(x*y);
+// in addition to this, don't have difficulties;
+#include <bits/stdc++.h>
+using namespace std;
+
+int gcd(int a, int b) {
+    if(a > b) {
+        swap(a,b);
+    }
+    if(b % a == 0) {
+        return a;
+    } else {
+        b %= a;
+        gcd(a,b);
+    }
+}
+
+int main()
+{
+    int x, y;
+    cin>>x>>y;
+    int count = 0;
+    int Pow = x*y;
+    int SqrtXY = sqrt(x*y);
+    for(int i = x; i <= SqrtXY; i++) {
+        if(Pow%i == 0 && gcd(Pow/i,Pow/(Pow/i)) == x) { // notice : Pow%i is judge whether equal to x or y;
+            if(Pow/i == Pow/(Pow/i)) { // AND Pow/i is equal to x or y; Pow/ (Pow/i) is equal to y or x;
+                count ++; // x == y add 1;
+            } else { // x not equal y add 2;
+                count += 2;
+            }
+        }
+    }
+    cout<<count;
+}
