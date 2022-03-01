@@ -41,4 +41,11 @@ int main()
   corresponding pt     , DEB GCA;
   then recursion;
   
+      string ss = "ABCDefg";
+    string ks = ss.substr(0,3); // output: ABC;
+    // is  ss.substr(subscript,add lenght);
+    string js = ss.substr(4); // output: efg;
+    // is ss.substr(subscript) // Subscript to the end;
+    cout<<ss.find('D');
+    // output:3 //the char' subscript; 
 */
