@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+int a[34];
+int cc = 0;
+
+int isPrime(int a) {
+    for(int i = 2; i <= sqrt(a); i++) {
+        if(a%i == 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void SUM(int count, int nowsum, int start, int end) {
+    if(count == 0) {
+        if(isPrime(nowsum)) {
+            cc++;
+        }
+        return ;
+    }
+    for(int i = start; i <= end; i++) {
+        SUM(count-1, nowsum+a[i], i+1, end);
+    }
+}
+
+int main()
+{
+    int n,k;
+    cin>>n>>k;
+    for(int i = 0; i < n; i++) {
+        cin>>a[i];
+    }
+    SUM(k,0,0,n-1);
+    cout<<cc;
+}
