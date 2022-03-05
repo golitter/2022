@@ -1,0 +1,158 @@
+//the mutinomial has two special positions that the first position and the last position;
+// So think of three situation : the first , the mid and the last;
+//the first position do not has symbol "+"
+// the last dont has "x^" or "x";
+// last but one dont has "x^";
+// and this code is laconic;
+// So AC :
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;
+    cin>>n;
+    int a;
+    for(int i = n; i >= 0; i--) {
+        cin>>a;
+        if(a) { 
+            if(i != n && a > 0) cout<<"+";
+            if(abs(a) > 1|| i == 0) cout<<a;
+            if(a == -1 && i) cout<<"-";
+            if(i > 1) cout<<"x^";
+            if(i == 1) cout<<"x";
+            if(i > 1) cout<<i;
+        }
+    }
+}
+/*
+    Originally, because I do not carefully look at question, I think myself;
+    but it is "对于不是最高次的项，以“+”号或者“-”号连接此项与前一项";
+    So I error;
+    #include <bits/stdc++.h>
+using namespace std;
+int a[123];
+int main()
+{
+  int n;
+  cin>>n;
+  for(int i = 1; i <= n+1; i++) {
+    cin>>a[i];
+  }
+  int judge = 1;
+  if(a[1] != 0) {
+    if(a[1] == 1) cout<<"x^"<<n;
+    else if(a[1] == -1) cout<<"-x^"<<n;
+    else 
+    cout<<a[1]<<"x^"<<n;
+  } else {
+    judge = 0;
+  }
+  for(int i = 2; i <= n; i++) {
+    if(judge == 0 && a[i] != 0) {
+      if(a[i] == 1) cout<<"x^"<<n-i+1;
+      else if(a[i] == -1) cout<<"-x^"<<n-i+1;
+      else 
+      cout<<a[i]<<"x^"<<n-i+1;
+      judge = 1;
+    } else if(judge == 0 && a[i] == 0) {
+      ;
+    } else if(judge != 0 && a[i] != 0) {
+      if(a[i] > 0) {
+        if(a[i] == 1) cout<<"+x^"<<n-i+1;
+        else 
+        cout<<"+"<<a[i]<<"x^"<<n-i+1;
+      }else {
+        if(a[i] == -1) cout<<"-x^"<<n-i+1;
+        else 
+        cout<<a[i]<<"x^"<<n-i+1;
+      }
+    } else {
+      ;
+    }
+  }
+  if(judge == 0 && a[n+1] == 0) {
+    cout<<0;
+  } else if(judge == 0 && a[n+1] != 0) {
+    if(a[n+1] == 1) cout<<1;
+    else if(a[n+1] == -1) cout<<-1;
+    else {
+      cout<<a[n+1];
+    }
+  } else if(judge != 0 && a[n+1] == 0) {
+    ;
+  } else {
+    if(a[n+1] > 0) {
+      if(a[n+1] == 1) cout<<"+1";
+      else cout<<"+"<<a[n+1];
+    } else {
+      if(a[n+1] == -1) cout<<"-1";
+      else {
+        cout<<a[n+1];
+      }
+    }
+  }
+}
+        Finally, I find it, and
+        write this code:
+        #include <bits/stdc++.h>
+using namespace std;
+int a[132];
+int main()
+{
+    int n;
+    cin>>n;
+    for(int i = 1; i <= n+1; i++) {
+        cin>>a[i];
+    }
+    if(a[1]) {
+        if(a[1] == 1) {
+            cout<<"x^"<<n;
+        } else if(a[1] == -1) {
+            cout<<"-x^"<<n;
+        } else {
+            cout<<a[1]<<"x^"<<n;
+        }
+    }
+    for(int i = 2; i <= n-1; i++) {
+        if(a[i]) {
+            if(a[i] > 0) {
+                cout<<"+";
+                if(a[i] == 1) {
+                    cout<<"x^"<<n-i+1;
+                } else {
+                    cout<<a[i]<<"x^"<<n-i+1;
+                }
+            } else {
+                if(a[i] == -1) {
+                    cout<<"-x^"<<n-i+1;
+                } else {
+                    cout<<a[i]<<"x^"<<n-i+1;
+                }
+            }
+        }
+    }
+    if(a[n]) {
+        if(a[n] > 0) {
+            if(a[n] == 1) {
+                cout<<"+x";
+            } else {
+                cout<<"+"<<a[n]<<"x";
+            }
+        } else{
+            if(a[n] == -1) {
+                cout<<"-x";
+            } else {
+                cout<<a[n]<<"x";
+            }
+        }
+    }
+    if(a[n+1]) {
+        if(a[n+1] > 0) {
+            cout<<"+"<<a[n+1];
+        } else {
+            cout<<a[n+1];
+        }
+    }
+}
+
+*/
