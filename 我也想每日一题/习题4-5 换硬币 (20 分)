@@ -1,0 +1,42 @@
+// c program;
+// Originally, I want to write simulation, it's many lines,
+// Meanwahile it is wrong.
+// em I find circulation, and is so short and laconic;
+// is essential for me;
+//
+#include <stdio.h>
+int main()
+{
+  int fivePence, twoPence, onePence;
+  int tag = 0;
+  int sumPence;
+  scanf("%d",&sumPence);
+  fivePence = sumPence/5;
+  int remainder = sumPence%5;
+  if(remainder <= 2) {
+    fivePence--;
+    remainder += 5;
+  }
+  int tagre = remainder; // because it is one time;
+  for(int i = fivePence; i >= 1; i--) {
+    remainder = tagre + (fivePence - i) *5; // Or is big number for tag;
+    twoPence = remainder/2;
+    onePence = remainder%2;
+    if(onePence == 0) {
+      onePence += 2;
+      twoPence--;
+    }
+    for(int j = twoPence; j >= 1; j--) {
+      printf("fen5:%d, fen2:%d, fen1:%d, total:%d\n",i, j, onePence, i+j+onePence);
+      tag++;
+      onePence += 2;
+    }
+    onePence = 0;
+  }
+  
+ /*
+  I am geniues;
+  ^-^ `-`:
+ */
+  printf("count = %d",tag);
+}
