@@ -1,5 +1,5 @@
-// Maybe I dont know it ;;
-
+//思考L and *L LinkList...
+// 思考L and *L List ...
 #include <stdio.h>
 #include <stdlib.h>
 typedef struct Lnode{
@@ -9,7 +9,10 @@ typedef struct Lnode{
 void str(LinkList *a) {
     LinkList  p = *a;
    // p = *a;// p == a == &head; *p == *a == head;
-    printf("%p",p);
+    printf("%p\n",p);
+}
+void str2(LinkList a) {
+    printf("%p\n",a);
 }
 int main(){
     LinkList head;
@@ -29,6 +32,8 @@ int main(){
     //
     str(&head);
 
-
+    printf("%p\n",&head); //NO;
+    printf("%p\n",head);// common
+    str2(head);// common
     
 }
