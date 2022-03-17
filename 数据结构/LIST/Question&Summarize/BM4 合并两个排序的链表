@@ -1,0 +1,60 @@
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ * };
+ *
+ 结点地址改变时要多加小心：
+ * C语言声明定义全局变量请加上static，防止重复定义
+ */
+
+/**
+ * 
+ * @param pHead1 ListNode类 
+ * @param pHead2 ListNode类 
+ * @return ListNode类
+ */
+struct ListNode* Merge(struct ListNode* pHead1, struct ListNode* pHead2 ) {
+    // write code here
+    struct ListNode *p1, *p2, *p3, *q, *p;
+    p1 = pHead1; p2 = pHead2;
+    p3 = NULL;
+    struct ListNode *Tar;
+    Tar = p3;
+    if(p1 == NULL && p2 == NULL) return p1;
+    if(p1 == NULL && p2 != NULL) return p2;
+    if(p1 != NULL && p2 == NULL) return p1;
+    while(p1 && p2) {
+        if(p1->val >= p2->val) {
+            if(Tar == NULL) {
+                Tar = p2;
+                p3 = p2;
+                p2 = p2->next;// p2到下一个结点的改变，若在下面一行在改，就会出错；
+                p3->next = NULL;
+                
+            } else {
+                q = p2;
+                p2 = p2->next;
+                q->next = Tar->next;
+                Tar->next = q;
+                Tar = q;
+            }
+        } else {
+            if(Tar == NULL) {
+                Tar = p1;
+                p3 = p1;
+                p1 = p1->next;
+                p3->next = NULL;
+                
+            } else {
+                q = p1;
+                p1 = p1->next;
+                q->next = Tar->next;
+                Tar->next = q;
+                Tar = q;
+            }
+        }
+    }
+    Tar->next = p2?p2:p1;
+    return p3;
+}
