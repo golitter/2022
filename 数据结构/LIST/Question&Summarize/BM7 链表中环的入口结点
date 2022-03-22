@@ -1,0 +1,40 @@
+/*
+struct ListNode {
+    int val;
+    struct ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL) {
+    }
+};*/
+/**
+ * @brief 
+ * Originally, seek whether it has loop,
+ * if has loop, then one from head traverse ,the other from loop point of intersection.
+ * to find the loop head point;
+ * that's all;
+ * same as the last problem;
+ */
+class Solution {
+public:
+       ListNode* Cir(ListNode* p) {
+        if(p == NULL) return NULL;
+        ListNode *fast, *slow;
+           fast = p; slow = p;
+        while(fast != NULL && fast->next != NULL) {
+            fast = fast->next->next;
+            slow = slow->next;
+            if(fast == slow) return fast;
+        }
+           return NULL;
+    }
+    ListNode* EntryNodeOfLoop(ListNode* pHead) {
+        ListNode *cirp = Cir(pHead);
+        if(cirp == NULL) return NULL;
+        ListNode *Trav = pHead;
+        while(Trav != cirp) {
+            Trav = Trav->next;
+            cirp = cirp->next;
+        }
+        return cirp;
+    }
+};
