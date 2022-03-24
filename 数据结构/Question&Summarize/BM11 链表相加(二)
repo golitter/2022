@@ -1,0 +1,65 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+/**
+ * @brief 
+ *  My method are not laconic, the quintessential sample is well and laconic ;
+ * My approach: reversed order , summation , if has list dont arrive the last NODE countine to add with if greater than 9;
+ *  blbl... is so tedious,
+ * And the quintessential sample is laconic, 
+ * it will my tedious stes cut,
+ * such as, val = head == NULL ? 0 : head->val; an unfinished step is omitted;
+ * is good; and I like it , Learning
+ */
+class Solution {
+public:
+    /**
+     * 
+     * @param head1 ListNode类 
+     * @param head2 ListNode类 
+     * @return ListNode类
+     */
+    ListNode* Reverse(ListNode* p) { // Reverse list;
+        ListNode *head = NULL, *q;
+        if(p == NULL ) return p;
+        while(p) {
+            q = p;
+            p = p->next;
+            q->next = head;
+            head = q;
+        }
+        return head;
+    }
+    ListNode* addInList(ListNode* head1, ListNode* head2) {
+        // write code here
+        
+        if(head1 == NULL) return head2; // if has a list is NULL , will return the other;
+        if(head2 == NULL) return head1;
+        head1 = Reverse(head1); head2 = Reverse(head2);
+        ListNode * res = new ListNode(-1); // equivalently:declare a ListNode* statement , and the statement ->next = NULL;
+        ListNode * tail = res; // The tail interpolation; add new node, become has node list, easy to operate;
+        int carr = 0;
+        while(head1 || head2 || carr ) {
+            int oneval = head1 == NULL ? 0 : head1->val;
+            int twoval = head2 == NULL ? 0 : head2->val;
+            int onlyS = oneval + twoval + carr;
+            int tmp = onlyS%10;
+            carr = onlyS/10;
+            tail->next = new ListNode(tmp); // ditto
+            tail = tail->next;
+            if(head1) { // Prefect1!
+                head1 = head1->next;
+            }
+            if(head2) {// ditto.
+                head2 = head2->next;
+            }
+        }
+        return Reverse(res->next);
+    }
+};
