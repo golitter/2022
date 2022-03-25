@@ -1,0 +1,33 @@
+/**
+ * @file Untitled-3
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-25
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+#include <iostream>
+using namespace std;
+// 满背包最大价值， 最大价值： 1, dp = -1; 2, dp = 0;
+int dp[10001];
+int weigh[10001];
+int val[1001];
+int main()
+{
+    int m, W; // m 物品数， W 容量；
+    // 01背包:
+    //core code; 改进过的；
+    for(int i = 1; i <= m; i++) {
+        for(int j = W; j >= weigh[i]; j--) {
+            dp[j] = max(dp[j], dp[j - weigh[i]] + val[i]);
+        }
+    }
+    // 完全背包；
+    for(int i = 1; i <= m; i++) {
+        for(int j = weigh[i]; j <= W; j++) {
+            dp[j] = max(dp[j], dp[j - weigh[i]] + val[i]);
+        }
+    }
+}
