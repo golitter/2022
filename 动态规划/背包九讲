@@ -14,9 +14,12 @@ using namespace std;
 int dp[10001];
 int weigh[10001];
 int val[1001];
+int s[1001]; s 表示 物品可以使用的次数
 int main()
 {
     int m, W; // m 物品数， W 容量；
+
+
     // 01背包:
     //core code; 改进过的；
     for(int i = 1; i <= m; i++) {
@@ -24,10 +27,67 @@ int main()
             dp[j] = max(dp[j], dp[j - weigh[i]] + val[i]);
         }
     }
+
+
     // 完全背包；
     for(int i = 1; i <= m; i++) {
         for(int j = weigh[i]; j <= W; j++) {
             dp[j] = max(dp[j], dp[j - weigh[i]] + val[i]);
         }
     }
+
+
+    // 多重背包：
+    for(int i = 1; i <= m; i++) {
+        for(int j = m; j >= 1; j--) {
+            for(int k = 0; k <= s[i]&& j >= k*s[i]; ++k) {
+                dp[j] = max(dp[j],dp[j - k*weigh[i]] + k*val[i]);
+            }
+        }
+    }
+
+    // 二进制改进；
+    for(int i = 1; i <= m; i++) {
+        if(val[i]*s[i] >= W) { //  完全背包；
+            for(int j = weigh[i]; j <= W; j++) {
+                dp[j] = max(dp[j], dp[j - weigh[i]] + val[i]);
+            }
+        } else {  // 01背包；
+            for(int j = 1; s[i] > 0; j *=2) { // 二进制；
+                int x = min(s[i], j);
+                for(int z = W; z >= weigh[i]; z--) {
+                    dp[z] = max(dp[z], dp[z - x*weigh[i]] + x*val[i]);
+                }
+                s[i] -= x;
+            }
+        }
+    }
+    // 混合背包；
+    
+    // 二维背包；
+    // https://www.bilibili.com/video/BV1C7411K79w?p=4
+    int V, volume[10001], W, int DP[1001][1001];
+    for(int i = 1; i <= n; i++) {
+        for(int j = W; j >= 0; j--) {
+            for(int z = V; z >= 0; z--) {
+                if(j < weigh[i] && z <= volume[i]) {
+                    DP[j][z] = max(DP[j][z], c[i]);
+                } else {
+                    int x, y;
+                    if(j >= weigh[i]) {
+                        x = j - weigh[i];
+                    } else {
+                        x = 0;
+                    }
+                    if(z >= volume[i]) {
+                        y = z - weigh[i];
+                    } else {
+                        z = 0;
+                    }
+                    DP[j][z] = max(DP[j][z], DP[x][y] + c[i]);
+                }
+            }
+        }
+    }
+
 }
