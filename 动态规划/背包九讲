@@ -90,4 +90,25 @@ int main()
         }
     }
 
+
+    // 分组背包；
+    // 01背包变形；
+    vector<int>ve[299];
+    int pp; ;;//组；
+    int t;;// 总共组数；
+    for(int i = 1; i <= n; i++) {
+        scanf("%d%d%d",&w[i], &val[i], &pp);
+        ve[pp].push_back(i);
+    }
+    for(int i = 1; i <= t; i++) {
+        for(int j = W; j >= 0; j--) {
+            for(int k = 0; k < ve[i].size(); k++) {
+                int x = ve[i][k]; // 表示第几组的W val;;
+                if(j >= w[ve[i][k]]) {
+                    dp[j] = max(dp[j], dp[j - w[ve[i][k]]] + val[ve[i][k]]);
+                }
+            }
+        }
+    }
+
 }
