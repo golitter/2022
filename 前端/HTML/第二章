@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <title>第二章</title>
+    </head>
+    <body>
+        <font size="-2">&lt;font&gt;标记size属性之前加上-</font><br>
+        <font size="+3">&lt;font&gt;。。。。。。。。。。加上+</font><br>
+        <font>&lt;font&gt;默认值</font><br>
+        <font size="5">&lt;font&gt;j标记值属性为5</font><br>
+        <font size="+2" color="blue" face="Verdana, Geneva, sans-serif">
+            设置size， color， face属性值
+        </font><br>
+        <font size="-1" color="yellow" face="隶书">
+            设置size，color，face属性值；
+        </font>
+        <b>杨钊瑞</b><br>
+        <i>yangzhaorui</i><br>
+        <srike>零零零零b</srike><br>
+        <tt>电报字体</tt><br>
+        <hr size="3" color="blue"><br>
+        <u>下划线</u><br>
+        <del>删除线</del><sub>下面</sub><sup>上门</sup>
+        <small>小</small><big>大</big><abbr>不知道这是什么</abbr>
+        <!--abbr怎么用-->
+        <address>dkfjsd</address>
+        <cite>理论上的了JFK</cite>
+        <code>
+            #include <stdio.h><br>
+                int main() {<br>
+                    printf("Hello World");<br>
+                }
+            </stdio.h>
+        </code>
+        <dfn>杨钊瑞</dfn>
+        <em>杨昊</em>
+        <kbd>1b</kbd>
+        <strong>表示强调</strong>
+        <var>this is verb</var>
+        <ul>
+            <li>the first unorder list</li>
+            <li>the second unorder list</li>
+            <li>the third unorder list</li>
+            <li>the fklklklkkkk</li>
+        </ul>
+        <ul type="circle">
+            <li>one</li>
+            <li>two</li>
+            <li>three</li>
+        </ul>
+        <ul type="square">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <ol>
+            <li>the first order list</li>
+            <li>the second order list</li>
+            <li>the third order list</li>
+
+        </ol>
+        <ol type="1">
+            <li>1</li>
+            <li>2</li>
+        </ol>
+        <ol type="I">
+            <li>A</li>
+            <li>B</li>
+            <li>C</li>
+        </ol>
+        <ol type="i">
+            <li>i</li>
+            <li>ii</li>
+            <li>iii</li>
+        </ol>
+        <ol type="A">
+            <li>a</li>
+            <li>b</li>
+            <li>c</li>
+        </ol>
+        <ol type="A" start="3" revered="true">
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+        <ol>
+            <li>1</li>
+            <li value="5">5</li>
+            <li>6</li>
+        </ol>
+        <h2>世界名著</h2>
+        <dl>
+            <dt>中国名著</dt>
+            <dd>咩咩咩咩咩咩咩咩咩咩咩咩吗咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩咩</dd>
+            <dd>顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶</dd>
+            <dd>啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</dd>
+            <dd>忘了忘了忘了忘了忘了忘了我完了完了完了</dd>
+            <dt>外国名著</dt>
+            <dd>买买买</dd>
+            <dd>酷酷酷</dd>
+        </dl>
+        <h2>我喜欢的水果</h2>
+        <ul>
+            <li>香蕉
+                <ul>
+                    <li>黄色</li>
+                    <li>弯曲</li>
+                </ul>
+            </li>
+            <li>苹果
+                <ol>
+                    <li>红色</li>
+                    <li>圆型</li>
+                </ol>
+            </li>
+
+        </ul>
+        <h2>解说列表嵌入无序列表示例</h2>
+        <dl>
+            <dt>唐宋八大家</dt>
+            <dd>苏轼的代表作
+                <ul>
+                    <li>古文</li>
+                    <li>诗歌</li>
+                    <li>词作</li>
+                </ul>
+            </dd>
+            <dt>唐宋八大家</dt>
+            <dd>王安石的代表作
+                <ul>
+                    <li>古文</li>
+                    <li>诗歌</li>
+                    <li>词作</li>
+                </ul>
+            </dd>
+        </dl>
+        <h2>无序列表嵌入有序列表</h2>
+        <ul>
+            <li>本章练习题
+                <ol>
+                    <li>HTML中文被叫做什么？
+                        <ol type="A">
+                            <li>可扩展性标记语言</li>
+                            <li>超文本标记语言</li>
+                            <li>统一建模语言</li>
+                            <li>可扩展超文本标记语言</li>
+                        </ol>
+                    </li>
+                    <li>HTML网页显示无序列表时需要使用到（）标记</li>
+                </ol>
+            </li>
+            <li>提高题
+                <ol type="I">
+                    <li>这不是答案</li>
+                    <li>这是答案</li>
+                    <li>这不是答案</li>
+                    <li>这不是答案</li>
+                </ol>
+            </li>
+            <li>考试题</li>
+        </ul>
+
+    </body>
+</html>
