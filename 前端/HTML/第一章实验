@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>七里香</title>
+  </head>
+  <body>
+    <center>
+      <h1>七里荷花香</h1>
+    </center>
+    <p>
+      &nbsp;&nbsp;&nbsp;"思政"。第一段。
+      <br/>
+      &nbsp;&nbsp;&nbsp; 第二段。
+    </p>
+    <img src="image/flower.jpg" width="200px" height="200px"
+    hspace="30" align="right" />
+    <p>
+      &nbsp;&nbsp;&nbsp;第三段。
+    </p>
+    <!--这还有注释-->
+  </body>
+</html>
