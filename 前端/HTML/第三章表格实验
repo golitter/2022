@@ -1,0 +1,67 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <table borderColor="red" width="100%" border="4">
+            <tbody>
+                <tr>
+                    <td width="50%">
+                        <table borderColor="yellow" height="300" width="100%" border="4">
+                            <col />
+                            <col span="3" align="right" />
+                            <tbody>
+                                <tr>
+                                    <td align="conter" colspan="5">
+                                        <h2 align="center">2013年啦啦啦各班平均分</h2>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>班级</th>
+                                    <th>语文</th>
+                                    <th>数学</th>
+                                    <th>英语</th>
+                                </tr>
+                                <tr>
+                                    <th>一一班</th>
+                                    <th>82</th>
+                                    <th>87.5</th>
+                                    <th>999</th>
+                                </tr>
+                                <tr>
+                                    <th>一一班</th>
+                                    <th>82</th>
+                                    <th>87.5</th>
+                                    <th>999</th>
+                                </tr>
+                                <tr>
+                                    <th>一一班</th>
+                                    <th>82</th>
+                                    <th>87.5</th>
+                                    <th>999</th>
+                                </tr>
+                                <tr>
+                                    <th>一一班</th>
+                                    <th>82</th>
+                                    <th>87.5</th>
+                                    <th>999</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td width="50%">
+                        <table borderColor="blue" height="300" width="100%" border="4">
+                            <tbody>
+                                <tr align="conter">
+                                    <td><h2>邯郸</h2>
+                                    <img src="img.jpg" width="300" height="220" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
