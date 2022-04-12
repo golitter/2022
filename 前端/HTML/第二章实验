@@ -1,0 +1,30 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h2>人物传记</h2>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;人物传记的意义。</p>
+        <ol>
+            <li>定义特征
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;特征</p>
+            </li>
+            <li>体现真实
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;以下几个方面</p>
+                <ul>
+                    <li>丰富详实
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;巴拉巴拉。包括以下<font color="yellow" size="+2">五</font>个方面</p>
+                        <pre>
+                            (1) .first
+                            (2) .second
+                            (3) . third
+                            (4) . fourth
+                        </pre>
+                    </li>
+                </ul>
+            </li>
+            <li>人物本质</li>
+            <li>传记分类</li>
+        </ol>
+    </body>
+</html>
