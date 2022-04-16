@@ -10,6 +10,12 @@ using namespace std;
  * Only need to two thing and one queue sign ;
  * from the producer to ultimate consumer;
  * NEED: user quickly input;
+ * UDP: record the time that from start to finish;
+ * usage: <ctime>
+ * clock_t start, end;
+ * start = clock();
+ * end = clock();
+ * time = (double) (end - start)/CLOCKS_PRE_SEC;
  */
 inline int read() {
     char ch;
