@@ -1,0 +1,74 @@
+#include <iostream>
+#include <queue>
+#include <cstdio>
+#include <cctype>
+using namespace std;
+/**
+ * @brief 
+ * this is Topo Sort;
+ * and about food chain question;
+ * Only need to two thing and one queue sign ;
+ * from the producer to ultimate consumer;
+ * NEED: user quickly input;
+ */
+inline int read() {
+    char ch;
+    int x = 0;
+    ch = getchar();
+    bool flag = true;
+    while(!isdigit(ch)) {
+        if(ch == '-') flag = false;
+        ch = getchar();
+    }
+    while(isdigit(ch)) {
+        x = (x<<3) + (x<<1) + ch - '0';
+        ch = getchar();
+    } 
+    if(flag) return x;
+    else return ~(x-1);  
+}
+int anim[5002], rudu[5002], cudu[5002];
+queue<int> q;
+const int mod = 80112002;
+vector<int>nem[5002];
+int main()
+{
+    int n, m;
+    cin>>n>>m;
+    int left, right;
+    for(int i = 1; i <= m; i++) {
+        //cin>>left>>right;
+        //scanf("%d %d",&left, &right);
+        left = read();
+        right = read();
+        cudu[left]++; 
+        rudu[right]++;
+        nem[left].push_back(right);
+    }
+    int zero;
+    for(int i = 1; i <= n; i++) {
+        if(!rudu[i]) {
+            zero = i;
+            anim[i] = 1;
+            q.push(i);
+        }
+    }
+    while(!q.empty()) {
+        int kai = q.front();
+        q.pop();
+        int len = nem[kai].size();
+        for(int i = 0; i < len; i++) {
+            int next = nem[kai][i];
+            rudu[next]--;
+            anim[next] = (anim[next] + anim[kai]) % mod;
+            if(rudu[next] == 0) q.push(next);
+        }
+    }
+    int  ans = 0;
+    for(int i = 0; i <= n; i++) {
+        if(!cudu[i]) {
+            ans = (ans + anim[i]) % mod;
+        }
+    }
+    cout<<ans;
+}
