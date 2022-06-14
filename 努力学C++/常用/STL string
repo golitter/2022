@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    /**
+     * @brief 
+     * sources: https://oi-wiki.org/lang/csl/string/;
+     * 
+     *  string str；
+     *  string -- > char : str.c_str();
+     * 获取长度： str.size() || str.length() || strlen(str.c_str());
+     * 
+     * 查找字符(串)第一次出现:
+     *  str.find(ch) || str.find(str1) || str.find(str2, pos);  
+     * 
+     * 截取字串：
+     *  str.substr(pos, len);
+     * 
+     * 插入 删除字符(串)：
+     *  str.insert(index, count, ch) || str.insert(index, str1);
+     *  str.erase(index, count) // count 可以省略，表示删除index及之后的字符；
+     * 
+     * 替换字符(串)：
+     *  str.replace(pos, count, str1);
+     *  str.replace(first, last, str1); // 迭代器；
+     * 
+     */
+    string str("OI wiki"), t("OI"), ui("i");
+    // cout<<str.substr(3,3)<<endl;
+    // cout<<str.erase(2)<<endl;
+    // cout<<str.insert(2, " wiki")<<endl;
+    // cout<<str.insert(7,3,'!');
+    cout<<str.replace(2, 5, "")<<endl;
+    cout<<str.replace(str.begin(), str.begin()+2, "NOI");
+    return 0;
+}
