@@ -31,10 +31,16 @@ int main()
      * 
      */
     string str("OI wiki"), t("OI"), ui("i");
-    // cout<<str.substr(3,3)<<endl;
-    // cout<<str.erase(2)<<endl;
-    // cout<<str.insert(2, " wiki")<<endl;
-    // cout<<str.insert(7,3,'!');
+        /**
+     * @brief 
+     * sources:B站 黑马STL视频笔记增添;
+     * 增加：
+     * rfind: 同find; 从后往前开始；
+     * clear: 同erase;
+     * append: 在s后面加上字符:
+     *      append(str1) || append(s1, pos, count);
+     * 
+     */
     cout<<str.replace(2, 5, "")<<endl;
     cout<<str.replace(str.begin(), str.begin()+2, "NOI");
     return 0;
