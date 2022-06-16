@@ -34,6 +34,7 @@
  *  set;
  *          元素唯一：
         默认按升序排列：
+   multiest: 元素可不唯一；
     插入： 只能: .insert(elem);
     删除 .erase(keyelem) || erase(iterator) || earse(iter first, inter last);
     查找 .find(elem) : 返回迭代 auto itera = .find(elem); // *itera;
