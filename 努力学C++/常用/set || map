@@ -18,6 +18,7 @@
  * ma.insert(make_pair(key,value));
  * m.erase() // (可以为迭代器类型 或 key)
  * m.empty();;m.size();
+ * m.count(key);
  * @copyright Copyright (c) 2022
  * 
  */
@@ -34,7 +35,6 @@
  *  set;
  *          元素唯一：
         默认按升序排列：
-   multiest: 元素可不唯一；
     插入： 只能: .insert(elem);
     删除 .erase(keyelem) || erase(iterator) || earse(iter first, inter last);
     查找 .find(elem) : 返回迭代 auto itera = .find(elem); // *itera;
@@ -48,15 +48,9 @@ using namespace std;
 
 int main()
 {
-    map<char,int> mca;
-    for(int i = 0; i < 10; ++i) {
-        mca.insert(make_pair('a'+i, i));
-    }
-    cout<<mca['d']<<endl;
-    map<char,int>::iterator it = mca.begin();
-    mca.erase('b');
-    for(it; it != mca.end(); ++it) {
-        cout<<it->first<<it->second<<endl;
-    }
+    map<int,int> ma;
+    ma[11] = 34;
+    ma[34] = 113;
+    cout<<ma.count(11);
     return 0;
 }
