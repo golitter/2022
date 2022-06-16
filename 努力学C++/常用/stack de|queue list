@@ -1,0 +1,146 @@
+#include <iostream>
+#include <vector>
+/* stack :先进后出*/
+/* queue : 先进先出 */
+/* list :back-->头插法 ;; front-->尾插法 */
+#include <list>
+/**
+ * @file labb.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-06-16
+ * list//
+ * push_back(eme);;
+ * pop_back();
+ * push_front(eme);
+ * pop_front();
+ * clear();
+ * erase();
+ * remove(elem);
+ * front() || back();;
+ *  
+ * 
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+#include <queue>
+/**
+ * @file labb.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-06-16
+ * 
+ * queue:
+ *  back() || front();;
+ *  push();;
+ *  pop();;
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+#include <stack>
+/**
+ * @file labb.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-06-16
+ * 
+ * stack:
+ * NOTICE: 不提供迭代器， 不能遍历， 不选择随机读取；
+ *  push();
+ *  top();
+ *  pop();
+ * @copyright Copyright (c) 2022
+ * 
+ */
+#include <deque>
+/**
+ * @file labb.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-06-16
+ * 
+ * deque:
+ *  push_back();
+ *  push_front();
+ *  pop_back();
+ *  pop_front();
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    deque<int> dea{1,2,3};
+    deque<int> dea1(dea);
+    while(!dea1.empty()) {
+        cout<<dea1.front()<<" ";
+        dea1.pop_front();
+    }
+    cout<<endl;
+    deque<int> dea2(dea);
+    while(!dea2.empty()) {
+        cout<<dea2.back()<<" ";
+        dea2.pop_back();
+    }
+
+    list<int> lia;
+    for(int i = 0; i < 10; ++i) {
+        lia.push_back(i);
+    }
+    cout<<endl;
+    list<int> lia1(lia);
+    while(!lia1.empty()) {
+        cout<<lia1.back()<<" ";
+        lia1.pop_back();
+    }
+    cout<<endl;
+    list<int> lia2(lia);
+    while(!lia2.empty()) {
+        cout<<lia2.front()<<" ";
+        lia2.pop_front();
+    }
+    queue<int> da;
+    for(int i = 0; i < 10; ++i) {
+        da.push(i);
+    }
+    cout<<endl;
+    queue<int> da1(da);
+    while(!da1.empty()) {
+        cout<<da1.front()<<" ";
+        da1.pop();
+    }
+    cout<<endl;
+    queue<int> da2(da);
+    while(!da2.empty()) {
+        cout<<da2.back()<<" ";
+        da2.pop();
+        /**
+         * @brief 
+         *  queue 只有 push() || pop() || front() || back() // BUT: back()对应的没有pop_back();
+         *  因为 pop() 只能删前面；；；
+         *  deque : 双向队列; 有 pop_back() 和 pop_front() ;
+         * 
+         */
+    }
+    cout<<endl;
+    stack<int> sta;
+    for(int i = 0; i < 10; ++i) {
+        sta.push(i);
+    }
+    stack<int> sta1(sta);
+    while(!sta1.empty()) {
+        cout<<sta1.top()<<" ";
+        sta1.pop();
+    }
+    return 0;
+}
