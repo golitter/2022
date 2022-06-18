@@ -4,6 +4,11 @@ using namespace std;
 void output(int n) {
     cout<<n<<" ";
 }
+    /**
+     * @brief 
+     * 二维vector初始化;
+     * vector<vector<int> > darr(row, vector<int>(column,0)) -- > (column,0) Init...
+     */
 /**
  * @brief [a.begin(), a,end()); 随机访问;
  * 总结：
