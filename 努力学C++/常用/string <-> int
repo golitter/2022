@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <sstream>
+#include <algorithm>
+using namespace std;
+
+int main()
+{ /**
+ * @brief 
+ * NTE: 需要 库 <sstream>
+ */
+    stringstream ss;
+    int n = 100;
+    ss<<n; // 把n输入到ss里；
+    string s;
+    ss>>s; // 把ss输出到s里；
+    cout<<s;
+    // 另一个简单的 int to string str = to_string(a);
+    string s2 = to_string(n);
+    cout<<endl;
+    cout<<s2<<endl;
+    double dn = 3.234;
+    string s3 = to_string(dn);
+    cout<<s3<<endl;
+    // string to int b = stoi(s2);;;;;
+    int b = stoi(s2, 0, 3); // stoi(str, start_n, convert_system); 
+    // 把str的convert_system制数，从start_n开始转换为十进制数；
+    cout<<b;
+    return 0;
+}
