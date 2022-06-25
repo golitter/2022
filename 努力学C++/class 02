@@ -1,0 +1,127 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+using namespace std;
+//IBTt;
+// c++ 默认提供三种构造;
+// 无参 ---> 无参 ---> 拷贝; ----------------------------------
+// if our define 有参构造 will not define 无参, but also define 拷贝构造
+// if our define 拷贝构造 will not define 无参 or 有参 函数；
+
+/**
+ * @brief 
+ * 
+ * 对象的初始化和清理：
+ * 1，构造函数进行初始化操作
+ * 
+ * 2，析构函数进行清理操作
+ * @return int 
+ */
+class Person {
+// 1.1 构造函数
+// 没有返回值，不用写void
+// 函数名 与类名相同
+// 构造函数可以有参数，可以发生重载
+// 创建对象时，构造函数会自动调用，而且只调用一次;
+public:
+    // 构造 1, 无参
+    Person() {
+        cout<<"Person无参构造函数的调用"<<endl;
+    }
+    // 构造函数的分类：
+        // 按参数：有参，无参 
+        // 按类型：普通，拷贝
+        // Person a;; Person a(123); Person a(a1);
+    // 三种调用方法：括号法，显示法，隐式转换法;
+
+    //   2，有参
+    Person(int a, int H) {
+        age = a;
+        height = new int(H);
+        cout<<"Person有参构造函数的调用"<<endl;
+    }
+    // 拷贝构造函数
+    Person(const Person &p) {
+        // 将p拷贝到...身上;
+        age = p.age;
+        height = new int(*p.height); // 深拷贝;;;;
+        cout<<"Perosn拷贝构造函数的调用"<<endl;
+    }
+    ~Person() {
+        // 将堆区开辟数据做释放操作;
+        if(height != NULL) {
+            delete height;
+        }
+        height = NULL; // 防止野指针;
+        cout<<"Person拷贝析构函数的调用"<<endl;
+    }
+    // 析构和构造都是必须要有的，如果我们不提供，编译器会自动提供空的;
+    int age;
+    int* height;
+};
+// 构造函数调用
+// 默认构造函数的调用: 不要 Person ep(); x 
+// 括号法：
+    // Person ep;
+    // Person ep() -- > 编译器会认为是一个函数的声明，不会认为在创建对象; NOTICE：
+       // Person ep(elem);
+
+// 显示法：
+    // Person p2 = Person(10); -- 有参构造
+    // Person p2 = Person(p3); -- 拷贝构造
+    // Person(10) -- 匿名对象 -- 执行完后，系统会立即收掉匿名对象;
+    //NOTICE: 不要利用拷贝函数，初始化匿名对象，编译器会认为Perosn(P3) === Person(P3);; 
+    // Person ep(ep2);
+// 隐式转换法
+    // Person a = 20;
+    // Person a = a1;
+
+void test1() {
+    Person b;
+}
+
+/**
+ * @brief 
+ * PRO: 拷贝构造函数调用时机：
+ *  1，使用一个已经创建完毕的对象来初始化一个新对象;
+ *  2, 值传递的方式给函数参数传值；
+ *  3, 值传递的方式返回局部变量;
+ * 
+ * @return int 
+ */
+// 3
+Person doWord2() {
+    Person dskf;
+    cout<<&dskf<<endl;
+    return dskf;
+}
+// 2;
+void doWord(Person a) {
+    ;
+}
+void test3() {
+    Person a;
+    doWord(a);
+}
+
+
+/**
+ * @brief 
+ * 
+ * IBTt: 浅拷贝和深拷贝:
+ * 
+ * 
+ * @return int 
+ */
+
+// 浅拷贝带来的问题：堆区内存重复释放;
+// 浅拷贝函数用深拷贝
+int main()
+{
+    Person a(1,2);
+    cout<<*a.height<<endl;
+    Person b(a);
+    return 0;
+}
