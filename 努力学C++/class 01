@@ -1,0 +1,178 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+using namespace std;
+#define PI 3.14
+// 类中的属性和行为，我们统称为 成员；
+// 属性 成员属性 成员变量；
+// 行为 成员函数 成员方法
+// 属性
+/**
+ * @brief 
+ * 三种权限：
+ * 公共权限：public
+ * 保护权限：protected —— 类内可以，类外不可以; 儿子可以访问父亲中的保护内容；
+ * 私有权限：private --- 同上·   儿子不可以访问父亲的私有内容；
+ *          设置私有：
+ *              1，可以自己控制读写权限  2，对于写可以检测数据的有效性；
+ */
+// struct -- 默认公有
+// class -- 默认私有
+
+class Person {
+public:
+    string m_name;
+protected:
+    string m_car;
+private:
+    int m_password;
+public:
+    void func() {
+        m_name = "张三";
+        m_car = "mest";
+        m_password = 234345435;
+        cout<<m_name<<endl;
+        cout<<m_car<<endl;
+        cout<<m_password<<endl;
+    }
+};
+
+class Circle {
+    // 访问权限
+    // 公共权限
+  public:
+  //属性
+  //半径
+  int m_r;
+  // 行为
+  // 获取园的周长
+  double calculate() {
+    return 2*PI*m_r;
+  }
+
+};
+
+class Stu {
+    public:
+        int xh;
+        int mz;
+        string nm;
+        void setName(string name) {
+            nm = name;
+        }
+
+        void print() {
+            cout<<xh<<endl;
+            cout<<mz<<endl;
+            cout<<nm;
+        }
+
+};
+// dlskfjdlskfj
+class Per1 {
+public:
+    void setName(string name1) {
+        name = name1;
+    }
+    string getName() {
+        return name;
+    }
+    void setLoveName(string sb) {
+        lovename = sb;
+    }
+    string getLoveName() {
+        return lovename;
+    }
+    void setAge(int n) {
+        if(age < 0 || age > 150) {
+            cout<<"error";
+            return ;
+        }
+        age = n;
+    }
+    int getAge() {
+        return age;
+    }
+    void pritnAll() {
+        cout<<name<<endl;
+        cout<<lovename<<endl;
+        cout<<age;
+    }
+private:
+    string name;
+    string lovename;
+    int age;
+};
+// 练习案例：设计立方体Cube
+class Cube {
+public:
+    // 行为
+    // 设置获取长宽高;
+    void setM_L(double L) {
+        m_L = L;
+    }
+    void setM_H(double h) {
+        m_H = h;
+    }
+    void setM_W(double w) {
+        m_W = w;
+    }
+    // 得到各个元素;
+    int getL() {
+        return m_L;
+    }
+    int getH() {
+        return m_H;
+    }
+    int getW() {
+        return m_W;
+    }
+    // 获取面积;
+    void S() {
+        m_S = 2*m_L*m_H + 2*m_L*m_W + 2*m_W*m_H;
+    }
+    void V() {
+        m_V = m_L*m_W*m_H;
+    }
+    void getVandS() {
+        cout<<m_V<<endl;
+        cout<<m_S<<endl;
+    }
+    // 两个Cube对象比较;
+    bool Compar(Cube & c) {
+        if(m_H == c.getH() && m_L == c.getL() && m_W == c.getW()) {
+            return true;
+        }
+        return false;
+    }
+private:
+    int m_L, m_H, m_W,m_S, m_V;
+
+};
+int main()
+{
+
+    Cube a,b;
+    a.setM_H(2);
+    a.setM_L(3);
+    a.setM_W(5);
+
+    a.S();a.V();
+
+    a.getVandS();
+
+    b.setM_H(2);
+    b.setM_L(3);
+    b.setM_W(5);
+    cout<<endl;
+    cout<<a.getH()<<a.getL()<<a.getW()<<endl;
+    cout<<b.getH()<<b.getL()<<b.getW()<<endl;    
+    if(a.Compar(b)) {
+        cout<<"YES";
+    } else {
+        cout<<"NO";
+    }
+    return 0;
+}
