@@ -1,30 +1,36 @@
-#include<bits/stdc++.h>
-#define F(i,n,m) for(int i=n;i<=m;i++)
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
 using namespace std;
-int n,a[1000001];
-void mysort(int l,int r)//自己写的快排 
-{
-    int mid=a[(l+r)/2];//找中间的数进行2分 
-    int i=l,j=r;
-    do{
-        while(a[i]<mid)
-		i++;//找左半部分大于中间数的 
-        while(a[j]>mid)
-		j--;//找右半部分小于中间数的 
-        if(i<=j)
-        {
-            swap(a[i],a[j]);//换位 
-            i++;//左指针右移 
-            j--;//右指针左移 
-        }
-    }
-	while(i<=j);
-    if(l<j) mysort(l,j);
-    if(i<r) mysort(i,r);
+int arr[1001];
+
+// big --> small;
+void mysort(int l, int r) {
+	int i = l, j = r, mid;
+	mid = arr[(l+r)/2];
+	do {
+		while(arr[i] > mid) ++i;
+		while(arr[j] < mid) --j;
+		if(i <= j) {
+			swap(arr[i],arr[j]);
+			++i;
+			--j;
+		}
+	} while(i <= j);
+	if(l < j) mysort(l, j);
+	if(r > i) mysort(i, r);
 }
+
 int main()
 {
-    int n = 344;
-    int arr[n];
-    qksort(arr,0,n-1);
+	for(int i = 0; i <1001; ++i) arr[i] = i;
+	int k = *find(arr+0, arr+1001, 34);
+	cout<<k;
+	mysort(0,1000);
+	for(auto &i: arr) {
+		cout<<i<<" ";
+	}
+	return 0;
 }
