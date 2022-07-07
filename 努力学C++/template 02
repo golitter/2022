@@ -1,0 +1,83 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+using namespace std;
+
+// 模板的局限性
+// 模板并不是万能的，有些特定数据类型，需要用具体化方式做特殊实现;
+// 利用具体化的模板，可以解决自定义类型的通用化;
+
+// 对比两个数据是否相等函数
+class Person {
+public:
+    Person(string a, int b) :name(a),age(b) {
+        ;
+    }
+    string name;
+    int age;
+};
+
+template<typename T>
+bool myCompare(T& a, T& b) {
+    if(a == b) return true;
+    return false;
+}
+// 具体化Person的版本实现代码，具体化优先调用
+template<> bool myCompare(Person& a, Person& b) {
+    if(a.name == b.name && a.age == b.age) return true;
+    return false;
+}
+void testLimit() {
+    int a = 10, b = 20;
+    bool ret = myCompare(a,b);
+    if(ret) {
+        cout<<"Yes"<<endl;
+    } else {
+        cout<<"No"<<endl;
+    }
+
+    Person aa("Tom",10);
+    Person bb("Kkka",34);
+    ret = myCompare(aa,bb);
+    if(ret) {
+        cout<<"Yes"<<endl;
+    } else {
+        cout<<"No"<<endl;
+    }
+}
+
+
+// 普通函数与函数模板调用规则
+// 1，如果函数模板和普通函数都可以调用，优先调用普通函数
+// 2，可以通过空模板参数列表 强制调用 函数模板
+// 3，函数模板可以发生函数重载
+// 4，如果函数模板可以产生更好的匹配，优先调用函数模板
+
+void myPrint(int a, int b) {
+    cout<<"调用的普通函数"<<endl;
+}
+template<typename T>
+void myPrint(T a, T b) {
+    cout<<"调用的模板"<<endl;
+}
+template<typename T>
+void myPrint(T a, T b, T c) {
+    cout<<"调用重载的模板"<<endl;
+}
+void test1() {
+    int a = 10, b = 20;
+    myPrint(a,b);
+    myPrint<>(a,b); // 通过空模板参数列表，强制调用函数模板;
+    myPrint(a,b,100);
+    char c1 = 'a';
+    char c2 = 'b';
+    myPrint(c1, c2);
+}
+
+int main()
+{
+    testLimit();
+    return 0;
+}
