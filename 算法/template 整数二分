@@ -1,0 +1,23 @@
+bool check(int mid)	{/* ......*/}
+// 关于整数二分
+// 要先有一个check函数， 看check函数返回为true时，是谁改变
+    // 若是l 即 l = mid ，则 mid = l + r +1 >>1;
+    // 反之， 为 r , then mid = l + r >>1;
+int bsearch2(int q[],int l,int r){
+	while(l<r){
+		int mid=l+r+1>>1;
+		if(check(q[mid]))	l=mid;
+		else	r=mid-1;	
+	}
+	return l;
+}
+
+int bsearch1(int q[],int l,int r){
+	while(l<r){
+		int mid=l+r>>1;
+		if(check(q[mid]))	r=mid;
+		else	l=mid+1;
+	}
+	return l;
+}
+
