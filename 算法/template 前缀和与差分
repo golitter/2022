@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+
+// 前缀和 and 差分
+using namespace std;
+// ios::sync_with_stdio(false); 提高cin的读取速度，副作用：不能再使用scanf
+// cin.tie(0),cout.tie(0);
+const int N = 100021;
+const int NN = 1021;
+int n, m,q;
+int a[N], s[N];
+int aa[NN][NN], ss[NN][NN];
+int diff[N];b[NN][NN];
+void test1Prefix01() {
+    int n = 0;
+    scanf("%d",&n);
+    for(int i = 1; i <= n; ++i) scanf("%d",&a[i]);
+    for(int i = 1; i <= n; ++i) s[i] = s[i - 1] + a[i];
+}
+
+void test1Prefix02() { // 二维前缀和
+
+    scanf("%d %d %d",&n, &m, &q);
+    for(int i = 1; i <= n; ++i) {
+        for(int j = 1; j <= m; ++j) {
+            scanf("%d", &aa[i][j]);
+        }
+    }
+    for(int i = 1; i <= n; ++i) {
+        for(int j = 1; j <= m; ++j) {
+            ss[i][j] = ss[i-1][j] + ss[i][j-1] - ss[i-1][j-1] + aa[i][j];
+        }
+    }
+}
+void testDiff() {
+    for(int i = 1; i <= n; ++i) diff[i] = a[i] - a[i-1];
+}
+// 二维差分
+void insert(int x1, int y1, int x2, int y2, int c) {
+    b[x1][y1] += c;
+    b[x2+1][y1] -= c;
+    b[x1][y2+1] -= c;
+    b[x2+1][y2+1] += c;
+}
+void testDiff2() { // 二维差分
+    for(int i = 1; i <= n; ++i) {
+        for(int j = 1; j <= m; ++j) {
+            insert(i,j,i,j,a[i][j]);
+        }
+    }
+}
+int main()
+{
+
+    return 0;
+}
