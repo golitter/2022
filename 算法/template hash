@@ -85,7 +85,7 @@ void hashString() {
     cin>>n>>m>>str+1;
     p[0] = 1;
     for(int i = 1; i <= n; ++i) {
-        p[i] = p[i - 1]  + P;
+        p[i] = p[i - 1] * P;
         h[i] = h[i-1]*P + str[i];
     }
     while(m--) {
