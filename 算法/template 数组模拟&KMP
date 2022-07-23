@@ -138,7 +138,7 @@ void KMP() {
     // 先处理ne数组，s和自己匹配 s is smaller than p;     
     for(int i = 2,j = 0; i <= n; ++i) {
         while(j && p[i] != p[j+1]) j = ne[j]; // 往前翻记录了有相同前缀的j
-        if(p[i] == p[j+1]) j++; // 匹配成功，i继续往后走
+        if(p[i] == p[j+1]) j++; // 匹配成功，j继续往后走
         ne[i] = j;
     }   
     // kmp 匹配过程
