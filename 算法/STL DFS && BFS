@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 10;
+int n;
+int path[N];
+bool st[N];
+int h[N], e[N], ne[N], idx;
+bool st[N]; // 标记
+// search DFS BFS
+    // DFS -- stack 不具有最短路性质
+    // BFS -- queue 最短路
+// 剪枝
+void dfs(int u) {
+    if(u == n) {
+        for(int i = 0; i < n; ++i) printf("%d ",path[i]);
+        return ;
+    }
+    for(int i = 1; i <= n; ++i) {
+        if(!st[i]) {
+            path[u] = i;
+            st[i] = true;
+            dfs(u+1);
+            // 回溯 恢复现场
+            //path[u] = 0;
+            st[i] = false;
+        }
+    }
+}
+/**
+ * @brief 
+ * 
+ *  BFS template
+ * while deque: # 非空
+	node = deque.popleft()
+    for m in node 的所有相邻结点:
+        if m 未访问过:
+            deque.append(m)
+
+ * 
+ */
+
+// tree 是特殊的 图
+// 有向图 有方向    无向图 无方向
+
+// 有向图  邻接矩阵 二维数组
+// 还有    邻接表 】
+// a---->b;
+void dfs(int u) {
+    st[u] = true; // 标记一下，已经搜过了
+    for(int i = h[u]; i!=-1; i = ne[i]) {
+        int j = e[i];
+        if(!st[j]) dfs(j);
+    }
+}
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+void test2() {
+    memset(h, -1, sizeof(h));
+}
+void test1() {
+
+    cin>>n;
+    dfs(0);
+}
+int main()
+{
+
+    return 0;
+}
