@@ -1,3 +1,39 @@
+BFS template
+while deque: # 非空
+    node = deque.popleft()
+    for m in node 的所有相邻结点:
+        if m 未访问过:
+            deque.append(m)
+
+
+DFS template
+这里还有两个普通的深搜模板
+深度优先搜索算法框架1
+int Search(int k)
+　{
+　for (i=1;i<=算符种数;i++)
+　　if (满足条件)
+　　   {
+　　　　保存结果
+　　　　if (到目的地) 输出解;
+　　　           else Search(k+1);
+　　　　恢复：保存结果之前的状态{回溯一步}
+　 　  }
+　}
+ 深度优先搜索算法框架2
+int Search(int k)
+　{
+　  if  (到目的地) 输出解;
+　　　else
+　　　　for (i=1;i<=算符种数;i++)
+　　　　　if  (满足条件) 
+　　　　　　　{
+　　　　　　　　保存结果;
+　　　                  Search(k+1)
+                             恢复：保存结果之前的状态{回溯一步}
+　　　　　　　}
+　}
+
 #include <bits/stdc++.h>
 using namespace std;
 
