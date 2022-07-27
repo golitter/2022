@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// 质数
+// 试除法
+bool isPrime(int n) {
+    if(1 == n) return false;
+    for(int i = 2; i <= n/i; ++i) {
+        if(n%i == 0) return false;
+    }
+    return true;
+}
+// 分解质因数
+    // n中最多只包含一个大于sqrt(n)的质因子
+void divide(int n) {
+    for(int i = 2; i <= n; ++i) {
+        if(n%i == 0) {
+            int s = 0;
+            while(n%i == 0) {
+                n /= i;
+                s++;
+            }
+            printf("%d %d\n", i, s);
+        }
+    }
+}
+const int N = 1021;
+int prime[N],cnt;
+bool st[N];
+// 埃氏筛法
+void get_prime1(int n) {
+    for(int i = 2; i <= n; ++i) {
+        if(!st[i]) {
+            prime[cnt++] = n;
+            for(int j = i + i; j <= n; j += i) {
+                st[j] = true;
+            }
+        }
+    }
+}
+// 线性筛  n 只会被最小质因子筛掉  faster
+void get_prime2(int n) {
+    for(int i = 2; i <= n; ++i) {
+        if(!st[i]) prime[cnt++] = i;
+        for(int j = 0; prime[j] <= n/i; j++) {
+            st[prime[j]*i] = true;
+            if(i%prime[j] == 0) break; // prime[j]一定是i的最小质因子，prime[j] 也一定是pj*i 的最小质因子
+        }
+    }
+}
+// 求约数
+vector<int> get_divide(int n) {
+    vector<int> ans;
+    for(int i = 1; i <= n/i; ++i) {
+        if(n%i == 0) {
+            ans.push_back(i);
+            if(i != n/i) ans.push_back(n/i);
+        }
+    }
+    sort(ans.begin(), ans.end());
+    return ans;
+}
+// 约数个数 (a1 +1) (a2 + 1) (a3 + 1) (a4 + 1)...
+// 约数之和 (p1^0 + p1^1...) ... ()
+int main()
+{
+    cout<<isPrime(2)<<endl;
+    divide(17);
+    cout<<endl;
+    auto re = get_divide(100);
+    for(auto & a: re) cout<<a<<" ";
+    puts("");
+    cout<<__gcd(10000,30000);
+}
