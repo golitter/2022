@@ -1,0 +1,63 @@
+
+# 大水题  就是 DFS模板
+
+#include <bits/stdc++.h>
+using namespace std;
+typedef pair<int,int> PII;
+const int N = 1021;
+char ph[N][N]; // 路径
+bool st[N][N]; // 
+int resL, ergoL, resS, ergoS; // 遍历比大小的
+    int n; // 全局变量 方便dfs函数
+
+PII pt[4] = { // 四个方向
+    {1,0}, {-1,0}, {0,1}, {0,-1}
+};
+// (x, y)  fg = ph(x,y);
+void dfs(int x, int y, char fg) {
+    // 判别return;
+    if(x < 0 || y < 0 || x > n || y > n || fg == '.' || st[x][y] || fg == '\0') return ;
+    st[x][y] = true;
+    // 是'#' 面积++;
+    ergoS++;
+    for(int i = 0; i < 4; ++i) {
+        int lx = x + pt[i].first, ly = y + pt[i].second;
+        char tg = ph[lx][ly];
+        if(tg == '.' && fg == '#' || tg == '\0' && fg == '#' ) ergoL++; // 满足条件 周长++
+        dfs(lx, ly, tg); // 递归
+    }
+}
+int main()
+{
+    cin>>n;
+    // 把第一行和其他的每一行的第一个char设置为'\0', 为了方便比较
+
+    for(int i = 0; i <= n + 1; i++) ph[0][i] = '\0'; // 这个可有可无，都能AC，表示数据很水的了
+
+    for(int i = 1; i <= n; ++i) {
+
+        ph[i][0] = '\0';
+
+        cin>>ph[i]+1;
+    }
+    for(int i = 1; i <= n; ++i) {
+        for(int j = 1; j <= n; ++j) {
+            char fg = ph[i][j];
+            dfs(i, j, fg);
+            // 判断 根据题意 判断周长和面积
+            if(resS == ergoS) {
+                resL = min(resL, ergoL);
+            } else {
+                if(resS < ergoS) {
+                    resS = ergoS;
+                    resL = ergoL;
+                } else {
+                    ;
+                }
+            }
+            // 重置
+            ergoS = 0, ergoL = 0;
+        }
+    }
+    cout<<resS<<" "<<resL;
+}
