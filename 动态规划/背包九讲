@@ -46,7 +46,7 @@ int main()
         }
     }
 
-    // 二进制改进；
+    // 二进制改进；有问题 error
     for(int i = 1; i <= m; i++) {
         if(val[i]*s[i] >= W) { //  完全背包；
             for(int j = weigh[i]; j <= W; j++) {
