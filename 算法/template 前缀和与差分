@@ -34,6 +34,11 @@ void test1Prefix02() { // 二维前缀和
 void testDiff() {
     for(int i = 1; i <= n; ++i) diff[i] = a[i] - a[i-1];
 }
+// 一维差分
+void insert111(int x, int y, int c) {
+    b[x] += c;
+    b[y+1] -=c;
+}
 // 二维差分
 void insert(int x1, int y1, int x2, int y2, int c) {
     b[x1][y1] += c;
