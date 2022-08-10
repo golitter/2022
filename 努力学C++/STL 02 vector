@@ -1,0 +1,97 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+#define rep(i,x,n) for(int i = x; i <= n; ++i)
+// vector 单端数组 动态扩展：寻找新空间，copy clear
+// 迭代器 rend rbegin 和 end begin 相反 就是倒着的哦哦
+// gouzhao
+void printVector(vector<int> & v) {
+    for(vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
+        cout<<*it<<" ";
+    }
+    puts("");
+}
+void test01() {
+    vector<int> v1; // default;
+    rep(i,1,10) v1.push_back(i);
+    printVector(v1);
+    vector<int> v2;
+    v2.assign(v1.begin(), v1.end());
+    printVector(v2);
+    vector<int> v3;
+    v3.assign(123,34);
+    printVector(v3);
+    v3.assign(1,1);
+    printVector(v3);
+    
+}
+// vector capacity and size
+void test02() {
+        vector<int> v1;
+    for(int i = 0; i < 10; ++i) {
+        v1.push_back(i);
+    }
+    printVector(v1);
+    if(v1.empty()) cout<<"Empty"<<endl;
+    else cout<<"No Empty"<<endl;
+    cout<<"v1 capacity: "<<v1.capacity()<<" size: "<<v1.size()<<endl;
+    v1.resize(45);
+    printVector(v1);
+    v1.resize(24,23);
+    printVector(v1);
+    cout<<v1.capacity()<<endl;
+    v1.resize(10);
+    printVector(v1);
+    v1.pop_back();
+    cout<<v1.front()<<endl;
+    printVector(v1);
+    // insert the first iterator
+    v1.insert(v1.begin(),100);
+    printVector(v1);
+    v1.insert(v1.begin(),2,1000);
+    printVector(v1);
+    v1.erase(v1.begin());
+    printVector(v1);
+    v1.erase(v1.begin(),v1.begin()+3);
+    printVector(v1);
+    // vector swap
+    vector<int> v2;
+    for(int i = 0; i < 10; ++i) v2.push_back(1000);
+    // swap 
+    cout<<"before swap:"<<endl;
+    cout<<" v1: "; printVector(v1);
+    cout<<" v2: "; printVector(v2);
+    cout<<"after swap: "<<endl;
+    v1.swap(v2);
+    cout<<" v1: "; printVector(v1);
+    cout<<" v2: "; printVector(v2);
+    // use swap can shrink space
+    // resize capacity;
+    cout<<v1.capacity()<<endl;
+
+    // annoymity
+    vector<int>(v1).swap(v1);
+    
+    cout<<v1.capacity()<<endl;
+    system("cls");
+    // reserve;
+    vector<int>vv;
+    int num = 0;
+    vv.reserve(100000);
+    int *p = NULL;
+    for(int i = 0; i < 100000; ++i) {
+        vv.push_back(i);
+        if(p != &vv[0]) {
+            p = &vv[0];
+            num++;
+        }
+    }
+    cout<<num<<endl;
+}
+
+int main()
+{
+    test02();
+}
