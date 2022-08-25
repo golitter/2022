@@ -8,7 +8,7 @@ const int N = 100021;
 #define v first
 #define w second
 
-
+// 当空间优化为一维之后，只有完全背包问题的体积是从小到大循环的
 PII res[N];
 int dp[N][N];
 int ans[N];
