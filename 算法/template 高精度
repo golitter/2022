@@ -79,6 +79,28 @@ vector<int> Div(vector<int> &A, int b, int &r) {
     while(C.size() > 1 && C.back() == 0) C.pop_back();
     return C;
 }
+// 高精度*高精度：
+    while(cin>>aa>>bb) {
+        int lena = aa.size()-1, lenb = bb.size()-1;
+        for(int i = lena; i >= 0; --i) a[lena - i] = aa[i] - '0';
+        for(int i = lenb; i >= 0; --i) b[lenb - i] = bb[i] - '0';
+        int len = lena + lenb +1;
+        for(int i = 0; i < len; ++i) {
+            for(int j = 0; j <= i; ++j) c[i] += a[j]*b[i-j];
+            if(c[i] >= 10) {
+                c[i+1] += c[i]/10;
+                c[i] %= 10;
+            }
+        }
+        int lennum = len;
+        for(int i = lennum; i > 0; --i) {
+            if(c[i] == 0) lennum--;
+            else break;
+        }
+        for(int i = lennum; i >= 0; --i) printf("%d",c[i]);
+        puts("");
+        memset(a,0,sizeof(a)), memset(b,0,sizeof(b)), memset(c,0,sizeof(c));
+    }
 int main()
 {
     string a,b;
