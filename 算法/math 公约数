@@ -1,3 +1,91 @@
+第二版：
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+
+// 与质数相关的判断，基本都有 <= n/i 这代码，记得 是 <= , < 可能出错。
+const int N = 1000021;
+int prime[N],cnt;
+// 判断是否为质数：
+bool isPrime(int x) {
+    if(x < 2) return false;
+    for(int i = 2; i <= x/i; ++i) {
+        if(x%i == 0) return false;
+    }
+    return true;
+}
+bool st[N];
+// 在[1,n]内，判断质数，并找个有多少个质数
+int get_Primes_CntPrimes() {
+    int n = N;
+    for(int i = 2; i <= n; ++i) {
+        if(!st[i]) prime[cnt++] = i; 
+        for(int j = 0; prime[j] <= n/i; ++j) {
+            st[prime[j]*i] = true;
+            if(i%prime[j] == 0) break;
+        }
+    }
+    return cnt;
+}
+// 分解质因子，
+void Didive() {
+    int n; // cin>>n;
+    for(int i = 2; i <= n/i; ++i) {
+        if(n%i == 0) {
+            int s = 0; // 指数哦
+            while(n%i == 0) n /= i, s++;
+            cout<<i<<" "<<s<<endl;
+        }
+    }
+    if(n > 1) cout<<n<<" "<<1<<endl;
+}
+// 试除法求约数
+vector<int> divide_Primes() {
+    int n; // cin>>n;
+    vector<int> vi;
+    for(int i = 1; i <= n/i; ++i) {
+        if(n%i == 0) {
+            vi.push_back(i);
+            if(n/i != i) vi.push_back(n/i);
+        }
+    }
+    return vi;
+}
+/**
+ * @brief 
+如果 N = p1^c1 * p2^c2 * ... *pk^ck
+约数个数： (c1 + 1) * (c2 + 1) * ... * (ck + 1)
+约数之和： (p1^0 + p1^1 + ... + p1^c1) * ... * (pk^0 + pk^1 + ... + pk^ck)
+ * 
+ * @return int 
+ */
+// 求最大公约数
+int gcd(int a, int b) {
+    return b?gcd(b, a%b): a;
+}
+// 欧拉函数：小于等于n的正整数中与n互质的数的数目。
+// 代码模板 与 分解质因数相似yyyhh。
+int uola(int x) {
+    int ret = x;
+    for(int i = 2; i <= x/i; ++i) {
+        if(x%i == 0) {
+            ret = ret/i*(i-1);
+        }
+        while(x%i == 0) x /= i;
+    }
+    if(x > 1) ret = ret/x*(x-1);
+    return ret;
+}
+int main()
+{
+
+}
+
+
+第一版：
 #include <bits/stdc++.h>
 using namespace std;
 
