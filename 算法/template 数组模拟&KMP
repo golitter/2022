@@ -151,6 +151,29 @@ void KMP() {
         }
     }
 }
+// 2022年9月1日17点47分
+const int N = 1000021;
+char slng[N], ssht[N];
+int net[N];
+int main()
+{
+    cin>>slng+1>>ssht+1;
+    int lnglen = strlen(slng+1), sshtlen = strlen(ssht+1);
+    for(int i = 2, j = 0; i <= sshtlen; ++i) {
+        while(j && ssht[i] != ssht[j+1]) j = net[j];
+        if(ssht[i] == ssht[j+1]) j++;
+        net[i] = j;
+    }
+    for(int i = 1, j = 0; i <= lnglen; ++i) {
+        while(j && slng[i] != ssht[j+1]) j = net[j];
+        if(slng[i] == ssht[j+1]) j++;
+        if(j == sshtlen) {
+            printf("%d\n",i - sshtlen + 1);
+            j = net[j];
+        }
+    }
+    for(int i = 1; i <= sshtlen; ++i) cout<<net[i]<<" ";
+}
 int main()
 {
 
