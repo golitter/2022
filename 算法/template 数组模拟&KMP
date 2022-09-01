@@ -130,12 +130,14 @@ void testP() { //
 
 // KMP算法
 void KMP() {
-    int p[N], s[N];
+    char p[N], s[N];
     int ne[N];
     // 求next
     int n, m;
     cin>>n>>p + 1 >> m >> s+1; // p -> small s -> big;
     // 先处理ne数组，s和自己匹配 s is smaller than p;     
+    // next数组保存的不是最长前缀的长度，而是对应的下标，也就是长度-1，如果长度是0，则保存-1
+    // next数组特别有意思，表示字符串前后缀相同的个数
     for(int i = 2,j = 0; i <= n; ++i) {
         while(j && p[i] != p[j+1]) j = ne[j]; // 往前翻记录了有相同前缀的j
         if(p[i] == p[j+1]) j++; // 匹配成功，j继续往后走
@@ -146,7 +148,7 @@ void KMP() {
         while(j && s[i] != p[j+1]) j = ne[j];
         if(s[i] == p[j+1]) j++;
         if(j == n) {
-            printf("%d", i - n + 1);
+            printf("%d", i - n + 1); // s字符串在p字符串字串中时；
             j = ne[j];
         }
     }
