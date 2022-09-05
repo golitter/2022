@@ -88,7 +88,7 @@ struct Edge {
 }edges[M];
 int k;
 int BellmanFord() {
-    memset(dis, 0x3f, sizeof(dis));
+    memset(dis, 0x3f, sizeof(dis)); dis[1]  = 0;
     for(int i = 0; i < k; ++i) { // 小于等于前i个边
         memcpy(backup, dis,sizeof(dis));
         for(int j = 0; j < m; ++j) {
