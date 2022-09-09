@@ -27,7 +27,72 @@ int sum(int x, int y) {
     return s2-s1;
 }
 
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <set>
+#include <map>
+#include <queue>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
 
+#define rep(i,x,n) for(int i = x; i <= n; i++)
+
+typedef long long LL;
+typedef pair<int,int> PII;
+
+const int INF = 0x3f3f3f3f;
+const int N = 100021;
+// 区间修改，区间求和；
+LL tr[N],n, str[N],ad[N];
+LL lowbit(int x) {
+    return x&(-x);
+}
+void add(int x, int k) {
+    for(int i = x; i <= n; i += lowbit(i)) {
+        tr[i] += k;str[i] +=k*(x-1);
+    }
+}
+LL query(int x) {
+    LL ans = 0;
+    for(int i = x; i; i -= lowbit(i)) {
+        //ans += tr[i];
+        ans += x*tr[i] - str[i];
+    }
+    return ans;
+}
+void test();
+int main()
+{
+    LL m;
+    while(cin>>n>>m) {
+        memset(ad,0,sizeof(ad));
+        memset(tr,0,sizeof(tr));
+        memset(str,0,sizeof(str));
+    rep(i,1,n) {
+        LL a; scanf("%lld",&ad[i]);
+        add(i,ad[i] - ad[i-1]);
+    }
+    while(m--) {
+        char op[2]; scanf("%s",op);
+        if(*op == 'C') {
+            int b,c,d; scanf("%d%d%d",&b,&c,&d); add(b,d), add(c+1,-d);
+        } else {
+            int c, d; scanf("%d%d",&c,&d); cout<<query(d) - query(c-1)<<endl;
+        }
+    }
+
+    }
+}
+
+void test() {
+    #define mytest
+    #ifdef mytest
+    freopen("ANSWER.txt", "w",stdout);
+    #endif
+}
 
 
 
