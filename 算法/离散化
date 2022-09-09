@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <set>
+#include <map>
+#include <queue>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
+
+#define rep(i,x,n) for(int i = x; i <= n; i++)
+
+typedef long long LL;
+typedef pair<int,int> PII;
+
+const int INF = 0x3f3f3f3f;
+const int N = 10021;
+// 离散化
+int a[N], id[N], lasa[N];
+bool cmp(int aa, int b) {
+    return a[aa]<a[b];
+}
+void test1() {  // 重复数字不一样 1 2 2 --> 1 2 3;
+    int n; cin>>n;
+    rep(i,1,n) {
+        cin>>a[i];
+        id[i] = i;
+    }
+    stable_sort(id+1,id+n+1,cmp);
+    rep(i,1,n) lasa[id[i]] = i; 
+    rep(i,1,n) cout<<lasa[i]<<" ";
+}
+void test2() { // 重复数字一样 1 2222 2222 ---> 1 2 2;
+    int n; cin>>n;
+    rep(i,1,n) {
+        cin>>a[i]; id[i] = a[i];
+    }
+    sort(id+1, id+n+1);
+    int cnt = unique(id+1,id+n+1) - id - 1;
+    rep(i,1,n) {
+        lasa[i] = lower_bound(id+1,id+n+1,a[i]) - id;
+    }
+    rep(i,1,n) cout<<lasa[i]<<" ";
+}
+void test();
+int main()
+{
+    test2();
+}
+
+void test() {
+    #define mytest
+    #ifdef mytest
+    freopen("ANSWER.txt", "w",stdout);
+    #endif
+}
