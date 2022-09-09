@@ -27,6 +27,7 @@ void test1() {  // 重复数字不一样 1 2 2 --> 1 2 3;
         cin>>a[i];
         id[i] = i;
     }
+    // 不知道为什么 stable_sort 不行，用sort倒是可以！！！
     stable_sort(id+1,id+n+1,cmp);
     rep(i,1,n) lasa[id[i]] = i; 
     rep(i,1,n) cout<<lasa[i]<<" ";
