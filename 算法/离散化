@@ -38,9 +38,10 @@ void test2() { // 重复数字一样 1 2222 2222 ---> 1 2 2;
         cin>>a[i]; id[i] = a[i];
     }
     sort(id+1, id+n+1);
+      注意减一哦
     int cnt = unique(id+1,id+n+1) - id - 1;
     rep(i,1,n) {
-        lasa[i] = lower_bound(id+1,id+n+1,a[i]) - id;
+        lasa[i] = lower_bound(id+1,id+cnt+1,a[i]) - id;
     }
     rep(i,1,n) cout<<lasa[i]<<" ";
 }
