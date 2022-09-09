@@ -93,6 +93,20 @@ void test() {
     freopen("ANSWER.txt", "w",stdout);
     #endif
 }
+求逆序对
+for(fint i=1;i<=n;i++)
+{
+    cin>>a;
+    adds(a,1);
+    ans+=i-query(a);
+}
+cout<<ans;
+return 0;
+
+
+
+
+
 
 
 
