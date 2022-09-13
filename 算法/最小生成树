@@ -1,0 +1,75 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <set>
+#include <map>
+#include <queue>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
+// 最小生成树：（无向图常见）在无向图中，连通而且不含有圈（环路）的图称为树
+    // 无向图，特殊的有向图
+// 正边 负边 都可以
+// 记得 memset dist
+/**
+ * @brief 
+ * 
+ *      Prim 稠密图
+ *          原理：最近的距离一定在MST上
+ *      kruskal 稀疏图
+ *          原理：最短的边一定在MST上
+ */
+#define rep(i,x,n) for(int i = x; i <= n; i++)
+
+typedef long long LL;
+typedef pair<int,int> PII;
+
+const int INF = 0x3f3f3f3f;
+const int N = 5021;
+int n,m, ph[N][N], dist[N]; bool st[N];
+void test();
+int prim() {
+    memset(dist,0x3f, sizeof(dist));
+    int res = 0;
+    for(int i = 0; i < n; ++i) {
+        int t = -1;
+        for(int j = 1; j <= n; ++j) {
+            if(!st[j] && (t == -1 || dist[t] > dist[j])) {
+                t = j;
+            }
+        }
+        if(i && dist[t] == 0x3f3f3f3f) return 0x3f3f3f3f;
+        if(i) res += dist[t];
+                                            // this is 点到集合的距离
+        for(int j = 1; j <= n; ++j) dist[j] = min(dist[j], ph[t][j]);
+        
+        st[t] = true;
+
+    }
+    return res;
+}
+int main()
+{
+    scanf("%d%d",&n,&m);
+    memset(ph,0x3f, sizeof(ph));
+    while(m--) {
+        int a, b, c; cin>>a>>b>>c;
+        ph[a][b] = ph[b][a] = min(ph[a][b], c);
+    }
+
+    int t  = prim();
+    if(t == 0x3f3f3f3f) {
+        puts("orz");
+    } else {
+        cout<<t;
+    }
+    return 0;
+}
+
+void test() {
+    #define mytest
+    #ifdef mytest
+    freopen("ANSWER.txt", "w",stdout);
+    #endif
+}
