@@ -73,3 +73,71 @@ void test() {
     freopen("ANSWER.txt", "w",stdout);
     #endif
 }
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <set>
+#include <map>
+#include <queue>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
+
+#define rep(i,x,n) for(int i = x; i <= n; i++)
+// kruskal :
+    // 将边的权重按从小到大排序，从小到大依次枚举每条边，并查集，不连通加入集合中
+typedef long long LL;
+typedef pair<int,int> PII;
+
+const int INF = 0x3f3f3f3f;
+const int N = 200021;
+int n,m;
+int p[N];
+struct Edge {
+    int a, b, w;
+    // 方便排序
+    bool operator< (const Edge &W) const {
+        return w < W.w;
+    }
+}edges[N];
+// 并查集
+int find(int x) {
+    if(p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+void test();
+int main()
+{
+    scanf("%d%d",&n,&m);
+    for(int i = 0; i < m; ++i) {
+        int a,b,w; scanf("%d%d%d",&a,&b,&w);
+        edges[i] = {a,b,w};
+    }
+    // 排序
+    sort(edges, edges+m);
+    int res = 0, cnt = 0;
+    // 并查集初始化
+    rep(i,1,n) p[i] = i;
+    // 枚举
+    for(int i = 0; i < m; ++i) {
+        int a = edges[i].a, b = edges[i].b, w = edges[i].w;
+        a = find(a), b = find(b);
+        // 连通
+        if(a != b) {
+            res += w; cnt++; p[a] = b;
+        }
+    }
+    // 如果cnt从1开始则为cnt < n， 但是cnt从0开始， 所以是cnt < n-1;;
+    if(cnt < n - 1) puts("orz");
+    else cout<<res;
+    return 0;
+}
+
+void test() {
+    #define mytest
+    #ifdef mytest
+    freopen("ANSWER.txt", "w",stdout);
+    #endif
+}
