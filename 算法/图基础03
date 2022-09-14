@@ -66,6 +66,7 @@ void Dijkstra__heap() { // 不需要对重边做处理
         if(st[ver]) {
             continue;
         }
+	st[ver] = true;
         for(int i = h[ver]; i != -1; i = ne[i]) {
             int j = e[i];
             if(dis[j] > distance + w[i]) {
