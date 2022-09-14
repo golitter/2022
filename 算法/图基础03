@@ -118,6 +118,15 @@ void Bellman_Ford() {
     else cout<<t;
 
 }
+while 队列不为空
+{
+	取队首，队首出队
+    枚举每一条边，如果起点为队首                                         
+        对这条边进行一次松弛
+        （也就是三角形不等式dist[s]=min(dist[t]+map[s][t],dist[s])）
+        如果成功，入队
+}
+
 // 用邻接表
 int SPFA() {
     // 根据三角不等式
