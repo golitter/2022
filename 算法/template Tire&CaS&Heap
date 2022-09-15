@@ -53,6 +53,41 @@ void CheckandSet() {
     }
 }
 
+需要包含 <numeric>
+	// this is my updated code;
+struct CKST {
+	vector<int> p;
+	// 构造函数 初始化
+		// iota 给容器递增初始化赋值
+	CKST(int n): p(n+1) { iota(p.begin(),p.end(),0); }
+
+	// 查找 + 路径压缩
+	int find(int x) {return p[x] == x ? x: p[x] = find(p[x]); }
+	// 连通   						this is ====
+	void uni(int x, int y) {p[find(x)] = find(y); }
+	// 判断是否 连通
+	bool same(int x, int y) {return find(x) == find(y); }
+
+};
+	// this is tourist
+struct DSU { //并查集模板
+
+  vector<int> p;
+
+  DSU(int n) : p(n + 1) { iota(p.begin(), p.end(), 0); }
+
+  int find(int x) { return p[x] == x ? x : p[x] = find(p[x]); }
+
+  void uni(int x, int y) { p[find(x)] = find(y); }
+
+  bool same(int x, int y) { return find(x) == find(y); }
+
+};
+
+
+
+
+
 // 如何手写一个堆 堆 -- 完全二叉树
 int h[N],size;
 // 插入一个数
