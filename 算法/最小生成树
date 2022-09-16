@@ -141,3 +141,65 @@ void test() {
     freopen("ANSWER.txt", "w",stdout);
     #endif
 }
+
+
+
+
+
+// 二分图： 当且仅当图中不含奇数环；
+
+	// 染色法判断二分图
+int n, h[N],e[N],ne[N],idx,color[N];
+void add(int a, int b) {
+	e[idx] = b, ne[idx] = h[a], h[a] = ++idx;
+}
+bool dfs(int u, int c) { // 不矛盾 返回 true
+	color[u] = c;
+	for(int i = h[u]; i != -1; i = ne[i]) {
+		int j = e[i];
+		if(color[j] == -1) {
+			// 矛盾
+			if(!dfs(j,!c)) return false;
+			// 相邻颜色相同
+		} else if(color[j] == c) return false;
+	}
+	return true;
+}
+bool check() {
+	memset(color,-1,sizeof color) ;
+	bool fg = true;
+	for(int i = 1; i <= n; ++i) {
+		if(color[i] == -1) {
+			// 判断 + 染色
+			if(!dfs(i,0)) {
+				fg = false;
+				break;
+			}
+		}
+	}
+	return fg;
+}
+int n,m;// ver edge
+	// 并查集判断二分图
+struct ckst{
+	vector<int> p;
+	ckst(int n): p(n+1) {iota(p.begin(), p.end(),0); }
+	int find(int x) {return p[x]==x?x:p[x]=find(p[x]); }
+	void uni(int x, int y) {p[find(x)]=p[find(y)]; }
+	bool same(int x, int y) {return p[x]==p[y]; }
+};
+// M is max edge number
+const int M = 34343;
+struct Edge{int u,v; }edge[M];
+bool check(int n, int m) {
+	ckst cs(n*2);
+	for(int i = 1; i <= m; ++i) { // 合并两个边上的点
+		int u = edge[i].u, v = edge[i].v;
+		cs.uni(u,v+n), cs.uni(u+n,v);
+	}
+	for(int i = 1; i <= m; ++i) {
+		// 如果相连通，返回false
+		if(cs.same(i,n+i)) return false;
+	}
+	return true;
+}
