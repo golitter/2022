@@ -203,3 +203,52 @@ bool check(int n, int m) {
 	}
 	return true;
 }
+
+const int INF = 0x3f3f3f3f;
+// 匈牙利算法 二分图最大匹配
+	// 月老 男女牵线问题
+const int N = 1021, M = 50001;
+int idx,h[N],e[M],ne[M];
+void add(int a, int b) { // idx++; is so significant
+	// 匈牙利算法 有向图 u ---> v or 男 --> 女 即可
+	e[idx] = b, ne[idx] = h[a]; h[a] = idx++;
+}
+int match[N]; // 表示 j 的最后的那个结点是哪个
+bool st[N]; // 表示第二个集合的点内 是否被遍历过
+bool find(int x) {
+	for(int i = h[x]; i != -1; i = ne[i]) {
+		int j = e[i];
+		if(!st[j]) {
+			st[j]  = 1;
+			// 表示 j没有配对的，或者j现在配对的可以再配对
+			// 男女关系类比
+			if(match[j] == 0 || find(match[j])) {
+				match[j] = x;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+void test();
+int main()
+{
+	int n, m, e;
+	cin>>n>>m>>e;
+	// 读入
+	memset(h, -1, sizeof h);
+	rep(i,0,e-1) {
+		int u,v;
+		cin>>u>>v; add(u,v);
+	}
+
+	// 求最大匹配数，依次枚举第一个集合中的每个点能否匹配第二个集合中的点
+	int res = 0;
+	for(int i = 1; i <= n; ++i) {
+		memset(st, false, sizeof st);
+		//memset(match, 0, sizeof match);
+		if(find(i)) res++;
+	}
+	cout<<res;
+	return 0;
+}
