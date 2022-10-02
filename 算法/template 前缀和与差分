@@ -31,6 +31,54 @@ void test1Prefix02() { // 二维前缀和
         }
     }
 }
+
+子矩阵和：
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <set>
+#include <map>
+#include <queue>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
+
+#define rep(i,x,n) for(int i = x; i <= n; i++)
+
+typedef long long LL;
+typedef pair<int,int> PII;
+
+const int INF = 0x3f3f3f3f;
+const int N = 1021;
+LL a[N][N], sum[N][N];
+void test();
+int main()
+{
+	int n, m, q; cin>>n>>m>>q;
+	for(int i = 1;i  <= n; ++i) {
+		for(int j = 1; j <= m; ++j) cin>>a[i][j];
+	}
+	for(int i = 1; i <= n; ++i) {
+		for(int j = 1; j <= m; ++j) {
+			sum[i][j] = sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1] + a[i][j];
+		}
+	}
+	while(q--) {
+		int x1,y1,x2,y2; cin>>x1>>y1>>x2>>y2;
+		cout<<sum[x2][y2] - sum[x1-1][y2] - sum[x2][y1-1] + sum[x1-1][y1-1]  <<endl;
+	}
+	return 0;
+}
+
+void test() {
+	#define mytest
+	#ifdef mytest
+	freopen("ANSWER.txt", "w",stdout);
+	#endif
+}
+
+
 void testDiff() {
     for(int i = 1; i <= n; ++i) diff[i] = a[i] - a[i-1];
 }
