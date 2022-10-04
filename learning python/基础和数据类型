@@ -1,0 +1,70 @@
+解释型语言
+动态数据语言
+
+a = "34"; a = 3 -- is OK
+
+也需要转义字符 -- " == \"
+
+字符串 下标索引 and 切片法
+    str[idx]        str[st,ed] -- (st,ed]
+
+type()
+id()
+
+简单数据类型转换：
+int(x, [,base]) 将 x 转换为base进制的数
+long 同理
+float 转float
+
+eval(str) 计算str的表达式
+
+str(x) 将 x 转换为string
+chr(x) int(x) -- > char(x)
+ord(ch) ord(char) -- > int(x)
+
+列表：
+    定义 list = [1,3,"34"]
+    获取长度：len(list)
+    访问列表元素： list[idx]
+    新增元素： list.append(newItem)
+    插入元素：list.insert(pos, newItem) 在pos位置插入newItem;
+    后增列表： list.append(lastList)
+    合并列表： newlist = oneList + twoList;
+    删除元素: del listName[idx];
+    获取下标: list.index(Item);
+
+    for i,val in  enumerate(a):
+
+元组:
+    性质：
+        1. 一经定义，tuple内容不可以改变
+        2. 可以存储不同类型数据
+        3. tuple元素由圆括号括起来
+            e.g. t = (1,2,3,"df")
+    访问: 下标访问
+    length: len(tuple)
+    遍历 ~ list 
+    NOT SORT
+    list = list(tuple)
+    tuple = tuple(list)
+
+字典:
+    c++ map<key,value>
+    d = {key:value, ...}
+    合并: d1.update(d2)
+    删除: dict.pop(key)
+    清除: clear()
+    可以嵌套
+
+集合:(同 数学上的集合)
+    集合分为可变集合(set) 和不可变集合(frozenset)
+    可变集合创建后可以add,append,change,delete，而不可变集合不能改变
+    本身无序，不可以idx和切片法，只能遍历
+    添加集合元素: s.add(item)
+    添加集合: s.update(s2)
+    删除集合元素: s.remove(item)
+    清除集合: s.clear()
+    集合合并: s = s1 | s2
+    集合交集: s = s1 & s2
+    集合差集: s = s1 - s2
+    
