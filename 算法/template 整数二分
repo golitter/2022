@@ -4,7 +4,7 @@ bool check(int mid)	{/* ......*/}
     // 若是l 即 l = mid ，则 mid = l + r +1 >>1;
     // 反之， 为 r , then mid = l + r >>1;
 
-模板*2：
+模板*2：可以取到右边界。
 int bsearch2(int q[],int l,int r){
 	while(l<r){
 		int mid=l+r+1>>1;
@@ -14,7 +14,7 @@ int bsearch2(int q[],int l,int r){
 	return l;
 }
 
-模板*1：
+模板*1： // 可以取左边界
 int bsearch1(int q[],int l,int r){
 	while(l<r){
 		int mid=l+r>>1;
