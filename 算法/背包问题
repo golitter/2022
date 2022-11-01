@@ -157,6 +157,7 @@ void knapsackMany_beta2222() {
 }
 
 // 分组背包
+类似于01背包扩展，每一组取一个。
 const int N = 1021;
 int dp[N];
 vector<int> nwg[N], nvl[N];
