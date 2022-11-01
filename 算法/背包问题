@@ -156,7 +156,28 @@ void knapsackMany_beta2222() {
     }
 }
 
-int main()
-{
+// 分组背包
+const int N = 1021;
+int dp[N];
+vector<int> nwg[N], nvl[N];
 
+void solve() {
+    int V, n; cin>>V>>n;
+    int hmg = 0;
+    rep(i,1,n) {
+        int a,b,c; cin>>a>>b>>c;
+        nwg[c].push_back(a);
+        nvl[c].push_back(b);
+        hmg = max(hmg, c);
+    }
+    
+    rep(i,1,hmg) {
+        for(int j = V; j >= 0; --j) {
+            rep(k,0,nwg[i].size()-1) {
+                if(nwg[i][k] <= j)
+                dp[j] =  max(dp[j], dp[j - nwg[i][k]] + nvl[i][k]);
+            }
+        }
+    }
+    cout<<dp[V];
 }
