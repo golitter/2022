@@ -26,3 +26,20 @@ add_executable(main
                 ${PROJECT_SOURCE_DIR}/src/main.cpp 
                 ${PROJECT_SOURCE_DIR}/src/func.cpp
 )
+
+
+
+## cmake 最小需求版本号
+cmake_minimum_required(VERSION 3.2)
+# 项目名 版本号
+project(pj1 VERSION 0.1.2)
+# 包含文件
+include_directories(${PROJECT_SOURCE_DIR}/include)
+# 定义
+add_definitions("-g -Wall -std=c++11")
+
+# 添加要执行文件
+add_executable(main
+                ${PROJECT_SOURCE_DIR}/src/main.cpp 
+                ${PROJECT_SOURCE_DIR}/src/func.cpp
+)
