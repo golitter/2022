@@ -1,0 +1,28 @@
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+//one approach: traverse pHead1 and pHead2, find how many nodes
+// then ,the longer list from abs(p1-p2) node start traverse, ther other from head traverse;
+// the other approach:
+//think of a loop, and find point of intersection.
+// but dont really connect a loop, just need to use ? : operator character virtually connect 
+class Solution {
+public:
+    ListNode* FindFirstCommonNode( ListNode* pHead1, ListNode* pHead2) {
+        if(!pHead1|| !pHead2) {
+            return NULL;
+        }
+        ListNode *p1, *p2;
+        p1 = pHead1; p2 = pHead2;
+        while(p1 != p2) {
+            p1 = p1 == NULL?pHead2:p1->next;
+            p2 = p2 == NULL?pHead1:p2->next;
+        }
+        return p1;
+    }
+};

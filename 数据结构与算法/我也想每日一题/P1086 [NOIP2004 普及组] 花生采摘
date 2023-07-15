@@ -1,0 +1,69 @@
+/**
+ * @file Untitled-6
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-31
+ * 
+ * @copyright Copyright (c) 2022
+ * this is greedy algorithm;
+ * Originally, I think is a BFS algorithm, but when I carefully look at this question , I found it is so easy ;
+ * NOTICE: i, j and x, y ; dont confound;;;
+ * 
+ */
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int Path[21][21];
+struct path {
+    int x;
+    int y;
+    int bean;
+}hasb[403];
+bool cmp(struct path a, struct path b) {
+    if(a.bean > b.bean) {
+        return true;
+    }
+    return false;
+}
+int main()
+{
+    int M, N, k;
+    cin>>M>>N>>k;
+    int c = 0;
+    for(int i = 1; i <= M; i++) {
+        for(int j = 1; j <= N; j++) {
+            cin>>Path[i][j];
+            if(Path[i][j] > 0) {
+                hasb[++c].x = i;
+                hasb[c].y = j;
+                hasb[c].bean = Path[i][j];
+            } 
+        }
+    }
+    sort(hasb+1,hasb+c+1,cmp);
+    int px, py;
+    int sum = 0;
+    px = 1;
+    int xx, yy, tm;
+    k--;
+    py = hasb[1].y;
+    for(int i = 1; i <= c; i++) {
+        xx = hasb[i].x;
+        yy = hasb[i].y;
+        tm = abs(px - xx) + abs(py - yy);
+        k -= tm;
+        k--;
+        if(k >= xx) {
+            sum += hasb[i].bean;
+            px = xx;
+            py = yy;
+        } else {
+            cout<<sum;
+            return 0;
+        }
+    }
+    cout<<sum;
+    return 0;
+}

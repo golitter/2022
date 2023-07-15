@@ -1,0 +1,56 @@
+/**
+ * @file Untitled-3
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-22
+ * 
+ * @copyright Copyright (c) 2022
+ * Updata:
+ * 改进无头结点链表的反转和插入；
+ * 给无头结点链表加一个头结点，成功后返回头结点的下一个结点，
+ * NOTICE:加头结点要开辟新空间，而不是单单用地址，因为 有 ->next 这一步骤；
+ * Review:反转链表； 未经思考， 写的是尾插法的，大错哦，反转链表原理是头插法；
+ * 
+ */
+#include <iostream>
+using namespace std;
+typedef struct list{
+    int val;
+    struct list *next;
+}List, *LinkList;
+LinkList Reverse(LinkList a) {
+    LinkList newhead, q;
+    newhead = NULL;
+    while(a) {
+        q = a;
+        a = a->next;
+        q->next = newhead;
+        newhead = q;
+    }
+    return newhead;
+}
+int main()
+{ // 这里好像多此一举了，不过在处理无头结点链表的题时，会显简单的；
+    LinkList head = new List;
+    head = NULL;
+    LinkList res,realhead;
+    res = new List; // error: notice add store space;
+    res->next = head;//
+    realhead = res;
+    head = res;
+    for(int i = 0; i < 10; i++) {
+        LinkList q = new List;
+        q->val = i;
+        q->next = res->next;
+        res->next = q;
+        res = q;
+    }
+    //realhead = realhead->next;
+    head = head->next;
+    head = Reverse(head);
+    while(head) {
+        cout<<head->val;
+        head = head->next;
+    }
+}

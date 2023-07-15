@@ -1,0 +1,163 @@
+# 图
+vertex：点
+edge：边 或顶点偶对称
+有向图： <x, y> 由x--> y；
+无向图： (x,y) NOTICE：特殊的有向图 
+## 图的基本术语
+完全图：n(n-1)/2 -- 无向图 不除二 -- 有向图
+权和网：
+	权：每条边上可以标上具有某种含义的数值，该数值为权。可以表示距离或耗费。
+	网：带权的图
+邻接点：两点可相连
+度：
+	顶点v的度是指和v相关联的边的数目。记为：TO(v);
+	入度：以顶点v为头的弧的数目。记为：ID(v);
+	出度：以顶点v为尾的弧的数目。记为：OD(v)
+	**TO(v) = ID(v) + OD(v)**
+路径和路径长度：
+回路或环
+
+连通，连通图和连通分量：
+	再G中，如果v->v'有路径，表示v和v'是连通的
+	全部都是连通的，是连通图
+	连通分量 是连通子图。
+
+
+
+## 图的存储结构
+### 邻接矩阵：
+	就是二维数组，g[a,b] a-->b O(n*2) 
+### 邻接表
+	图的链式存储结构。在邻接表中，对图中每一个顶点vi建立一个单链表
+
+## 拓扑序列：有向图 都是从前指向后的
+	有向无环图，被称为拓扑图
+	有向无环图一定至少存在一个入度为0的点
+
+
+## 最短路
+ ### 单源最短路
+	#### 所有边权都是正数
+		1， 朴素Dijkstra算法
+		2， 堆优化版的Dijkstra算法
+	#### 存在负权边
+		1， Bellman-Ford
+		2， SPFA
+ ### 多源汇最短路
+	Floyd算法
+
+ 源点 起点  汇点 终点
+ 
+ 
+ 图的遍历
+ dfs
+ int dfs(int u)
+{
+    st[u] = true; // st[u] 表示点u已经被遍历过
+
+    for (int i = h[u]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        if (!st[j]) dfs(j);
+    }
+}
+ 
+ bfs
+ queue<int> q;
+st[1] = true; // 表示1号点已经被遍历过
+q.push(1);
+
+while (q.size())
+{
+    int t = q.front();
+    q.pop();
+
+    for (int i = h[t]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        if (!st[j])
+        {
+            st[j] = true; // 表示点j已经被遍历过
+            q.push(j);
+        }
+    }
+}
+ 
+ 
+ #include <cstring>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 100021, M = N*2;
+int h[N], e[N], ne[N],idx;
+int d[N], q[N];
+bool st[N];
+int n, m;
+int ans = N;
+// a -- > b;
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+// 无向边 add(a,b), add(b,a);
+// 以u为根的子树中点的数量
+// 树的重心
+int dfs(int u) {
+    st[u] = 1; // dfs tag
+    int sum = 1, res = 0;
+    for(int i = h[u]; i != -1; i = ne[i]) {
+        int j = e[i];
+        if(!st[j]) {
+            int s = dfs(j);
+            res = max(res,s);
+            sum += s;
+        }
+    }
+    res = max(res, n - sum);
+    ans = min(ans, res);
+}
+void bfs() {
+    int hh = 0, tt = 0; // q[]  数组模拟队列
+    q[0] = 1;
+    memset(d,-1,sizeof(d));
+    d[1] = 0;
+    while(hh <= tt) { // hh <= tt -- > 队列不为空
+        int t = q[hh++]; // 出队
+        for(int i = h[t]; i != -1; i = ne[i]) {
+            int j = e[i];
+            if(d[j] == -1) {
+                d[j] = d[t] + 1;
+                q[++t] = j; // 入队
+            }
+        }
+    }
+    return d[n];
+}
+bool topsort() {
+    // 入度为零，即没有指向它的
+    // bfs
+    // 指向后删除边，被指向点入度减一
+    int hh = 0, tt = -1;
+    for(int i = 1; i <= n; ++i) {
+        if(!d[i]) {
+            q[++t] = i;
+        }
+    }
+    while(hh <= tt) {
+        int t = q[hh++];
+        for(int i = h[t]; i != -1; i = ne[i]) {
+            int j = e[i];
+            d[j]--;
+            if(d[j] == 0) {
+                q[++tt] = j;
+            }
+        }
+    }
+    return tt == n-1;
+    // 队列q[n] 恰好是拓扑序
+
+}
+int main()
+{
+    // init
+    memset(h, -1, sizeof(h));
+}

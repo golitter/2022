@@ -1,0 +1,60 @@
+/**
+ * @file kl.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-04-07
+ * 
+ * @copyright Copyright (c) 2022
+ * about this is AC code, I feel it is not laconic,
+ * but this answer only took less than half an hour;
+ * maybe hassle is the s2 can 1 to n;
+ * 
+ */
+#include <iostream>
+#include <cmath>
+#include <cstdio>
+using namespace std;
+struct ll{
+    long long peoplenum;
+    long long oneflih;
+} camp[500003];
+long long Left, Right,c,p1, s1, s2;
+int main()
+{
+    long long n;
+    cin>>n;
+    for(long long i = 1; i <= n; i++) {
+        //cin>>camp[i].peoplenum;
+        scanf("%lld",&camp[i].peoplenum);
+    }
+    cin>>c>>p1>>s1>>s2;
+    camp[p1].peoplenum += s1;
+    for(long long i = 1; i < c; i++) {
+        Left += camp[i].peoplenum * (c - i);
+    }
+    for(long long i = c+1; i <= n; i++) {
+        Right += camp[i].peoplenum * (i - c);
+    }
+    long long compar;
+    long long whatcamp = c;
+    long long lafabs = abs(Left - Right);
+            for(long long i = 1; i < c; i++) {
+            compar = Left;
+            compar += s2 * (c - i);
+            if(lafabs > abs(Right - compar)) {
+                lafabs = abs(Right - compar);
+                whatcamp = i;
+            }
+        }
+
+        for(long long i = c+1; i <= n; i++) {
+            compar = Right;
+            compar += s2 * (i - c);
+            if(lafabs > abs(Left - compar)) {
+                lafabs = abs(Left - compar);
+                whatcamp = i;
+            }
+        }
+    cout<<whatcamp;
+}

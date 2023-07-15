@@ -1,0 +1,94 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+using namespace std;
+/**
+ * @brief 
+ *  
+ * 
+ *  函数模板注意事项：
+ *  1，自动类型推导，必须推导出一致数据类型T才可以使用
+ *  2，模板必须要确定出T的数据类型，才可以使用；
+ * 
+ * 
+ * 普通函数与函数模板区别：
+ *  1，普通函数调用可以发生隐式·类型转换；
+ *  2，函数模板 用自动类型推导，不可以发生隐式类型转换
+ *  3，函数模板 用显示指定类型，可以发生隐式类型转换；
+ * 
+ * 
+ * 
+ * @param a 
+ * @param b 
+ */
+
+
+// 函数模板作用
+// 建立一个通用函数，其函数返回值类型和形参类型可以不具体制定，用一个虚拟的类型来表示
+// 语法
+// template<typename T> 
+// 函数声明或定义
+template<typename T>
+T myAdd02(T a, T b) {
+    return a+b;
+}
+
+int myAdd01(int a, int b) {
+    return a+b;
+}
+
+void testfunc() {
+    int a = 10;
+    int b = 20;
+    cout<<myAdd01(a,'c')<<endl;
+    cout<<myAdd02<int>(a,'c')<<endl;
+}
+
+void swapInt(int &a, int &b) {
+    int temp = b;
+    b = a;
+    a = temp;
+}
+void swapDouble(double &a, double &b) {
+    double temp = a;
+    a = b;
+    b = temp;
+}
+// 函数模板;
+template<typename T> // 声明一个模板，告诉编译器后面代码中紧跟着的T不要报错，T是一个通用数据类型
+// typename 可以替换成 class;
+void mySwap(T &a, T &b) {
+    T temp = a;
+    a = b;
+    b = temp;
+}   
+template<typename T>
+void myFunc() { // 模板必须要确定出T的数据类型，才可以使用
+    cout<<"this is myFunc"<<endl;
+}
+
+void test1() {
+    ; // 两种方式使用函数模板
+    // 1，自动类型推导
+    int a = 3434, b = 111111111;
+    cout<<a<<"  "
+    <<b<<endl;
+    mySwap(a,b);
+    cout<<a<<"  "<<b<<endl;
+    // 2，显示指定类型
+    mySwap<int>(a,b);
+    cout<<a<<"  "<<b<<endl;
+}
+
+void test2() {
+    myFunc<void>();
+}
+
+int main()
+{
+
+    testfunc();
+    return 0;
+}

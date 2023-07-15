@@ -1,0 +1,55 @@
+/**
+ * @file Untitled-3
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-24
+ * 
+ * @copyright Copyright (c) 2022
+ * equivalently: 01 bag;
+ * chart:
+ * The only difference is if unsatisfactory condition, should add value of lose, instead of do not do something;
+ * 
+ * Meanwhile:
+ * 01 bag core code is;
+ *  for(int i = 1; i <= N; i++) {
+ *      for(int j = 1; j <= M; j++) {
+ *                  if(j > weigh[i]);
+ *              dp[i][j] = max(dp[i-1][j], dp[i][j- weigh[i-1]] + value[i]);
+ *                  else dp[i][j] = dp[i-1][j]
+ * }
+ * }
+ * IMPROVEMENT: 
+ *  for(int i blblbl)
+ * for(int j = M; j >= 0; j--) {
+ * dp[j] = max(dp[j],dp[j-weigh[i]] + value[i]);
+ * }
+ * 
+ * 
+ */
+#include <iostream>
+using namespace std;
+struct bag{
+    int lose;
+    int win;
+    int drug;
+}bag[1001];
+long long dp[1001];
+int main()
+{
+    int n, x;
+    cin>>n>>x;
+    for(int i = 1; i <= n; i++) {
+        cin>>bag[i].lose>>bag[i].win>>bag[i].drug;
+    }
+    for(int i = 1; i <= n; i++) {
+        for(int j = x; j >= bag[i].drug; j--) {
+            dp[j] = max(dp[j] + bag[i].lose, dp[j - bag[i].drug] + bag[i].win);
+        }
+        for(int j = bag[i].drug-1; j >= 0; j--) {
+            dp[j] += bag[i].lose;
+        }
+    }
+    cout<<5*dp[x];
+
+}

@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+// 函数对象
+// 重载函数调用操作符的类，其对象常被称为函数对象
+// 也叫 仿函数
+// 本质 ： 类 不是函数
+// 函数对象使用时，可以像普通函数那样调用，可以有参数，可以有返回值
+class MyAdd{
+public:
+    int operator()(int a, int b) {
+        return a + b;
+    }
+};
+// 2，函数对象超出普通函数的概念，函数对象可以有自己的状态。
+class MyPrint{
+public:
+    MyPrint() {
+        this->count = 0;
+    }
+    void operator() (string as) {
+        cout<<as<<endl;
+        count++;
+        cout<<" "<<count<<endl;
+    }
+    int count; // status
+};
+// 3，函数对象可以作为参数传递
+void doPrint(MyPrint & mp, string sk) {
+    mp(sk);
+}
+void test1() {
+    MyAdd myss;
+    cout<<myss(1,334)<<endl;
+    MyPrint mr;
+    mr("hello world");
+    mr("dlkfj");
+    doPrint(mr,"dklf");
+}
+int main()
+{   
+    test1();
+}

@@ -1,0 +1,229 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// 最短路
+    // 朴素Dijjstra算法
+    // 距离 dis[1] = 0, dis[others] = +INF
+    // 已经确定最短路的点存入 s。迭代，找到不到s中的距离最近的点，存入 t
+    // 用 t更新其他边的距离
+typedef pair<int,int> PII;
+const int N = 50010; 
+int n, m;
+int g[N][N];
+int dis[N];
+int h[N], e[N], ne[N],idx,w[N]; // w -- 权重
+bool st[N]; // 确保<v0,vi>是否已被确定最短路径 true 表示确定，false表示否定
+
+void Dijkstra__plain() {
+    // input n and v;
+    cin>>n>>m;
+    memset(g,0x3f,sizeof(g));
+    while(m--) {
+        int a, b, c;
+        cin>>a>>b>>c;
+        g[a][b] = min(g[a][b], c); // 可能有多个边，只要找最小的那个边就行
+
+    }
+    // start Dijkstra;
+    memset(dis,0x3f, sizeof(dis));
+    dis[1] = 0;
+    for(int i = 0; i < n; ++i) {
+        int t = -1;;
+        for(int j = 1; j <= n; ++j) {
+            if(!st[j] && (t == -1 || dis[t] > dis[j])) { // 若还未存入，或者存入的较大，
+                t = j;
+            }
+        }
+        st[t] = true;
+        for(int j = 1; j <= n; ++j) {
+            dis[j] = min(dis[j], dis[t] + g[t][j]); 
+        }
+    }
+    if(dis[n] == 0x3f3f3f3f) {
+        ; // 无路径
+    } else {
+        ; // 有路径
+    }
+}
+void add(int a, int b, int ww) {
+    e[idx] = b, ne[idx] = h[a], w[idx] = ww, h[a] = idx++;
+}
+void Dijkstra__heap() { // 不需要对重边做处理
+    // 手写堆，或者优先队列
+    memset(h,-1,sizeof(h));
+    
+    // input
+
+    memset(dis, 0x3f, sizeof(dis));
+    dis[1] = 0;
+
+    priority_queue<PII,vector<PII>,greater<PII>> heap; // 小顶堆
+    heap.push({0,1});
+    while(heap.size()) {
+        auto t = heap.top();
+        heap.pop();
+        int ver = t.second, distance = t.first;
+        if(st[ver]) {
+            continue;
+        }
+	st[ver] = true;
+        for(int i = h[ver]; i != -1; i = ne[i]) {
+            int j = e[i];
+            if(dis[j] > distance + w[i]) {
+                dis[j] = distance + w[i];
+                heap.push({dis[j],j});
+            }
+        }
+    }
+    if(dis[n] == 0x3f3f3f3f) {
+        // wu
+    } else {
+        // you
+    }
+}
+// 有负权边
+int backup[N];
+const int M = 10021;
+struct Edge {
+    int a, b, w;
+}edges[M];
+int k;
+int BellmanFord() {
+    memset(dis, 0x3f, sizeof(dis)); dis[1]  = 0;
+    for(int i = 0; i < k; ++i) { // 小于等于前i个边
+        memcpy(backup, dis,sizeof(dis));
+        for(int j = 0; j < m; ++j) {
+            int a = edges[j].a, b = edges[j].b, w = edges[j].w;
+            dis[b] = min(dis[b], backup[a] + w);
+        }
+    }
+    if(dis[n] > 0x3f3f3f3f / 2 ) return -1; // 防止无穷到无穷
+    return dis[n];
+}
+void Bellman_Ford() {
+    // a -- w -- >b
+    // 定义个结构体就可以喽。
+    // 松弛操作
+    // dis[b] <= dis[a] + w; 三角不等式
+    // 有负权回路，不一定有最短路咯
+    cin>>n>>m>>k;
+    for(int i = 0; i < m; ++i) {
+        int a, b, w;
+        cin>>a>>b>>w;
+        edges[i] = {a,b,w};
+
+    }
+    // start Bellman-ford;
+    int t = BellmanFord();
+    if(t == -1) cout<<"N";
+    else cout<<t;
+
+}
+while 队列不为空
+{
+	取队首，队首出队
+    枚举每一条边，如果起点为队首                                         
+        对这条边进行一次松弛
+        （也就是三角形不等式dist[s]=min(dist[t]+map[s][t],dist[s])）
+        如果成功，入队
+}
+
+// 用邻接表
+int SPFA() {
+    // 根据三角不等式
+    // bfs 将变小的入队，更新以其为起始点的其他边
+    memset(dis, 0x3f, sizeof(dis));
+    queue<int> q;
+    dis[1] = 0;
+    q.push(1);
+    st[1] = true; // 判断队列中是否重复
+    while(q.size()) {
+        int t = q.front();
+        q.pop();
+        st[t] = false;
+        for(int i = h[t]; i != -1; i = ne[i]) {
+            int j = e[i];
+            if(dis[j] > dis[t] + w[i]) {
+                dis[j] = dis[t] + w[i];
+                if(!st[j]) {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+    if(dis[n] == 0x3f3f3f3f) return -1;
+    else dis[n];
+}
+// 判断是否有负环
+int cnt[N];
+bool Is_SPFA_ECli() { // 都遍历一遍
+    // 根据三角不等式
+    // bfs 将变小的入队，更新以其为起始点的其他边
+   // memset(dis, 0x3f, sizeof(dis));
+    queue<int> q;
+    dis[1] = 0;
+    q.push(1);
+    st[1] = true; // 判断队列中是否重复
+    while(q.size()) {
+        int t = q.front();
+        q.pop();
+        st[t] = false;
+        for(int i = h[t]; i != -1; i = ne[i]) {
+            int j = e[i];
+            if(dis[j] > dis[t] + w[i]) {
+                dis[j] = dis[t] + w[i];
+                cnt[j] = cnt[t] + 1;
+                if(cnt[j] >= n) return true;
+                if(!st[j]) {
+                    q.push(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+    // if(dis[n] == 0x3f3f3f3f) return -1;
+    // else dis[n];
+    return false;
+}
+// 多源最短路 不能有负权回路
+    // 动态规划
+int INF = 1e9;
+int d[N][N], n, m, Q;
+void floyd {
+    cin>>n>>m>>Q;
+    for(int i = 1; i <= n; ++i) {
+        for(int j = 1; j <= n; ++j) {
+            if(i == j) {
+                d[i][j] = 0;
+            } else {
+                d[i][j] = INF;
+            }
+        }
+    }
+    while(m--) {
+        int a, b, w;
+        cin>>a>>b>>w;
+        if(d[a][b] < INF / 2)
+        d[a][b] = min(d[a][b], w);
+    }
+    
+    // start floyd
+    for(int k = 1; k <= n; ++k) {
+        for(int i = 1; i <= n; ++i) {
+            for(int j = 1; j <= n; ++j) {
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+            }
+        }
+    }
+
+    while(Q--) {
+        int a, b;
+        cin>>a>>b;
+        cout<<d[a][b];
+    }
+}
+int main()
+{
+
+}

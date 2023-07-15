@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+const int N = 1e5 + 21;
+int st[N][25];
+int a[N],n,m;
+int mn[N];
+inline int read()
+{
+	int x=0,f=1;char ch=getchar();
+	while (ch<'0'||ch>'9'){if (ch=='-') f=-1;ch=getchar();}
+	while (ch>='0'&&ch<='9'){x=x*10+ch-48;ch=getchar();}
+	return x*f;
+}
+void st_init() { // https://www.cnblogs.com/autsky-jadek/p/7327416.html
+    for(int i = 1; i <= n; ++i) {
+        st[i][0] = a[i];
+    }
+    for(int j = 1; (1<<j) <= n; ++j) {
+        for(int i = 1; i + (1 << j) - 1 <= n; ++i) {
+            st[i][j] = max(st[i][j-1], st[i + (1 << (j -1))][j-1]);
+        }
+    }
+    for(int len = 1; len <= n; ++len) {
+        int k = 0;
+        while(1 <<(k+1) <= len) {
+            k++;
+        }
+        mn[len] = k;
+    }
+}
+int st_query(int l, int r) {
+    int k = mn[r - l + 1];
+    return max(st[l][k], st[r - (1<<k) + 1][k]);
+}
+void solve() {
+    n = read(), m = read();
+    for(int i = 1; i <= n; ++i) a[i] = read();
+    st_init();
+    for(int i = 1;  i <= m; ++i) {
+        int l = read(), r = read();
+        printf("%d\n", st_query(l,r));
+    }
+}
+int main()
+{
+    solve();
+    return 0;
+}

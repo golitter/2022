@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+/**
+ * @brief 
+ *  基于范围的for循环：
+ *  int arr[10];
+ *  for(int i : arr) // 不可修改;
+ *  for( auto i : arr) // 同上；
+ *  for(auto &i : arr) // 可以获取和修改;
+ *  较大的变量：
+ *  for(const auto&i : arr);/////////
+ * @return int 
+ */
+int main()
+{
+    int arr[10];
+    for(auto &i : arr) {
+        cin>>i;
+    }
+    for(auto &i : arr) {
+        if(i > 100) {
+            i = i - 100;
+        }
+    }
+    for( auto i : arr) {
+        cout<<i<<" ";
+    }
+
+    // 二维数组 用范围for循环;
+
+    int barr[][2] = {1,2,3,4,5,6};
+    for(auto &i: barr){  // 数组名 barr；
+        for(auto &j: i) {  // 引用的 i；
+            cout<<j<<" "; // j == 非范围for循环的 barr[i][j];
+        }  /**
+         * @brief 
+         * 要使用范围for语句处理多维数组，除了最内层的循环外，
+         * 其他所有循环的控制变量都应该是引用类型。
+         * BCOS:
+         * 因为如果上述例子的row不是引用类型，编译器初始化row时会
+         * 自动将这些数组形式的元素转换成指向该数组内首元素的指针，这样row的类型就是int*，
+         * 显然内层的循环就不合法了。
+         */
+        cout<<endl;
+    }
+    return 0;
+}

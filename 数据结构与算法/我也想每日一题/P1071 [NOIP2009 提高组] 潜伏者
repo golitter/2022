@@ -1,0 +1,59 @@
+/**
+ * @file Untitled-3
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-29
+ * 
+ * @copyright Copyright (c) 2022
+ * this is a question of simulation;
+ * declare two string a and b;
+ * a & b: a[item] -> b[item];;NOT also -> b[other item] & b[other item] <- a[item];
+ * and must Corresponding completely;
+ * 
+ * 
+ */
+#include <iostream>
+#include <cstring>
+#include <ctype.h>
+using namespace std;
+char Trans[26];
+int Judge[26];
+int Cover[26];
+int main()
+{
+    string a, b, c;
+    cin>>a>>b>>c;
+    for(int i = 0; i < a.size(); i++) {
+        int index = a[i] - 65;
+        int p = ++Judge[a[i] - 65]; // Originally I write is : kk ++; and p = 0; always "Failed"; ~-~;
+        if(p == 1) {
+            Trans[index] = b[i];
+            Cover[b[i] - 65]++;
+            if(Cover[b[i] - 65] >= 2) {
+                cout<<"Failed";
+                return 0;
+            }
+
+        }
+        else {
+            if(b[i] == Trans[index]) {
+                ;
+            }
+            else {
+                cout<<"Failed";
+                return 0;
+            }
+        }
+    }
+    for(int i = 0; i < 26; i++) {
+        if(!isalpha(Trans[i])) {
+            cout<<"Failed";
+            return 0;
+        }
+    }
+    for(int i = 0; i < c.size(); i++) {
+        int p = c[i] - 65;
+        cout<<Trans[p];
+    }
+}

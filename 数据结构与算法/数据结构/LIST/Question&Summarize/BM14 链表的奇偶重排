@@ -1,0 +1,41 @@
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ *	ListNode(int x) : val(x), next(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * maybe is so easy;
+     *APPROACH: four pointers, one odd pointer, one even pointer,
+     odd->next = even->next; odd = odd->next;
+     then : DITTO
+     * 
+     * @param head ListNode类 
+     * @return ListNode类
+     */
+    ListNode* oddEvenList(ListNode* head) {
+        // write code here
+        if(head == NULL) {
+            return head;
+        }
+        ListNode * odd, *even, * oddtrav, *eventrav;
+        odd = head;
+        even = head->next;
+        oddtrav = odd;
+        eventrav = even;
+        while(even && even->next) {
+            odd->next = even->next;
+            odd = odd->next;
+            even->next = odd->next;
+            even = even->next;
+            
+        }
+        odd->next = eventrav;
+        return oddtrav;
+    }
+};

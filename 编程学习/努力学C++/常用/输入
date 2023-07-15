@@ -1,0 +1,30 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <cctype>
+using namespace std;
+
+int main()
+{
+    /**
+     * @brief 
+     * C++标准输入(常用)
+     * char ch;
+     * string str;
+     * ch = cin.get();
+     * cin.get(ch);
+     * char st[101];
+     * cin.get(st,101);
+     * getline(cin, str);
+     * 其他输入处理:
+     *      cin.ignore(); // 表示忽视一个字符；
+     *      cin.peek(); // 表示窥窃一下缓冲区内容；
+     */
+    char st[211];
+    string str;
+    cin.ignore();
+    getline(cin,str);
+    cout<<str;
+    return 0;
+}

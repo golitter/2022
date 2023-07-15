@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+using namespace std;
+// 递增运算符;
+/**
+ * @brief 
+ *  前置有引用，后置无引用;;;
+ * 	
+ */
+
+
+
+
+// 赋值运算符;
+
+class MyInteger {
+	friend ostream &operator<<(ostream & cout, MyInteger p);
+public:
+	MyInteger () {
+		m_Num = 1;
+	}
+	// 重载 前置 ++ ;; 后置 ++;
+	MyInteger& operator++() { // 前置
+		m_Num++;
+		// 返回这个;
+		return *this;
+	}
+	MyInteger operator++(int) { //int 代表占位参数，可以区分前置和后置递增;
+		// 先记录 当前结果;
+		MyInteger temp = *this;
+		m_Num++;
+		return temp;
+	}
+	// 前置 & ；； 后置 无 &; 
+	MyInteger& operator--() { // 前置;
+		m_Num--;
+		return *this;
+	}
+	MyInteger operator--(int) { // 后置;
+		MyInteger temp = *this;
+		m_Num--;
+		return temp;
+	}
+private:
+	int m_Num;
+};
+ostream &operator<<(ostream & cout, MyInteger p) {
+	cout<<p.m_Num<<endl;
+	return cout;
+}
+void test2() {
+	MyInteger a;
+	cout<<--a;
+	cout<<a;
+	cout<<a--;
+	cout<<a;
+	MyInteger b = a;
+	cout<<b;
+}
+void test1() {
+	MyInteger myint;
+	cout<<++myint;
+	cout<<myint++;
+	cout<<myint;
+}
+int main()
+{
+	test2();
+	return 0;
+}
