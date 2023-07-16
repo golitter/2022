@@ -33,6 +33,16 @@ const int N = 2e5 + 21;
 
 // #define int long long
 
+
+inline int fread() // 快读
+{
+    int x = 0,f = 1;
+    char ch = getchar();
+    for(;!isdigit(ch);ch = getchar()) if(ch == '-')f = -f;
+    for(;isdigit(ch);ch = getchar()) x = 10 * x + ch - '0';
+    return x * f;
+}
+
 void inpfile();
 void solve() {
     map<int,int> mii;

@@ -1,4 +1,5 @@
 /**
+ * 最大公约数 gcd
  * 线性逆元 inv
 */
 
@@ -6,6 +7,13 @@
 #include <cstring>
 using namespace std;
 typedef long long LL;
+
+namespace golitter {
+namespace gcd {
+int gcd(int a, int b) {
+    return b ? gcd(b, b%a) : a;
+}
+}}
 namespace golitter {
 namespace inv {
 LL mod = 131;
