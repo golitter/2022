@@ -1,7 +1,9 @@
 /**
  * 链式前向星  basic
+ * 树的直径： DT
  * 最短路：shortest_path
  *          https://www.acwing.com/blog/content/462/
+ * 
  * 最小生成树： MST
  * 二分图： bipartite_graph
  *          
@@ -60,6 +62,77 @@ void dfs(int u) {
     for(int i = 0; i < adj[u].size(); ++i) {
         dfs(adj[u][i]);
     }
+}
+
+}}
+
+namespace golitter {
+namespace DT {
+    
+const int INF = 0x3f3f3f3f;
+const int N = 2e5 + 21;
+
+/**
+ * 树的直径：树中最远的两个节点之间的距离被称为树的直径 -- 算法竞赛进阶指南
+ * 求树的直径通常有两种方法，一种是通过两次搜索（bfs和dfs均可），另一种就是通过树形dp来求了。
+ * POJ 1985 板子 http://poj.org/problem?id=1985
+ * https://blog.csdn.net/AC__dream/article/details/119101320
+*/
+int e[N], ne[N], w[N], h[N], idx;
+bool vis[N];
+int ans, d[N],n,m;
+void add(int u, int v, int c) {
+    e[idx] = v; w[idx] = c; ne[idx] = h[u]; h[u] = idx++;
+}
+// dp法
+void tdp(int x) {
+    vis[x] = 1;
+    for(int i = h[x]; ~i; i = ne[i]) {
+        int y = e[i];
+        if(vis[y]) continue;
+        tdp(y);
+        ans = max(ans, d[x] + d[y] + w[i]);
+        d[x] = max(d[x], d[y] + w[i]);
+    }
+}
+
+// 两次遍历
+void dfs(int x, int fa) {
+    for(int i = h[x]; ~i; i = ne[i]) {
+        int y = e[i];
+        if(y == fa) continue; // 树是一种有向无环图，只要搜索过程中不返回父亲节点即可保证不会重复遍历同一个点。
+        d[y] = d[x] + w[i]; // 更新每个点到起始点的距离（在树中任意两点的距离是唯一的）
+        dfs(y, x); // 继续搜索下一个节点
+    }
+}
+void solve() {
+    memset(h, -1, sizeof(h));
+    cin>>n>>m; // v edge
+    int u,v,c; char ch;
+    for(int i = 0; i < m; ++i) {
+        cin>>u>>v>>c>>ch;
+        add(u,v,c); add(v,u,c);
+    }
+    // tdp(1);
+    // 第一次遍历
+    dfs(1,0);
+    int e = 0;
+    for(int i = 1; i <= n; ++i) {
+        if(d[i] > ans) {
+            ans = d[i];
+            e = i;
+        }
+    }
+    // reset d
+    memset(d, 0, sizeof(d));
+    // 第二次遍历
+    dfs(e,0);
+    for(int i = 1; i <= n; ++i) {
+        if(d[i] > ans) {
+            ans = d[i];
+        }
+    }
+    cout<<ans;
 }
 
 }}
