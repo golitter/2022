@@ -34,14 +34,18 @@ const int N = 2e5 + 21;
 // #define int long long
 
 
+// 当输入数据大于 1e6 时用快读
 inline int fread() // 快读
 {
-    int x = 0,f = 1;
-    char ch = getchar();
-    for(;!isdigit(ch);ch = getchar()) if(ch == '-')f = -f;
-    for(;isdigit(ch);ch = getchar()) x = 10 * x + ch - '0';
+    int x = 0, f = 1; char ch = getchar();
+    while(ch < '0' || ch > '9') {if (ch == '-') f = -1; ch = getchar(); }
+    while(ch >= '0' && ch <= '9') {
+        x = x * 10 + (ch - '0');
+        ch = getchar();
+    }
     return x * f;
 }
+
 
 void inpfile();
 void solve() {

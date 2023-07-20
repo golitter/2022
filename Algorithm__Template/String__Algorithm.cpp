@@ -1,6 +1,7 @@
 /**
  * 常规字符串处理    STRING
  * KMP              KMP
+ * 字符串哈希        hash
  * trie      字典树 trie
  * manacher 马拉车 manacher
 */
@@ -79,6 +80,32 @@ vector<int> prefix_function(string s) {
 }}
 
 namespace golitter {
+namespace hash_ {
+/*
+    核心思想：将字符串看成P进制数，P的经验值是131或13331，取这两个值的冲突概率低
+    小技巧：取模的数用2^64，这样直接用unsigned long long存储，溢出的结果就是取模的结果
+*/
+typedef unsigned long long ULL;
+ULL h[N], p[N],n; // h[k]存储字符串前k个字母的哈希值, p[k]存储 P^k mod 2^64
+ULL P = 1e9 + 7;
+char str[N];
+void init() {
+    // 初始化
+    p[0] = 1;
+    for (int i = 1; i <= n; i ++ ) {
+        h[i] = h[i - 1] * P + str[i];
+        p[i] = p[i - 1] * P;
+    }
+}
+
+// 计算子串 str[l ~ r] 的哈希值
+ULL get(int l, int r) {
+    return h[r] - h[l - 1] * p[r - l + 1];
+}
+
+}}
+
+namespace golitter {
 namespace trie {
     
 const int N = 2e5 + 21;
@@ -138,13 +165,13 @@ void solve() {
         tr[i][1] = 0; tr[i][0] = 0;
         s[i] = 0;
     }
-    n = fread();
+    cin>>n;
     int res = 0;
-    for(int i = 1; i <= n; ++i) a[i] = fread();
-    rep(i,1,n) {
+    for(int i = 1; i <= n; ++i) cin>>a[i];
+    for(int i = 1; i <= n; ++i) {
         s[i] = s[i-1] ^ a[i];
     }
-    rep(i,0,n) {
+    for(int i = 0; i <= n; ++i) {
         insert(s[i]);
         int t = query(s[i]);
         res = max(res,  t);

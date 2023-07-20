@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://www.acwing.com/blog/content/462/ -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style id="autocompletion.css">.ace_editor.ace_autocomplete .ace_marker-layer .ace_active-line {    background-color: #CAD6FA;    z-index: 1;}.ace_dark.ace_editor.ace_autocomplete .ace_marker-layer .ace_active-line {    background-color: #3a674e;}.ace_editor.ace_autocomplete .ace_line-hover {    border: 1px solid #abbffe;    margin-top: -1px;    background: rgba(233,233,253,0.4);    position: absolute;    z-index: 2;}.ace_dark.ace_editor.ace_autocomplete .ace_line-hover {    border: 1px solid rgba(109, 150, 13, 0.8);    background: rgba(58, 103, 78, 0.62);}.ace_completion-meta {    opacity: 0.5;    margin: 0.9em;}.ace_editor.ace_autocomplete .ace_completion-highlight{    color: #2d69c7;}.ace_dark.ace_editor.ace_autocomplete .ace_completion-highlight{    color: #93ca12;}.ace_editor.ace_autocomplete {    width: 300px;    z-index: 200000;    border: 1px lightgray solid;    position: fixed;    box-shadow: 2px 3px 5px rgba(0,0,0,.2);    line-height: 1.4;    background: #fefefe;    color: #111;}.ace_dark.ace_editor.ace_autocomplete {    border: 1px #484747 solid;    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.51);    line-height: 1.4;    background: #25282c;    color: #c1c1c1;}
+/*# sourceURL=ace/css/autocompletion.css */</style><style>.ace_snippet-marker {    -moz-box-sizing: border-box;    box-sizing: border-box;    background: rgba(194, 193, 208, 0.09);    border: 1px dotted rgba(211, 208, 235, 0.62);    position: absolute;}</style><style>    .error_widget_wrapper {        background: inherit;        color: inherit;        border:none    }    .error_widget {        border-top: solid 2px;        border-bottom: solid 2px;        margin: 5px 0;        padding: 10px 40px;        white-space: pre-wrap;    }    .error_widget.ace_error, .error_widget_arrow.ace_error{        border-color: #ff5a5a    }    .error_widget.ace_warning, .error_widget_arrow.ace_warning{        border-color: #F1D817    }    .error_widget.ace_info, .error_widget_arrow.ace_info{        border-color: #5a5a5a    }    .error_widget.ace_ok, .error_widget_arrow.ace_ok{        border-color: #5aaa5a    }    .error_widget_arrow {        position: absolute;        border: solid 5px;        border-top-color: transparent!important;        border-right-color: transparent!important;        border-left-color: transparent!important;        top: -5px;    }</style><style id="ace-tm">.ace-tm .ace_gutter {background: #f0f0f0;color: #333;}.ace-tm .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-tm .ace_fold {background-color: #6B72E6;}.ace-tm {background-color: #FFFFFF;color: black;}.ace-tm .ace_cursor {color: black;}.ace-tm .ace_invisible {color: rgb(191, 191, 191);}.ace-tm .ace_storage,.ace-tm .ace_keyword {color: blue;}.ace-tm .ace_constant {color: rgb(197, 6, 11);}.ace-tm .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-tm .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-tm .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-tm .ace_invalid {background-color: rgba(255, 0, 0, 0.1);color: red;}.ace-tm .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-tm .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-tm .ace_support.ace_type,.ace-tm .ace_support.ace_class {color: rgb(109, 121, 222);}.ace-tm .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-tm .ace_string {color: rgb(3, 106, 7);}.ace-tm .ace_comment {color: rgb(76, 136, 107);}.ace-tm .ace_comment.ace_doc {color: rgb(0, 102, 255);}.ace-tm .ace_comment.ace_doc.ace_tag {color: rgb(128, 159, 191);}.ace-tm .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-tm .ace_variable {color: rgb(49, 132, 149);}.ace-tm .ace_xml-pe {color: rgb(104, 104, 91);}.ace-tm .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-tm .ace_heading {color: rgb(12, 7, 255);}.ace-tm .ace_list {color:rgb(185, 6, 144);}.ace-tm .ace_meta.ace_tag {color:rgb(0, 22, 142);}.ace-tm .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-tm .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-tm.ace_multiselect .ace_selection.ace_start {box-shadow: 0 0 3px 0px white;}.ace-tm .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-tm .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-tm .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-tm .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-tm .ace_gutter-active-line {background-color : #dcdcdc;}.ace-tm .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-tm .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}
+/*# sourceURL=ace/css/ace-tm */</style><style id="ace_editor.css">.ace_br1 {border-top-left-radius    : 3px;}.ace_br2 {border-top-right-radius   : 3px;}.ace_br3 {border-top-left-radius    : 3px; border-top-right-radius:    3px;}.ace_br4 {border-bottom-right-radius: 3px;}.ace_br5 {border-top-left-radius    : 3px; border-bottom-right-radius: 3px;}.ace_br6 {border-top-right-radius   : 3px; border-bottom-right-radius: 3px;}.ace_br7 {border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-right-radius: 3px;}.ace_br8 {border-bottom-left-radius : 3px;}.ace_br9 {border-top-left-radius    : 3px; border-bottom-left-radius:  3px;}.ace_br10{border-top-right-radius   : 3px; border-bottom-left-radius:  3px;}.ace_br11{border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-left-radius:  3px;}.ace_br12{border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br13{border-top-left-radius    : 3px; border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br14{border-top-right-radius   : 3px; border-bottom-right-radius: 3px; border-bottom-left-radius:  3px;}.ace_br15{border-top-left-radius    : 3px; border-top-right-radius:    3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px;}.ace_editor {position: relative;overflow: hidden;font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;direction: ltr;text-align: left;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}.ace_scroller {position: absolute;overflow: hidden;top: 0;bottom: 0;background-color: inherit;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;cursor: text;}.ace_content {position: absolute;box-sizing: border-box;min-width: 100%;contain: style size layout;}.ace_dragging .ace_scroller:before{position: absolute;top: 0;left: 0;right: 0;bottom: 0;content: '';background: rgba(250, 250, 250, 0.01);z-index: 1000;}.ace_dragging.ace_dark .ace_scroller:before{background: rgba(0, 0, 0, 0.01);}.ace_selecting, .ace_selecting * {cursor: text !important;}.ace_gutter {position: absolute;overflow : hidden;width: auto;top: 0;bottom: 0;left: 0;cursor: default;z-index: 4;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none;user-select: none;contain: style size layout;}.ace_gutter-active-line {position: absolute;left: 0;right: 0;}.ace_scroller.ace_scroll-left {box-shadow: 17px 0 16px -16px rgba(0, 0, 0, 0.4) inset;}.ace_gutter-cell {position: absolute;top: 0;left: 0;right: 0;padding-left: 19px;padding-right: 6px;background-repeat: no-repeat;}.ace_gutter-cell.ace_error {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABOFBMVEX/////////QRswFAb/Ui4wFAYwFAYwFAaWGAfDRymzOSH/PxswFAb/SiUwFAYwFAbUPRvjQiDllog5HhHdRybsTi3/Tyv9Tir+Syj/UC3////XurebMBIwFAb/RSHbPx/gUzfdwL3kzMivKBAwFAbbvbnhPx66NhowFAYwFAaZJg8wFAaxKBDZurf/RB6mMxb/SCMwFAYwFAbxQB3+RB4wFAb/Qhy4Oh+4QifbNRcwFAYwFAYwFAb/QRzdNhgwFAYwFAbav7v/Uy7oaE68MBK5LxLewr/r2NXewLswFAaxJw4wFAbkPRy2PyYwFAaxKhLm1tMwFAazPiQwFAaUGAb/QBrfOx3bvrv/VC/maE4wFAbRPBq6MRO8Qynew8Dp2tjfwb0wFAbx6eju5+by6uns4uH9/f36+vr/GkHjAAAAYnRSTlMAGt+64rnWu/bo8eAA4InH3+DwoN7j4eLi4xP99Nfg4+b+/u9B/eDs1MD1mO7+4PHg2MXa347g7vDizMLN4eG+Pv7i5evs/v79yu7S3/DV7/498Yv24eH+4ufQ3Ozu/v7+y13sRqwAAADLSURBVHjaZc/XDsFgGIBhtDrshlitmk2IrbHFqL2pvXf/+78DPokj7+Fz9qpU/9UXJIlhmPaTaQ6QPaz0mm+5gwkgovcV6GZzd5JtCQwgsxoHOvJO15kleRLAnMgHFIESUEPmawB9ngmelTtipwwfASilxOLyiV5UVUyVAfbG0cCPHig+GBkzAENHS0AstVF6bacZIOzgLmxsHbt2OecNgJC83JERmePUYq8ARGkJx6XtFsdddBQgZE2nPR6CICZhawjA4Fb/chv+399kfR+MMMDGOQAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: 2px center;}.ace_gutter-cell.ace_warning {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAmVBMVEX///8AAAD///8AAAAAAABPSzb/5sAAAAB/blH/73z/ulkAAAAAAAD85pkAAAAAAAACAgP/vGz/rkDerGbGrV7/pkQICAf////e0IsAAAD/oED/qTvhrnUAAAD/yHD/njcAAADuv2r/nz//oTj/p064oGf/zHAAAAA9Nir/tFIAAAD/tlTiuWf/tkIAAACynXEAAAAAAAAtIRW7zBpBAAAAM3RSTlMAABR1m7RXO8Ln31Z36zT+neXe5OzooRDfn+TZ4p3h2hTf4t3k3ucyrN1K5+Xaks52Sfs9CXgrAAAAjklEQVR42o3PbQ+CIBQFYEwboPhSYgoYunIqqLn6/z8uYdH8Vmdnu9vz4WwXgN/xTPRD2+sgOcZjsge/whXZgUaYYvT8QnuJaUrjrHUQreGczuEafQCO/SJTufTbroWsPgsllVhq3wJEk2jUSzX3CUEDJC84707djRc5MTAQxoLgupWRwW6UB5fS++NV8AbOZgnsC7BpEAAAAABJRU5ErkJggg==");background-position: 2px center;}.ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAJ0Uk5TAAB2k804AAAAPklEQVQY02NgIB68QuO3tiLznjAwpKTgNyDbMegwisCHZUETUZV0ZqOquBpXj2rtnpSJT1AEnnRmL2OgGgAAIKkRQap2htgAAAAASUVORK5CYII=");background-position: 2px center;}.ace_dark .ace_gutter-cell.ace_info {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJFBMVEUAAAChoaGAgIAqKiq+vr6tra1ZWVmUlJSbm5s8PDxubm56enrdgzg3AAAAAXRSTlMAQObYZgAAAClJREFUeNpjYMAPdsMYHegyJZFQBlsUlMFVCWUYKkAZMxZAGdxlDMQBAG+TBP4B6RyJAAAAAElFTkSuQmCC");}.ace_scrollbar {contain: strict;position: absolute;right: 0;bottom: 0;z-index: 6;}.ace_scrollbar-inner {position: absolute;cursor: text;left: 0;top: 0;}.ace_scrollbar-v{overflow-x: hidden;overflow-y: scroll;top: 0;}.ace_scrollbar-h {overflow-x: scroll;overflow-y: hidden;left: 0;}.ace_print-margin {position: absolute;height: 100%;}.ace_text-input {position: absolute;z-index: 0;width: 0.5em;height: 1em;opacity: 0;background: transparent;-moz-appearance: none;appearance: none;border: none;resize: none;outline: none;overflow: hidden;font: inherit;padding: 0 1px;margin: 0 -1px;contain: strict;-ms-user-select: text;-moz-user-select: text;-webkit-user-select: text;user-select: text;white-space: pre!important;}.ace_text-input.ace_composition {background: transparent;color: inherit;z-index: 1000;opacity: 1;}.ace_composition_placeholder { color: transparent }.ace_composition_marker { border-bottom: 1px solid;position: absolute;border-radius: 0;margin-top: 1px;}[ace_nocontext=true] {transform: none!important;filter: none!important;perspective: none!important;clip-path: none!important;mask : none!important;contain: none!important;perspective: none!important;mix-blend-mode: initial!important;z-index: auto;}.ace_layer {z-index: 1;position: absolute;overflow: hidden;word-wrap: normal;white-space: pre;height: 100%;width: 100%;box-sizing: border-box;pointer-events: none;}.ace_gutter-layer {position: relative;width: auto;text-align: right;pointer-events: auto;height: 1000000px;contain: style size layout;}.ace_text-layer {font: inherit !important;position: absolute;height: 1000000px;width: 1000000px;contain: style size layout;}.ace_text-layer > .ace_line, .ace_text-layer > .ace_line_group {contain: style size layout;position: absolute;top: 0;left: 0;right: 0;}.ace_hidpi .ace_text-layer,.ace_hidpi .ace_gutter-layer,.ace_hidpi .ace_content,.ace_hidpi .ace_gutter {contain: strict;will-change: transform;}.ace_hidpi .ace_text-layer > .ace_line, .ace_hidpi .ace_text-layer > .ace_line_group {contain: strict;}.ace_cjk {display: inline-block;text-align: center;}.ace_cursor-layer {z-index: 4;}.ace_cursor {z-index: 4;position: absolute;box-sizing: border-box;border-left: 2px solid;transform: translatez(0);}.ace_multiselect .ace_cursor {border-left-width: 1px;}.ace_slim-cursors .ace_cursor {border-left-width: 1px;}.ace_overwrite-cursors .ace_cursor {border-left-width: 0;border-bottom: 1px solid;}.ace_hidden-cursors .ace_cursor {opacity: 0.2;}.ace_smooth-blinking .ace_cursor {transition: opacity 0.18s;}.ace_animate-blinking .ace_cursor {animation-duration: 1000ms;animation-timing-function: step-end;animation-name: blink-ace-animate;animation-iteration-count: infinite;}.ace_animate-blinking.ace_smooth-blinking .ace_cursor {animation-duration: 1000ms;animation-timing-function: ease-in-out;animation-name: blink-ace-animate-smooth;}@keyframes blink-ace-animate {from, to { opacity: 1; }60% { opacity: 0; }}@keyframes blink-ace-animate-smooth {from, to { opacity: 1; }45% { opacity: 1; }60% { opacity: 0; }85% { opacity: 0; }}.ace_marker-layer .ace_step, .ace_marker-layer .ace_stack {position: absolute;z-index: 3;}.ace_marker-layer .ace_selection {position: absolute;z-index: 5;}.ace_marker-layer .ace_bracket {position: absolute;z-index: 6;}.ace_marker-layer .ace_active-line {position: absolute;z-index: 2;}.ace_marker-layer .ace_selected-word {position: absolute;z-index: 4;box-sizing: border-box;}.ace_line .ace_fold {box-sizing: border-box;display: inline-block;height: 11px;margin-top: -2px;vertical-align: middle;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACJJREFUeNpi+P//fxgTAwPDBxDxD078RSX+YeEyDFMCIMAAI3INmXiwf2YAAAAASUVORK5CYII=");background-repeat: no-repeat, repeat-x;background-position: center center, top left;color: transparent;border: 1px solid black;border-radius: 2px;cursor: pointer;pointer-events: auto;}.ace_dark .ace_fold {}.ace_fold:hover{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJpJREFUeNpi/P//PwOlgAXGYGRklAVSokD8GmjwY1wasKljQpYACtpCFeADcHVQfQyMQAwzwAZI3wJKvCLkfKBaMSClBlR7BOQikCFGQEErIH0VqkabiGCAqwUadAzZJRxQr/0gwiXIal8zQQPnNVTgJ1TdawL0T5gBIP1MUJNhBv2HKoQHHjqNrA4WO4zY0glyNKLT2KIfIMAAQsdgGiXvgnYAAAAASUVORK5CYII="),url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA3CAYAAADNNiA5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACBJREFUeNpi+P//fz4TAwPDZxDxD5X4i5fLMEwJgAADAEPVDbjNw87ZAAAAAElFTkSuQmCC");}.ace_tooltip {background-color: #FFF;background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));border: 1px solid gray;border-radius: 1px;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);color: black;max-width: 100%;padding: 3px 4px;position: fixed;z-index: 999999;box-sizing: border-box;cursor: default;white-space: pre;word-wrap: break-word;line-height: normal;font-style: normal;font-weight: normal;letter-spacing: normal;pointer-events: none;}.ace_folding-enabled > .ace_gutter-cell {padding-right: 13px;}.ace_fold-widget {box-sizing: border-box;margin: 0 -12px 0 1px;display: none;width: 11px;vertical-align: top;background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42mWKsQ0AMAzC8ixLlrzQjzmBiEjp0A6WwBCSPgKAXoLkqSot7nN3yMwR7pZ32NzpKkVoDBUxKAAAAABJRU5ErkJggg==");background-repeat: no-repeat;background-position: center;border-radius: 3px;border: 1px solid transparent;cursor: pointer;}.ace_folding-enabled .ace_fold-widget {display: inline-block;   }.ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAANElEQVR42m3HwQkAMAhD0YzsRchFKI7sAikeWkrxwScEB0nh5e7KTPWimZki4tYfVbX+MNl4pyZXejUO1QAAAABJRU5ErkJggg==");}.ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAGCAYAAAAG5SQMAAAAOUlEQVR42jXKwQkAMAgDwKwqKD4EwQ26sSOkVWjgIIHAzPiCgaqiqnJHZnKICBERHN194O5b9vbLuAVRL+l0YWnZAAAAAElFTkSuQmCCXA==");}.ace_fold-widget:hover {border: 1px solid rgba(0, 0, 0, 0.3);background-color: rgba(255, 255, 255, 0.2);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);}.ace_fold-widget:active {border: 1px solid rgba(0, 0, 0, 0.4);background-color: rgba(0, 0, 0, 0.05);box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);}.ace_dark .ace_fold-widget {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2P4//8/AzoGEQ7oGCaLLAhWiSwB146BAQCSTPYocqT0AAAAAElFTkSuQmCC");}.ace_dark .ace_fold-widget.ace_end {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAH0lEQVQIW2P4//8/AxQ7wNjIAjDMgC4AxjCVKBirIAAF0kz2rlhxpAAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget.ace_closed {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAFCAYAAACAcVaiAAAAHElEQVQIW2P4//+/AxAzgDADlOOAznHAKgPWAwARji8UIDTfQQAAAABJRU5ErkJggg==");}.ace_dark .ace_fold-widget:hover {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);background-color: rgba(255, 255, 255, 0.1);}.ace_dark .ace_fold-widget:active {box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);}.ace_inline_button {border: 1px solid lightgray;display: inline-block;margin: -1px 8px;padding: 0 5px;pointer-events: auto;cursor: pointer;}.ace_inline_button:hover {border-color: gray;background: rgba(200,200,200,0.2);display: inline-block;pointer-events: auto;}.ace_fold-widget.ace_invalid {background-color: #FFB4B4;border-color: #DE5555;}.ace_fade-fold-widgets .ace_fold-widget {transition: opacity 0.4s ease 0.05s;opacity: 0;}.ace_fade-fold-widgets:hover .ace_fold-widget {transition: opacity 0.05s ease 0.05s;opacity:1;}.ace_underline {text-decoration: underline;}.ace_bold {font-weight: bold;}.ace_nobold .ace_bold {font-weight: normal;}.ace_italic {font-style: italic;}.ace_error-marker {background-color: rgba(255, 0, 0,0.2);position: absolute;z-index: 9;}.ace_highlight-marker {background-color: rgba(255, 255, 0,0.2);position: absolute;z-index: 8;}.ace_text-input-ios {position: absolute !important;top: -100000px !important;left: -100000px !important;}
+/*# sourceURL=ace/css/ace_editor.css */</style>
+    <title>最短路小总结-----图论小知识 - AcWing</title>
+    
+
+
+<meta name="keywords" content="总结">
+<meta name="description" content="总结">
+<meta name="baidu-site-verification" content="UW1SBiMHO7">
+<meta name="google-site-verification" content="YTgbOq_0TDShJS6KTcUYCQoAAZTm308SJ7ibsafBD_Y">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" type="image/png" href="./最短路小总结-----图论小知识 - AcWing_files/favicon(1).ico">
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/bootstrap.min.css">
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/bootstrap-toggle.min.css">
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/signform.css">
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/jquery-ui.min.css">
+
+    <link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/success_modal.css">
+
+
+    
+        <link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/chat_list-0.0.1.css">
+    
+
+<!--link rel="stylesheet" href="https://cdn.acwing.com/static/web/css/pace.css"-->
+<!--script src="https://cdn.acwing.com/static/web/js/pace.js"></script-->
+<script>
+    let onbeforeunload_functions = [];
+</script>
+
+
+<style>
+    /* latin */
+    @font-face {
+      font-family: 'Satisfy';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Satisfy Regular'), local('Satisfy-Regular'), url(https://cdn.acwing.com/static/web/fonts/rP2Hp2yn6lkG50LoCZOIHQ.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Lato';
+      font-style: italic;
+      font-weight: 400;
+      src: local('Lato Italic'), local('Lato-Italic'), url(https://cdn.acwing.com/static/web/fonts/S6u8w4BMUTPHjxsAUi-qJCY.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Lato';
+      font-style: italic;
+      font-weight: 400;
+      src: local('Lato Italic'), local('Lato-Italic'), url(https://cdn.acwing.com/static/web/fonts/S6u8w4BMUTPHjxsAXC-q.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin-ext */
+    @font-face {
+      font-family: 'Lato';
+      font-style: italic;
+      font-weight: 700;
+      src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://cdn.acwing.com/static/web/fonts/S6u_w4BMUTPHjxsI5wq_FQft1dw.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Lato';
+      font-style: italic;
+      font-weight: 700;
+      src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://cdn.acwing.com/static/web/fonts/S6u_w4BMUTPHjxsI5wq_Gwft.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin-ext */
+    @font-face {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Lato Regular'), local('Lato-Regular'), url(https://cdn.acwing.com/static/web/fonts/S6uyw4BMUTPHjxAwXjeu.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Lato Regular'), local('Lato-Regular'), url(https://cdn.acwing.com/static/web/fonts/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin-ext */
+    @font-face {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 700;
+      src: local('Lato Bold'), local('Lato-Bold'), url(https://cdn.acwing.com/static/web/fonts/S6u9w4BMUTPHh6UVSwaPGR_p.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 700;
+      src: local('Lato Bold'), local('Lato-Bold'), url(https://cdn.acwing.com/static/web/fonts/S6u9w4BMUTPHh6UVSwiPGQ.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+</style>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/jquery-3.3.1.min.js.下载"></script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/bootstrap.min.js.下载"></script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/bootstrap-toggle.min.js.下载"></script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/jquery-ui.min.js.下载"></script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/jquery.cookie.js.下载"></script>
+<script>
+    $(document).ready(function () {
+        var csrftoken = $.cookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            },
+            cache: true
+        });
+    });
+</script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/signform-0.0.1.js.下载"></script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/handlebars-v1.3.0.js.下载"></script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/effect_anchor-0.0.1.js.下载"></script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/utils-0.0.1.js.下载"></script>
+
+    <script>
+    let chat_state = {
+        me_id: 159268,
+    };
+</script>
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.MathJax_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax .merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MathJax .MJX-monospace {font-family: monospace}
+.MathJax .MJX-sans-serif {font-family: sans-serif}
+#MathJax_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true'); padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.MathJax {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax:focus, body :focus .MathJax {display: inline-table}
+.MathJax img, .MathJax nobr, .MathJax a {border: 0; padding: 0; margin: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+img.MathJax_strut {border: 0!important; padding: 0!important; margin: 0!important; vertical-align: 0!important}
+.MathJax span {display: inline; position: static; border: 0; padding: 0; margin: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+.MathJax nobr {white-space: nowrap!important}
+.MathJax img {display: inline!important; float: none!important}
+.MathJax * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.MathJax_Processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MathJax_Processed {display: none!important}
+.MathJax_ExBox {display: block!important; overflow: hidden; width: 1px; height: 60ex; min-height: 0; max-height: none}
+.MathJax .MathJax_EmBox {display: block!important; overflow: hidden; width: 1px; height: 60em; min-height: 0; max-height: none}
+.MathJax .MathJax_HitBox {cursor: text; background: white; opacity: 0; filter: alpha(opacity=0)}
+.MathJax .MathJax_HitBox * {filter: none; opacity: 1; background: transparent}
+#MathJax_Tooltip * {filter: none; opacity: 1; background: transparent}
+@font-face {font-family: MathJax_Main; src: url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Main-bold; src: url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff?rev=2.6.1') format('woff'), url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Main-italic; src: url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff?rev=2.6.1') format('woff'), url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Math-italic; src: url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff?rev=2.6.1') format('woff'), url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Caligraphic; src: url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Size1; src: url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Size2; src: url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Size3; src: url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Size4; src: url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.acwing.com/static/MathJax-2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf?rev=2.6.1') format('opentype')}
+.MathJax .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head><body id="acwing_body" style="min-height: 100vh;" data-new-gr-c-s-check-loaded="14.1033.0" data-gr-ext-installed=""><div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;"><div id="MathJax_Hidden"></div></div><div id="MathJax_Message" style="display: none;"></div><div style="display: none;">
+    <div id="message_template_me">
+        <div class="row" style="margin: 0; margin-bottom: 10px;">
+            <div class="col-xs-2 pull-right" style="width: 30px; padding: 0; margin-right: 10px;">
+                <a href="https://message_host_space_url/">
+                    <img class="img-responsive img-circle" width="30px" height="30px" src="./最短路小总结-----图论小知识 - AcWing_files/favicon.ico" alt="我的头像">
+                </a>
+            </div>
+            <div class="col-xs-10 pull-right">
+                <span class="chat-bubble-me pull-right" style="word-break: break-all;">
+                    message_content
+                </span>
+            </div>
+        </div>
+    </div>
+    <div id="message_template_you">
+        <div class="row" style="margin: 0; margin-bottom: 10px;">
+            <div class="col-xs-2" style="width: 30px; padding: 0; margin-left: 10px;">
+                <a href="https://message_host_space_url/">
+                    <img class="img-responsive img-circle" width="30px" height="30px" src="./最短路小总结-----图论小知识 - AcWing_files/favicon.ico" alt="好友头像">
+                </a>
+            </div>
+            <div class="col-xs-10">
+                <span class="chat-bubble-you pull-left" style="word-break: break-all;">
+                    message_content
+                </span>
+            </div>
+        </div>
+    </div>
+    <div id="message_create_time">
+        <div class="text-center">
+            <span class="chat-time-format">message create time</span>
+        </div>
+        <br>
+    </div>
+    <div id="message_code_template">
+        <a id="message_code_template_0_message_id_0" style="cursor:pointer;">
+            <img src="./最短路小总结-----图论小知识 - AcWing_files/code.png" width="75px" style="margin: -17px -22px -14px -22px;" alt="代码">
+        </a>
+    </div>
+    <div id="message_emoji_gif_template">
+        <a style="cursor:pointer;">
+            <img src="./最短路小总结-----图论小知识 - AcWing_files/favicon.ico" width="100px" style="margin: 0" title="emoji_gif_description" alt="表情动画">
+        </a>
+    </div>
+</div>
+    <script src="./最短路小总结-----图论小知识 - AcWing_files/utils.js.下载"></script>
+
+
+
+    <script src="./最短路小总结-----图论小知识 - AcWing_files/ace.js.下载" type="text/javascript" charset="utf-8"></script>
+    <script src="./最短路小总结-----图论小知识 - AcWing_files/ext-language_tools-0.0.1.js.下载"></script>
+    <script src="./最短路小总结-----图论小知识 - AcWing_files/code_completer-0.0.11.min.js.下载"></script>
+    <script src="./最短路小总结-----图论小知识 - AcWing_files/emoji-data.js.下载"></script>
+
+
+
+
+<script>
+    let user_state = {
+        is_authenticated: true,
+        is_pc: false,
+        is_tablet: false,
+        is_mobile: false,
+    };
+    if (user_state.is_authenticated){
+        user_state.user_id = 159268;
+        user_state.info = "1 3 1 4 9 1 9 12 2 6 12 1 2 1 2 4 10 5 8 9 2 9 ";
+    }
+    
+        user_state.is_pc = true;
+    
+</script>
+<script>
+    let GLOBAL_COMMENT_SONS = {};
+</script>
+<style>
+    
+        #acwing_body {
+            background: white url("https://cdn.acwing.com/static/web/img/background.png") fixed;
+            background-size: auto;
+        }
+    
+
+    
+    @media (min-width: 768px) and (max-width: 1000px) {
+       .collapse {
+           display: none !important;
+       }
+    }
+    .popover {
+        z-index: 1000000 !important;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        width: 750px;
+      }
+    }
+    @media (min-width: 992px) {
+      .container {
+        width: 900px;
+      }
+    }
+    @media (min-width: 1200px) {
+      .container {
+        width: 1000px;
+      }
+    }
+
+    @media (min-width: 1300px) {
+      .container {
+        width: 1170px;
+      }
+    }
+</style>
+
+
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/ace.min.css">
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/martor.min.css">
+
+    <link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/martor.css">
+
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/comment.css">
+
+
+    <link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/style-0.0.16.css">
+
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/navbar.css">
+
+    
+
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/base-0.0.4.css">
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/base-0.0.1.css">
+<link rel="stylesheet" href="./最短路小总结-----图论小知识 - AcWing_files/base-0.0.5.css">
+<script>
+    let DESKTOP_STATE_WINDOW_OPERATE_OPEN_URL = "/file_system/gui/window/operate/open/666/";
+    let DESKTOP_STATE_TASKBAR_SEARCH_URL = "/file_system/gui/taskbar/search/base/search/";
+    let DESKTOP_STATE_OS_THIRD_PARTY_API_OAUTH2_AUTHORIZE_URL = "/third_party/api/oauth2/acapp/authorize/";
+</script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/file_explorer-0.0.7.min.js.下载"></script>
+<script src="./最短路小总结-----图论小知识 - AcWing_files/gui-0.0.60.min.js.下载"></script>
+<script>
+    $(document).ready(function () {
+        let urls = {
+            add: "/file_system/file/operation/content/add/",
+            update: "/file_system/file/operation/content/update/",
+            delete: "/file_system/file/operation/content/delete/",
+            update_refactor_rename: "/file_system/file/operation/content/update/refactor/rename/",
+            command_ls: "/file_system/file/operation/content/command/ls/",
+            command_cp: "/file_system/file/operation/content/command/cp/",
+            command_mv: "/file_system/file/operation/content/command/mv/",
+            command_read: "/file_system/file/operation/content/command/read/",
+        };
+        desktop_state.os.builtin.api.file.operation.set(urls);
+
+        let applications = {
+            file_explorer: 284475,
+            ac_editor: 172575,
+            ac_saber: 118289,
+            settings: 589618,
+            ac_chat: 994425,
+        };
+        desktop_state.os.builtin.application.set(applications);
+
+        let configs = {
+            media_url: "https://cdn.acwing.com/media/",
+            static_url: "https://cdn.acwing.com/static/",
+        };
+        desktop_state.os.builtin.settings.set(configs);
+
+        let auto_open_apps = [];
+        
+            auto_open_apps.push({
+                title: "AC Chat",
+                icon: "https://cdn.acwing.com/media/file_system/file/application/icon/2220490481555590627-128_UQONKkk.png",
+                file_id: 994425,
+            });
+        
+        desktop_state.taskbar.widgets.apps.set(auto_open_apps);
+    });
+</script>
+
+
+<div id="fs-gui-advertisement-base" style="position: fixed; top: 15vh; cursor: pointer; display: none; z-index:999999999">
+    <div>
+        <div id="fs-gui-advertisement-base-title"></div>
+        <div style="text-align: left; font-size: 80%;">
+            <span style="font-size: 80%;">¥</span>
+            <span id="fs-gui-advertisement-base-price" style="font-size: 135%;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span id="fs-gui-advertisement-base-inventory" style="font-size: 135%;"></span> 份秒杀
+            <span class="glyphicon glyphicon-triangle-right" style="font-size: 70%; top: 0.25vh"></span>
+        </div>
+        <div id="fs-gui-advertisement-base-close-btn" style="color: white; position: absolute; top: -0.4vh; right: 4px; cursor: pointer; font-size: 18px;">x</div>
+    </div>
+</div>
+    
+
+<style>
+    .file-explorer-main-field-item-desktop:hover {
+        background-color: rgba(204,232,255, 0.5);
+    }
+</style>
+
+
+
+<div id="acwing_page">
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg" style="z-index: 10;">
+        <div class="container">
+            <!-- Header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    
+                        <span class="notification-number">
+                            
+                                1
+                            
+                        </span>
+                    
+                </button>
+                
+                <a class="navbar-brand" href="https://www.acwing.com/">AcWing</a>
+            </div>
+
+            <!-- Items -->
+
+        </div>
+    </nav>
+    <div class="base_body">
+    <div id="file-content-whole-field-full-3298-912b4e5d" class="player-web-full-screen" style="display: none"></div>
+    <div id="file-content-whole-field-3298-912b4e5d" class="file-content-whole-page-flag">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-9">
+        
+                    <div class="panel panel-default copy-with-link">
+                        <div class="panel-body">
+                            
+                                
+    <h2 style="margin-top: 10px;">最短路小总结-----图论小知识</h2>
+
+<div style="color: #999999; font-size:14px;">
+    作者：
+    <a href="https://www.acwing.com/user/myspace/index/4329/">
+        <img class="img-circle" src="./最短路小总结-----图论小知识 - AcWing_files/4329_sm_c3a79d309c.jpg" alt="作者的头像">
+        &nbsp;
+        <span style="font-size: 18px;">wuog</span>
+    </a>
+    ,&nbsp;
+    2019-08-12 03:11:18
+    ,&nbsp;
+    
+        所有人可见
+    
+    ,&nbsp;
+    阅读&nbsp;5168
+</div>
+
+                            
+                            <hr style="margin-bottom: 10px;">
+                            <div class="row">
+                                <div class="vote_cut col-xs-1" align="center">
+                                    
+
+
+
+
+                                </div>
+                                <div class="col-xs-11 vote_cut">
+                                    
+                                        
+
+<div class="main-martor main-martor-content" data-field-name="content">
+    <div class="section-martor">
+        <div class="ui bottom attached tab active martor-preview">
+            <h4>概述</h4>
+<p>现在有一个问题就是有北京—&gt;成都选什么路径使时间花费最少？或者同时求北京----&gt;海南，天津—&gt;石家庄？当然我给你全国的路线，我们一般是枚举选最少的！现在我们来看一下怎么样用高效的算法去解决！</p>
+<p>解决最短路径问题有几个优秀的算法:</p>
+<pre class="hljs css"><code>1<span class="hljs-selector-class">.dijkstra</span>算法,最经典的单源最短路径算法
+
+2<span class="hljs-selector-class">.bellman-ford</span>算法,允许负权边的单源最短路径算法
+
+3<span class="hljs-selector-class">.spfa</span>,其实是<span class="hljs-selector-tag">bellman-ford</span>+队列优化,其实和<span class="hljs-selector-tag">bfs</span>的关系更密一点
+
+4<span class="hljs-selector-class">.floyd</span>算法,经典的多源最短路径算法
+
+</code></pre>
+
+<p>我们来看一下yxc老师的知识结构图：<br>
+<img alt="aa1.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_ec363e06bc-aa1.PNG" style="cursor: pointer;"> <br>
+下面我们来开始一个一个认识：</p>
+<h4>Dijkstra</h4>
+<p>Dijkstra 算法，用于对有权图进行搜索，找出图中两点的最短距离，既不是DFS搜索，也不是BFS搜索。<br>
+  把Dijkstra 算法应用于无权图，或者所有边的权都相等的图，Dijkstra 算法等同于BFS搜索。</p>
+<p>首先我们来看一下它能干什么：</p>
+<p>能解决源点到任意一个点的距离（就是有北京到全国各地的最短时间路程规划）</p>
+<p>算法的思路：<br>
+设G=(V,E)是一个带权有向图，把图中顶点集合V分成两组第一组为已求出最短路径的顶点集合（用S表示，初始时S中只有一个源点，以后每求得一条最短路径 , 就将加入到集合S中，直到全部顶点都加入到S中，算法就结束了）第二组为其余未确定最短路径的顶点集合（用U表示），按最短路径长度的递增次序依次把第二组的顶点加入S中。在加入的过程中，总保持从源点v到S中各顶点的最短路径长度不大于从源点v到U中任何顶点的最短路径长度。此外，每个顶点对应一个距离，S中的顶点的距离就是从v到此顶点的最短路径长度，U中的顶点的距离，是从v到此顶点只包括S中的顶点为中间顶点的当前最短路径长度。</p>
+<p>简单来说就是：<br>
+1. 先定义dist[1]=0,dist[i]=INF;<br>
+2. for  1~n  i判断不在S中，且距离最近的点，把他加入s中<br>
+3. 然后开始更新一下它到其他点的距离</p>
+<p>如果觉得麻烦就看一个动态图：</p>
+<p><img alt="Dijkstra_Animation.gif" src="./最短路小总结-----图论小知识 - AcWing_files/4329_74ec5474bc-Dijkstra_Animation.gif" style="cursor: pointer;"></p>
+<p>其实一句话来说就是，对于全国路线网，你要确定北京为起点，然后根据路线图来现在最优路线！</p>
+<p>我们来举一个例子：</p>
+<p><img alt="a1.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_7b8a63d2bc-a1.PNG" style="cursor: pointer;"> </p>
+<p>1.创建一个dist[]数组用于存储距离，先将他们初始化为INT_MAX,一个给g图数组！然后开始从A开始搜索：<br>
+为了方便为定义灰色将要处理，黑色已经处理！<br>
+<img alt="a2.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_2c513ae6bc-a2.PNG" style="cursor: pointer;"> <br>
+2.A–&gt;A=0,现在有A的最短路径A–A=0,A–&gt;B=3<br>
+<img alt="a3.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_df5c51cabc-a3.PNG" style="cursor: pointer;"> <br>
+3.然后选入C,此时有最短路A–&gt;A=0,B=3,C=5;<br>
+<img alt="a4.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_4e534002bc-a4.PNG" style="cursor: pointer;"> <br>
+4.选入D,进行权重比较就有了，A–&gt;B–&gt;D=6最短<br>
+<img alt="a5.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_cdbd2182bc-a5.PNG" style="cursor: pointer;"> <br>
+ 5.选入E，A–&gt;c–&gt;E=7最短<br>
+<img alt="a6.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_2c678ddabc-a6.PNG" style="cursor: pointer;"> <br>
+ 6.选入F，A-&gt;b-&gt;D–&gt;F=9最短<br>
+<img alt="a7.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_706414a4bc-a7.PNG" style="cursor: pointer;"> <br>
+ 7.选入齐齐哈尔，但是没有相应的路径，所以A–&gt;齐齐哈尔=INF<br>
+<img alt="a8.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_b5abc96cbc-a8.PNG" style="cursor: pointer;"> <br>
+ 8.由于图中的点已经全部松弛，所以结束！</p>
+<p>如果你对得到最短路径有疑问！我来解释一段：就以选入B来说，选入B,那么图里面就要去除这个点，我们发现A–&gt;B—&gt;B=5,A–&gt;B–&gt;D=6,A–&gt;B–&gt;E=7,A–&gt;B–&gt;其他点为INF,所以最短路径就是A–B–C=5;其他点也是这样类似计算！</p>
+<p>实例中我们可以发现，Dijkstra 算法是一个排序过程，就上面的例子来说，是根据A到图中其余点的最短路径长度进行排序，路径越短越先被找到，路径越长越靠后才能被找到，要找A到F的最短路径，我们依次找到了<br>
+(A,B)A –&gt; B 的最短路径 3<br>
+(A,C)A –&gt; B –&gt; C 的最短路径 5<br>
+(A,D)A –&gt; B –&gt; D 的最短路径 6<br>
+(A,E)A –&gt; B –&gt; E 的最短路径 7<br>
+(A,F)A –&gt; B –&gt; D –&gt; F 的最短路径 9<br>
+(A,G)A-______-G=INF;</p>
+<p>好了算法具体我们已经理解了：<br>
+我们来看一个例题：</p>
+<h5>习题</h5>
+<p><a href="https://www.acwing.com/problem/content/851/">习题链接</a> <br>
+分析：<br>
+<img alt="a9.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_3e72d3babc-a9.PNG" style="cursor: pointer;"> </p>
+<p>代码：</p>
+<pre class="hljs cpp"><code><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">dijkstrac</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-built_in">memset</span>(dist,<span class="hljs-number">0x3f</span>,<span class="hljs-keyword">sizeof</span> dist);
+    <span class="hljs-comment">//初始化</span>
+    dist[<span class="hljs-number">1</span>]=<span class="hljs-number">0</span>;
+    <span class="hljs-comment">//设置A--&gt;A=0开始距离</span>
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+        <span class="hljs-keyword">int</span> t=<span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=n;j++)
+        <span class="hljs-comment">//寻找</span>
+        <span class="hljs-keyword">if</span>(!st[j]&amp;&amp;(t==<span class="hljs-number">-1</span>||dist[j]&lt;dist[t]))
+                t=j;
+       st[t]=<span class="hljs-literal">true</span>;
+       <span class="hljs-comment">//最优路径</span>
+       <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=n;j++)
+       dist[j]=min(dist[j],dist[t]+g[t][j]);
+    }
+    <span class="hljs-keyword">if</span>(dist[n]==<span class="hljs-number">0x3f3f3f3f</span>)<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> dist[n];
+}
+</code></pre>
+
+<p>真正想理解的快就自己画一个图，按照代码一步一步走！<br>
+代码一眼看过去你根本不知道那是干嘛，甚至有可能你还不清楚参数的含义！好了，看来模板之后，你可能会发现他居然是O(n^2)的算法，她有没有可能优化呢？</p>
+<p>我们知道我们是寻找最小的数，而且寻找会要删除该点，然后向后移动，我们可以想到用最小优先队列实现，当然我可以用书写队列（太过于复杂不建议运用）！而且时间复杂度是O(nlogn)n代表边数，m是点数,他一般用于稀疏图，而朴素的Dijkstra用于稠密图！<br>
+我们还是看代码理解吧：</p>
+<pre class="hljs cpp"><code><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-built_in">memset</span>(dist,<span class="hljs-number">0x3f</span>,<span class="hljs-keyword">sizeof</span> dist);
+    <span class="hljs-comment">//初始化</span>
+    dist[<span class="hljs-number">1</span>]=<span class="hljs-number">0</span>;
+    <span class="hljs-comment">//起点选定</span>
+    priority_queue&lt;PII,<span class="hljs-built_in">vector</span>&lt;PII&gt;,greater&lt;PII&gt; &gt;heap;
+    <span class="hljs-comment">//定义一个小根堆</span>
+
+    heap.push({<span class="hljs-number">0</span>,<span class="hljs-number">1</span>});
+
+    <span class="hljs-keyword">while</span>(heap.size()){
+        <span class="hljs-keyword">auto</span> t=heap.top();
+        heap.pop();
+
+        <span class="hljs-keyword">int</span> ver=t.second,distance=t.first;
+        <span class="hljs-keyword">if</span>(st[ver])<span class="hljs-keyword">continue</span>;
+        <span class="hljs-comment">//开始循环查找</span>
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=h[ver];i!=<span class="hljs-number">-1</span>;i=ne[i]){
+            <span class="hljs-keyword">int</span> j=e[i];
+
+            <span class="hljs-comment">//如果距离大了，选择最小路径</span>
+            <span class="hljs-keyword">if</span>(dist[j]&gt;distance+w[i]){
+                dist[j]=distance+w[i];
+                heap.push({dist[j],j});
+            }
+        }
+    }
+
+
+    <span class="hljs-keyword">if</span>(dist[n]==<span class="hljs-number">0x3f3f3f3f</span>)<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> dist[n];
+
+}
+</code></pre>
+
+<h4>bellman-ford</h4>
+<p>我们知道Dijkstrac有不能有负权的边缺陷，而贝尔曼福特算法就可以解决它！当然还不止他一个算法可以处理负权问题！相比Dijkstrac，它的边的权值可以为负数、实现简单,而还可以限定边数，缺点是时间复杂度过高，高达O(n*m)。但算法可以进行若干种优化，提高了效率。</p>
+<p>下面我们来看一下这个算法：<br>
+  可用于解决以下问题：</p>
+<pre class="hljs"><code>   从A出发是否存在到达各个节点的路径(有计算出值当然就可以到达)；
+   从A出发到达各个节点最短路径(时间最少、或者路径最少等)
+    图中是否存在负环路（权重之和为负数）
+</code></pre>
+
+<p>其思路为：</p>
+<pre class="hljs php"><code><span class="hljs-number">1.</span>初始化时将起点s到各个顶点v的距离dist(s-&gt;v)赋值为INF，dist(s-&gt;s)赋值为<span class="hljs-number">0</span>
+<span class="hljs-number">2.</span>后续进行最多n<span class="hljs-number">-1</span>次遍历操作,对所有的边进行松弛操作,假设:
+所谓的松弛，以边ab为例，若dist(a)代表起点s到达a点所需要花费的总数，dist(b)代表起点s到达b点所需要花费的总数,weight(ab)代表边ab的权重，
+若存在:三角不等式：
+(dist(a) +weight(ab)) &lt; dist(b)则说明存在到b的更短的路径,s-&gt;...-&gt;a-&gt;b,更新b点的总花费为(dist(a) +weight(ab))，父节点为a
+
+<span class="hljs-number">3.</span>遍历都结束后，若再进行一次遍历，还能得到s到某些节点更短的路径的话，则说明存在负环路
+
+</code></pre>
+
+<p>思路上与狄克斯特拉算法(Dijkstra algorithm)最大的不同是每次都是从源点s重新出发进行”松弛”更新操作，而Dijkstra则是从源点出发向外扩逐个处理相邻的节点，不会去重复处理节点，这边也可以看出Dijkstra效率相对更高点。</p>
+<p>我们举一个例子：<br>
+<img alt="C1.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_4f445a38bc-C1.PNG" style="cursor: pointer;"> <br>
+ 求A到任意一点的距离：<br>
+   该图共有节点7个，最多需要进行7-1=6次的对所有边的松弛操作<br>
+ 1.进行第一次遍历松弛操作，可以得到:<br>
+<img alt="c2.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_3c9a3c94bc-c2.PNG" style="cursor: pointer;"> <br>
+ 2.进行第二次遍历松弛操作，得到：<br>
+<img alt="c3.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_eb549f04bc-c3.PNG" style="cursor: pointer;"> <br>
+ 3.再松弛：<br>
+<img alt="c4.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_f8a32cacbc-c4.PNG" style="cursor: pointer;"> <br>
+ 4.此时上表边上A到各个节点的最短路径，可以通过倒序的方式得出路线，只是读入时可能会影响最优路径的顺序</p>
+<p>比如上述,AB:6 ,AC:5,AD:5,CB:-2,DC:-2,BE:-1,CE:1,DF:-1,EG:3,FG:3 代码需要遍历3次才可以确认结果(最后一次用于确认结果不再更新)；<br>
+AB:6，AC:5，AD:5，DC:-2，CB:-2，BE:-1，CE:1，DF:-1，EG:3，FG:3 代码需要遍历2次就可以确认结果；<br>
+AB:6，AC:5，AD:5，BE:-1，CE:1，DF:-1，DC:-2，CB:-2，EG:3，FG:3 代码需要遍历4次就可以确认结果；</p>
+<p>有时候图的关系是用户输入的，对于顺序并不好强制一定是最佳的！</p>
+<h5>例题</h5>
+<p><a href="https://www.acwing.com/problem/content/855/">例题链接</a> </p>
+<p>题意：<br>
+   就是让我们求从1号点到n号点的最多经过k条边的最短距离！</p>
+<p>代码：</p>
+<pre class="hljs cpp"><code><span class="hljs-keyword">struct</span> Edge{
+    <span class="hljs-keyword">int</span> a,b,c;
+
+}edges[M];
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">bellman_ford</span><span class="hljs-params">()</span></span>{
+<span class="hljs-comment">//初始化</span>
+    <span class="hljs-built_in">memset</span>(dist,<span class="hljs-number">0x3f</span>,<span class="hljs-keyword">sizeof</span> dist);
+    <span class="hljs-comment">//定义起点</span>
+    dist[<span class="hljs-number">1</span>]=<span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;k;i++){
+    <span class="hljs-comment">//把dist复制到backup经行遍历松弛,不会产生串联</span>
+        <span class="hljs-built_in">memcpy</span>(backup,dist, <span class="hljs-keyword">sizeof</span> dist);
+
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;m;j++){
+            <span class="hljs-keyword">int</span> a=edges[j].a,b=edges[j].b,c=edges[j].c;
+            <span class="hljs-comment">//(dist(a) +weight(ab)) &lt; dist(b)则说明存在到b的更短的路径,取最小值</span>
+            dist[b]=min(dist[b],backup[a]+c);
+        }
+    }
+    <span class="hljs-keyword">if</span>(dist[n]&gt;<span class="hljs-number">0x3f3f3f3f</span>/<span class="hljs-number">2</span>)<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> dist[n];
+}
+</code></pre>
+
+<p>1.BFS主要适用于无权重向图重搜索出源点到终点的步骤最少的路径，当方向图存在权重时，不再适用<br>
+2.Dijkstra主要用于有权重的方向图中搜索出最短路径，但不适合于有负权重的情况.对于环图，个人感觉和BFS一样，标志好已处理的节点避免进入死循环，可以支持<br>
+3.Bellman–Ford主要用于存在负权重的方向图中(没有负权重也可以用，但是效率比Dijkstra低很多)，搜索出源点到各个节点的最短路径<br>
+4.Bellman–Ford可以判断出图是否存在负环路，但存在负环路的情况下不支持计算出各个节点的最短路径。只需要在结束(节点数目-1)次遍历后，再执行一次遍历，若还可以更新数据则说明存在负环路，当人为限制了遍历次数后，对于负环路也可以计算出，但似乎没有什么实际意义</p>
+<h4>Spfa</h4>
+<p>前面两个算法，已经可以出单源到任意一个点的距离，而对于负环的判断和时间复杂度Bellman–Ford并没有那么完美：<br>
+ 下面我们看一下用Bellman–Ford队列优化的spfa算法：<br>
+ 算法的思路： <br>
+我们用数组dis记录每个结点的最短路径估计值，用邻接表或邻接矩阵来存储图G。我们采取的方法是动态逼近法：设立一个先进先出的队列用来保存待优化的结点，优化时每次取出队首结点u，并且用u点当前的最短路径估计值对离开u点所指向的结点v进行松弛操作，如果v点的最短路径估计值有所调整，且v点不在当前的队列中，就将v点放入队尾。这样不断从队列中取出结点来进行松弛操作，直至队列空为止，所以他的时间复杂度就是O(m),最坏O(n*m)!</p>
+<p>我们要知道带有负环的图是没有最短路径的，所以我们在执行算法的时候，要判断图是否带有负环，方法有两种：</p>
+<p>1.开始算法前，调用拓扑排序进行判断（一般不采用，浪费时间）<br>
+   2.如果某个点进入队列的次数超过N次则存在负环（N为图的顶点数）</p>
+<p>举一个例子：<br>
+v首先我们先初始化数组dis如下图所示：（除了起点赋值为0外，其他顶点的对应的dis的值都赋予无穷大，这样有利于后续的松弛）<br>
+<img alt="e1.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_ba735546bc-e1.PNG" style="cursor: pointer;"> <br>
+此时，我们还要把a推入队列：{a}现在进入循环，直到队列为空才退出循环。<br>
+1.首先，队首元素出队列，即是a出队列，然后，对以a为弧尾的边对应的弧头顶点进行松弛操作，可以发现a到c，e，f三个顶点的最短路径变短了，更新dis数组的值，得到如下结果：<br>
+<img alt="e2.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_0d6ba7f8bc-e2.PNG" style="cursor: pointer;"> </p>
+<p>2.我们发现c，e，f都被松弛了，而且不在队列中，所以要他们都加入到队列中：{c，e，f}此时，队首元素为c，c出队列，然后，对以c为弧尾的边对应的弧头顶点进行松弛操作，可以发现a到d的边，经过c松弛变短了，所以更新dis数组，得到如下结果： <br>
+<img alt="e3.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_490a97b0bc-e3.PNG" style="cursor: pointer;"> <br>
+3.此时只有d对应的值被更新了，而且d不在队列中，则把它加入到队列中：{e,f,d}<br>
+此时，队首元素为e，e出队列，然后，对以e为弧尾的边对应的弧头顶点进行松弛操作，发现a到d和f的最短路径，经过e的松弛都变短了，更新dis的数组，得到如下结果<br>
+<img alt="e4.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_7669f642bc-e4.PNG" style="cursor: pointer;"> </p>
+<p>4.我们发现d、f对应的值都被更新了，但是他们都在队列中了，所以不用对队列做任何操作。队列值为：{f,d}<br>
+队首元素为f，f出队列，然后，对以f为弧尾的边对应的弧头顶点进行松弛操作，发现f出度为0,所以不变，下面对d处理：<img alt="e5.PNG" src="./最短路小总结-----图论小知识 - AcWing_files/4329_cfe83a6cbc-e5.PNG" style="cursor: pointer;"> </p>
+<p>队列元素为，循环停止！得到答案：</p>
+<h5>习题</h5>
+<p><a href="https://www.acwing.com/problem/content/853/">习题链接</a> </p>
+<p>由于思路与BFS差不了多少所以直接看代码：</p>
+<pre class="hljs cpp"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;cstring&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;queue&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span> &gt;PII;
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N=<span class="hljs-number">100010</span>;
+
+<span class="hljs-keyword">int</span> h[N],e[N],ne[N],w[N],dist[N],n,m,idx;
+<span class="hljs-keyword">bool</span>  st[N];
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a,<span class="hljs-keyword">int</span> b,<span class="hljs-keyword">int</span> c)</span>
+</span>{
+    e[idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx++;
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">spfa</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);
+    dist[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q;
+    q.push(<span class="hljs-number">1</span>);
+    st[<span class="hljs-number">1</span>] = <span class="hljs-literal">true</span>;
+
+    <span class="hljs-keyword">while</span> (q.size())
+    {
+        <span class="hljs-keyword">int</span> t = q.front();
+        q.pop();
+
+        st[t] = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = h[t]; i != <span class="hljs-number">-1</span>; i = ne[i])
+        {
+            <span class="hljs-keyword">int</span> j = e[i];
+            <span class="hljs-keyword">if</span> (dist[j] &gt; dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                <span class="hljs-keyword">if</span> (!st[j])
+                {
+                    q.push(j);
+                    st[j] = <span class="hljs-literal">true</span>;
+                }
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dist[n];
+}
+
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-built_in">cin</span>.tie(<span class="hljs-number">0</span>);
+    ios::sync_with_stdio(<span class="hljs-literal">false</span>);
+    <span class="hljs-built_in">cin</span>&gt;&gt;n&gt;&gt;m;
+    <span class="hljs-built_in">memset</span>(h,<span class="hljs-number">-1</span>,<span class="hljs-keyword">sizeof</span> h);
+    <span class="hljs-keyword">while</span>(m--)
+    {
+        <span class="hljs-keyword">int</span> a,b,c;
+        <span class="hljs-built_in">cin</span>&gt;&gt;a&gt;&gt;b&gt;&gt;c;
+        add(a,b,c);
+    }
+
+    <span class="hljs-keyword">int</span> t=spfa();
+    <span class="hljs-keyword">if</span>(t==<span class="hljs-number">0x3f3f3f3f</span>)<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"impossible"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-built_in">cout</span>&lt;&lt;t&lt;&lt;<span class="hljs-built_in">endl</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+
+<h4>Floyd</h4>
+<p>由于他是一个经典的DP问题，所以我们后面DP部分会详细介绍：</p>
+<p>当你想寻找理解我给你一些思路：</p>
+<p>从任意节点i到任意节点j的最短路径不外乎2种可能，1是直接从i到j，2是从i经过若干个节点k到j。所以，我们假设dist(i,j)为节点u到节点v的最短路径的距离，对于每一个节点k，我们检查dist(i,k) + dist(k,j) &lt; dist(i,j)是否成立，如果成立，证明从i到k再到j的路径比i直接到j的路径短，我们便设置dist(i,j) = dist(i,k) + dist(k,j)，这样一来，当我们遍历完所有节点k，dist(i,j)中记录的便是i到j的最短路径的距离。</p>
+<p>模板：</p>
+<pre class="hljs cpp"><code>初始化：
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++ )
+            <span class="hljs-keyword">if</span> (i == j) d[i][j] = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">else</span> d[i][j] = INF;
+
+<span class="hljs-comment">// 算法结束后，d[a][b]表示a到b的最短距离</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">floyd</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt;= n; k ++ )
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++ )
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+}
+</code></pre>
+
+<p>当然我们由模板就以看出时间复杂度为O（n^3）;<br>
+模板描述：<br>
+a.从任意一条单边路径开始。所有两点之间的距离是边的权，如果两点之间没有边相连，则权为无穷大。 　　</p>
+<p>b.对于每一对顶点 u 和 v，看看是否存在一个顶点 w 使得从 u 到 w 再到 v的距离k 比己知的路径更短。如果是更新它。</p>
+<h4>习题</h4>
+<p><a href="https://www.acwing.com/problem/content/856/">链接</a> </p>
+<p>这个问题主要看DP状态方程！</p>
+<pre class="hljs cpp"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;cstring&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N=<span class="hljs-number">10010</span>,INF=<span class="hljs-number">1e9</span>;
+<span class="hljs-keyword">int</span> n,m,k;
+<span class="hljs-keyword">int</span> d[N][N];
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">floyd</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k=<span class="hljs-number">1</span>;k&lt;=n;k++){
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=n;j++){
+                d[i][j]=min(d[i][j],d[i][k]+d[k][j]);
+            }
+        }
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+   <span class="hljs-built_in">cin</span>&gt;&gt;n&gt;&gt;m&gt;&gt;k;
+   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++){
+       <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=n;j++){
+           <span class="hljs-keyword">if</span>(i==j)d[i][j]=<span class="hljs-number">0</span>;
+           <span class="hljs-keyword">else</span> d[i][j]=INF;
+
+       }
+   }
+   <span class="hljs-keyword">while</span>(m--){
+       <span class="hljs-keyword">int</span> a,b,w;
+       <span class="hljs-built_in">cin</span>&gt;&gt;a&gt;&gt;b&gt;&gt;w;
+       d[a][b]=min(d[a][b],w);
+   }
+   floyd();
+   <span class="hljs-keyword">while</span>(k--){
+       <span class="hljs-keyword">int</span> a,b;
+       <span class="hljs-built_in">cin</span>&gt;&gt;a&gt;&gt;b;
+       <span class="hljs-keyword">if</span>(d[a][b]&gt;=INF/<span class="hljs-number">2</span>)<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"impossible"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;
+      <span class="hljs-keyword">else</span> <span class="hljs-built_in">cout</span>&lt;&lt;d[a][b]&lt;&lt;<span class="hljs-built_in">endl</span>;
+   }
+   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+}
+</code></pre>
+
+<h4>小结</h4>
+<p>对于图论里面最短路算法，无负权基本上用堆优化Dijkstra,效率是比较乐观的，而且他还有优先队列优化！对于bellman-ford，像是Dijkstra到Spfa的一个过渡！<br>
+ Spfa算法的基本思路与贝尔曼-福特算法相同，即每个节点都被用作用于松弛其相邻节点的备选节点,spfa算法的提升在于它并不盲目尝试所有节点，而是维护一个备选节点队列，并且仅有节点被松弛后才会放入队列中。整个流程不断重复直至没有节点可以被松弛。当然这里我最喜欢Floyd，就时间复杂度不尽如人意！<br>
+ 对于最短路算法的看法就是这些了，当然由于图论的一些思想不好接受，慢慢理解，谢谢你能把它阅读完！希望你有所收获！</p>
+<h4>yxc老师的模板   <a href="https://www.acwing.com/blog/content/405/">链接</a></h4>
+<p>朴素dijkstra算法 —— 模板题 AcWing 849. Dijkstra求最短路 I<br>
+时间复杂是 O(n2+m)O(n2+m), nn 表示点数，mm 表示边数</p>
+<pre class="hljs cpp"><code><span class="hljs-keyword">int</span> g[N][N];  <span class="hljs-comment">// 存储每条边</span>
+<span class="hljs-keyword">int</span> dist[N];  <span class="hljs-comment">// 存储1号点到每个点的最短距离</span>
+<span class="hljs-keyword">bool</span> st[N];   <span class="hljs-comment">// 存储每个点的最短路是否已经确定</span>
+
+<span class="hljs-comment">// 求1号点到n号点的最短路，如果不存在则返回-1</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);
+    dist[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n - <span class="hljs-number">1</span>; i ++ )
+    {
+        <span class="hljs-keyword">int</span> t = <span class="hljs-number">-1</span>;     <span class="hljs-comment">// 在还未确定最短路的点中，寻找距离最小的点</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++ )
+            <span class="hljs-keyword">if</span> (!st[j] &amp;&amp; (t == <span class="hljs-number">-1</span> || dist[t] &gt; dist[j]))
+                t = j;
+
+        <span class="hljs-comment">// 用t更新其他点的距离</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++ )
+            dist[j] = min(dist[j], dist[t] + g[t][j]);
+
+        st[t] = <span class="hljs-literal">true</span>;
+    }
+
+    <span class="hljs-keyword">if</span> (dist[n] == <span class="hljs-number">0x3f3f3f3f</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> dist[n];
+}
+</code></pre>
+
+<p>堆优化版dijkstra —— 模板题 AcWing 850. Dijkstra求最短路 II<br>
+时间复杂度 O(mlogn)O(mlogn), nn 表示点数，mm 表示边数</p>
+<pre class="hljs cpp"><code><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;
+
+<span class="hljs-keyword">int</span> n;      <span class="hljs-comment">// 点的数量</span>
+<span class="hljs-keyword">int</span> h[N], w[N], e[N], ne[N], idx;       <span class="hljs-comment">// 邻接表存储所有边</span>
+<span class="hljs-keyword">int</span> dist[N];        <span class="hljs-comment">// 存储所有点到1号点的距离</span>
+<span class="hljs-keyword">bool</span> st[N];     <span class="hljs-comment">// 存储每个点的最短距离是否已确定</span>
+
+<span class="hljs-comment">// 求1号点到n号点的最短距离，如果不存在，则返回-1</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);
+    dist[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;
+    priority_queue&lt;PII, <span class="hljs-built_in">vector</span>&lt;PII&gt;, greater&lt;PII&gt;&gt; heap;
+    heap.push({<span class="hljs-number">0</span>, <span class="hljs-number">1</span>});      <span class="hljs-comment">// first存储距离，second存储节点编号</span>
+
+    <span class="hljs-keyword">while</span> (heap.size())
+    {
+        <span class="hljs-keyword">auto</span> t = heap.top();
+        heap.pop();
+
+        <span class="hljs-keyword">int</span> ver = t.second, distance = t.first;
+
+        <span class="hljs-keyword">if</span> (st[ver]) <span class="hljs-keyword">continue</span>;
+        st[ver] = <span class="hljs-literal">true</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = h[ver]; i != <span class="hljs-number">-1</span>; i = ne[i])
+        {
+            <span class="hljs-keyword">int</span> j = e[i];
+            <span class="hljs-keyword">if</span> (dist[j] &gt; distance + w[i])
+            {
+                dist[j] = distance + w[i];
+                heap.push({dist[j], j});
+            }
+        }
+    }
+
+    <span class="hljs-keyword">if</span> (dist[n] == <span class="hljs-number">0x3f3f3f3f</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> dist[n];
+}
+</code></pre>
+
+<p>Bellman-Ford算法 —— 模板题 AcWing 853. 有边数限制的最短路<br>
+时间复杂度 O(nm)O(nm), nn 表示点数，mm 表示边数</p>
+<pre class="hljs cpp"><code><span class="hljs-keyword">int</span> n, m;       <span class="hljs-comment">// n表示点数，m表示边数</span>
+<span class="hljs-keyword">int</span> dist[N];        <span class="hljs-comment">// dist[x]存储1到x的最短路距离</span>
+
+<span class="hljs-keyword">struct</span> Edge     <span class="hljs-comment">// 边，a表示出点，b表示入点，w表示边的权重</span>
+{
+    <span class="hljs-keyword">int</span> a, b, w;
+}edges[M];
+
+<span class="hljs-comment">// 求1到n的最短路距离，如果无法从1走到n，则返回-1。</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">bellman_ford</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);
+    dist[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 如果第n次迭代仍然会松弛三角不等式，就说明存在一条长度是n+1的最短路径，由抽屉原理，路径中至少存在两个相同的点，说明图中存在负权回路。</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )
+    {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j ++ )
+        {
+            <span class="hljs-keyword">int</span> a = edges[j].a, b = edges[j].b, w = edges[j].w;
+            <span class="hljs-keyword">if</span> (dist[b] &gt; dist[a] + w)
+                dist[b] = dist[a] + w;
+        }
+    }
+
+    <span class="hljs-keyword">if</span> (dist[n] == <span class="hljs-number">0x3f3f3f3f</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> dist[n];
+}
+</code></pre>
+
+<p>spfa 算法（队列优化的Bellman-Ford算法） —— 模板题 AcWing 851. spfa求最短路<br>
+时间复杂度 平均情况下 O(m)O(m)，最坏情况下</p>
+<pre class="hljs cpp"><code>O(nm)O(nm), nn 表示点数，mm 表示边数
+<span class="hljs-keyword">int</span> n;      <span class="hljs-comment">// 总点数</span>
+<span class="hljs-keyword">int</span> h[N], w[N], e[N], ne[N], idx;       <span class="hljs-comment">// 邻接表存储所有边</span>
+<span class="hljs-keyword">int</span> dist[N];        <span class="hljs-comment">// 存储每个点到1号点的最短距离</span>
+<span class="hljs-keyword">bool</span> st[N];     <span class="hljs-comment">// 存储每个点是否在队列中</span>
+
+<span class="hljs-comment">// 求1号点到n号点的最短路距离，如果从1号点无法走到n号点则返回-1</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">spfa</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);
+    dist[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q;
+    q.push(<span class="hljs-number">1</span>);
+    st[<span class="hljs-number">1</span>] = <span class="hljs-literal">true</span>;
+
+    <span class="hljs-keyword">while</span> (q.size())
+    {
+        <span class="hljs-keyword">auto</span> t = q.front();
+        q.pop();
+
+        st[t] = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = h[t]; i != <span class="hljs-number">-1</span>; i = ne[i])
+        {
+            <span class="hljs-keyword">int</span> j = e[i];
+            <span class="hljs-keyword">if</span> (dist[j] &gt; dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                <span class="hljs-keyword">if</span> (!st[j])     <span class="hljs-comment">// 如果队列中已存在j，则不需要将j重复插入</span>
+                {
+                    q.push(j);
+                    st[j] = <span class="hljs-literal">true</span>;
+                }
+            }
+        }
+    }
+
+    <span class="hljs-keyword">if</span> (dist[n] == <span class="hljs-number">0x3f3f3f3f</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">return</span> dist[n];
+}
+</code></pre>
+
+<p>spfa判断图中是否存在负环 —— 模板题 AcWing 852. spfa判断负环</p>
+<pre class="hljs cpp"><code>时间复杂度是 O(nm)O(nm), nn 表示点数，mm 表示边数
+<span class="hljs-keyword">int</span> n;      <span class="hljs-comment">// 总点数</span>
+<span class="hljs-keyword">int</span> h[N], w[N], e[N], ne[N], idx;       <span class="hljs-comment">// 邻接表存储所有边</span>
+<span class="hljs-keyword">int</span> dist[N], cnt[N];        <span class="hljs-comment">// dist[x]存储1号点到x的最短距离，cnt[x]存储1到x的最短路中经过的点数</span>
+<span class="hljs-keyword">bool</span> st[N];     <span class="hljs-comment">// 存储每个点是否在队列中</span>
+
+<span class="hljs-comment">// 如果存在负环，则返回true，否则返回false。</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">spfa</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-comment">// 不需要初始化dist数组</span>
+    <span class="hljs-comment">// 原理：如果某条最短路径上有n个点（除了自己），那么加上自己之后一共有n+1个点，由抽屉原理一定有两个点相同，所以存在环。</span>
+
+    <span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )
+    {
+        q.push(i);
+        st[i] = <span class="hljs-literal">true</span>;
+    }
+
+    <span class="hljs-keyword">while</span> (q.size())
+    {
+        <span class="hljs-keyword">auto</span> t = q.front();
+        q.pop();
+
+        st[t] = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = h[t]; i != <span class="hljs-number">-1</span>; i = ne[i])
+        {
+            <span class="hljs-keyword">int</span> j = e[i];
+            <span class="hljs-keyword">if</span> (dist[j] &gt; dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                cnt[j] = cnt[t] + <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">if</span> (cnt[j] &gt;= n) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;       <span class="hljs-comment">// 如果从1号点到x的最短路中包含至少n个点（不包括自己），则说明存在环</span>
+                <span class="hljs-keyword">if</span> (!st[j])
+                {
+                    q.push(j);
+                    st[j] = <span class="hljs-literal">true</span>;
+                }
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+</code></pre>
+
+<p>floyd算法 —— 模板题 AcWing 854. Floyd求最短路<br>
+时间复杂度是 O(n3)O(n3), nn 表示点数<br>
+初始化：</p>
+<pre class="hljs cpp"><code>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++ )
+            <span class="hljs-keyword">if</span> (i == j) d[i][j] = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">else</span> d[i][j] = INF;
+
+<span class="hljs-comment">// 算法结束后，d[a][b]表示a到b的最短距离</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">floyd</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt;= n; k ++ )
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++ )
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+}
+
+作者：yxc
+链接：https:<span class="hljs-comment">//www.acwing.com/blog/content/405/</span>
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+</code></pre>
+        </div>
+    </div><!-- end  /.section-martor -->
+</div>
