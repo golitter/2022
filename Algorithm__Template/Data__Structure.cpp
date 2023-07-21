@@ -2,7 +2,7 @@
  * 树状数组 BIT
  * 线段树  SegTree
  * 并查集 DisjointSet
- * 最近公共祖先 LCA
+ * 
  * 分块 block
  * 
 */
@@ -167,69 +167,6 @@ void solve() {
 
 
 
-namespace golitter {
-namespace LCA {
-
-const int N = 10e5 + 21;
-const int M = 2*N;
-int h[M],e[M],ne[M],idx;
-int dep[N],root,n,m,t;
-int fa[N][20];
-void add(int u,int v) { //
-    e[idx] = v, ne[idx] = h[u], h[u] = idx++;
-}
-void bfs() { // 找深度 + 预处理
-    memset(dep, 0x3f, sizeof(dep));
-    dep[0] = 0, dep[root] = 1;
-    queue<int> q;
-    q.push(root);
-    while (q.size())
-    {
-        int x = q.front(); q.pop();
-        for(int i = h[x]; ~i; i = ne[i]) {
-            int y = e[i];
-            if(dep[y] > dep[x]) {
-                dep[y] = dep[x] + 1;
-                q.push(y);
-                fa[y][0] = x;
-                for(int k = 1; k <= t; k++) {
-                    fa[y][k] = fa[ fa[y][k-1]][k-1];
-                }
-            }
-        }
-    }
-    
-}
-int lca(int x, int y) {
-    if(dep[y] > dep[x]) swap(x,y); // 让x深度最大，从x到y找
-    for(int k = t; k >= 0; --k) {
-        if(dep[ fa[x][k]] >= dep[y]) x = fa[x][k];
-    }
-    if(x == y) return x;
-    for(int k = t; k >= 0; --k) {
-        if(fa[x][k] != fa[y][k]) {
-            x = fa[x][k], y = fa[y][k];
-        }
-    }
-    return fa[x][0];
-}
-void solve() {
-    t = 15;
-    cin>>n>>m>>root;
-    memset(h, -1, sizeof(h));
-    for(int i = 1; i < n; ++i) {
-        int u,v; cin>>u>>v;
-        add(u,v); add(v,u);
-    }
-    bfs();
-    for(int i  = 0; i < m; ++i) {
-        int u,v; cin>>u>>v;
-        cout<<lca(u,v)<<endl;
-    }
-}
-
-}}
-
 
 namespace golitter {
 namespace DisjointSet {
@@ -273,7 +210,7 @@ namespace block {
 /**
  * 
  * https://www.bilibili.com/video/BV1ms411t7xu/?spm_id_from=333.337.search-card.all.click&vd_source=13dfbe5ed2deada83969fafa995ccff6
- * 
+ * 范围比线段树广，不必考虑区间可加性~
  * belong 表示这个数在哪个块里面
  * block 块大小
  * lb 数所在的左边界
@@ -285,7 +222,7 @@ int belong[N], block, lb[N], rb[N],n,num;
 void build() {
     block = sqrt(n);
     num = n / block; if(n%block) num++;
-    for(int i = 1; i <= num; ++i) {
+    for(int i = 1; i <= num; ++i) { // 下标从1开始
         lb[i] = (i-1)*block + 1, rb[i] = min(i*block, n);
     }
     for(int i = 1; i <= n; ++i) {

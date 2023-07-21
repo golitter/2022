@@ -5,6 +5,7 @@
  *          https://www.acwing.com/blog/content/462/
  * 
  * 最小生成树： MST
+ * 最近公共祖先 LCA
  * 二分图： bipartite_graph
  *          
  * 
@@ -459,6 +460,71 @@ int main()
 
 
 }} 
+
+ 
+
+namespace golitter {
+namespace LCA {
+
+const int N = 10e5 + 21;
+const int M = 2*N;
+int h[M],e[M],ne[M],idx;
+int dep[N],root,n,m,t;
+int fa[N][20];
+void add(int u,int v) { //
+    e[idx] = v, ne[idx] = h[u], h[u] = idx++;
+}
+void bfs() { // 找深度 + 预处理
+    memset(dep, 0x3f, sizeof(dep));
+    dep[0] = 0, dep[root] = 1;
+    queue<int> q;
+    q.push(root);
+    while (q.size())
+    {
+        int x = q.front(); q.pop();
+        for(int i = h[x]; ~i; i = ne[i]) {
+            int y = e[i];
+            if(dep[y] > dep[x]) {
+                dep[y] = dep[x] + 1;
+                q.push(y);
+                fa[y][0] = x;
+                for(int k = 1; k <= t; k++) {
+                    fa[y][k] = fa[ fa[y][k-1]][k-1];
+                }
+            }
+        }
+    }
+    
+}
+int lca(int x, int y) {
+    if(dep[y] > dep[x]) swap(x,y); // 让x深度最大，从x到y找
+    for(int k = t; k >= 0; --k) {
+        if(dep[ fa[x][k]] >= dep[y]) x = fa[x][k];
+    }
+    if(x == y) return x;
+    for(int k = t; k >= 0; --k) {
+        if(fa[x][k] != fa[y][k]) {
+            x = fa[x][k], y = fa[y][k];
+        }
+    }
+    return fa[x][0];
+}
+void solve() {
+    t = 15;
+    cin>>n>>m>>root;
+    memset(h, -1, sizeof(h));
+    for(int i = 1; i < n; ++i) {
+        int u,v; cin>>u>>v;
+        add(u,v); add(v,u);
+    }
+    bfs();
+    for(int i  = 0; i < m; ++i) {
+        int u,v; cin>>u>>v;
+        cout<<lca(u,v)<<endl;
+    }
+}
+
+}}
 
 namespace golitter {
 namespace bipartite_graph {
