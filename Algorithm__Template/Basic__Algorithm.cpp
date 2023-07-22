@@ -2,7 +2,7 @@
  * 不定向输入       UndirectedInput
  * 二分         binary
  * 离散化       discretization
- * 基础dp模板 
+ * 进制转换     conversion
  * 搜索         Bfs_Dfs
  * STL
 */
@@ -97,29 +97,61 @@ void solve() {
 
 }}
 
-
 namespace golitter {
-namespace dp_template {
-const int N = 1e5 + 21;
-int a[N];
-// 最长上升子序列 
-int LIS()
-{
-    int n; cin>>n;
-    for(int i = 1; i <= n; ++i) cin>>a[i]; 
-    vector<int> f;
-    for(int i = 1; i <= n; ++i)  {
-        auto pos = lower_bound(f.begin(), f.end(), a[i]);
-        if(pos == f.end()) {
-            f.push_back(a[i]);
-        } else *pos = a[i];
+namespace conversion {
+/**
+ * @brief 将数制为base的value转为十进制
+ * @return 转换为十进制的数
+*/
+int conversion_from_other_2_base10(int base, int value) {
+    string str = to_string(value);
+    int res = 0;
+    int p = 1;
+    int len = str.size();
+    for(int i = len - 1; i >= 0; --i) {
+        res += p * (str[i] - '0');
+        p *= base;
     }
-    cout<<f.size();
-
-    return 0;
+    return res;
+}
+/**
+ * @brief 将value转换为base进制的数
+ * @return 转换为base进制的数
+*/
+int conversion_from_base10_2_other(int value, int base) {
+    string str = "";
+    while(value) {
+        str += value % base + '0';
+        value /= base;
+    }
+    int res = 0;
+    int len = str.size();
+    for(int i = len - 1; i >= 0; --i) {
+        res = res * 10 + str[i] - '0';
+    }
+    return res;
+}
+/**
+ * @brief 将数制为A_base的数A_value转为数制为B_base的数B_value
+ * @param A_base 将要转换的值的数制类型
+ * @param A_value 将要转换的值
+ * @param B_base 转换后的数制类型
+ * @param B_value 转换后的数值（引用类型）
+ * @return void
+*/
+void conversion_from_baseA_2_baseB(int A_base, int A_value, int B_base, int& B_value) {
+    if(A_base != 10) {
+        A_value = conversion_from_other_2_base10(A_base, A_value);
+    }
+    if(B_base != 10) {
+        B_value = conversion_from_base10_2_other(A_value, B_base);
+    } else B_value = A_value;
+    // cout<<"进制: "<<A_base<<" 的数 ( "<<A_value<<" ) 转为 ==> 进制: "<<B_base<<" 的数 ( "<<B_value<<" )"<<endl;
 }
 
 }}
+
+
 
 #include <vector>
 #include <stack>
@@ -189,6 +221,11 @@ void Map() {
     /**
      * size()   clear()
      *     
+     * map:
+     * 可以元组映射
+     * map<PII,int> mpi; mpi[{1, 2}] = 3;
+     * 
+     * unordered_map 不可以元组映射
      * multimap:
      *  multimap<PII,PII> mmpp;
      * mmpp.insert(pair<PII,PII>({x1,y1}, {x2,y2}));
@@ -208,8 +245,9 @@ void Map() {
 		static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count(); // <chrono>
 		return splitmix64(x + FIXED_RANDOM);
 	}
-    unordered_map<int,int,custom_hash> umii; 
 };
+    unordered_map<int,int,custom_hash> umii; 
+
 }
 void Set() {
     /**

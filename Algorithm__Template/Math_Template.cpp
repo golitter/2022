@@ -1,4 +1,5 @@
 /**
+ * 简单结论 conclusion
  * 最大公约数 gcd
  * 基础数论-质数： prime
  * 线性逆元 inv
@@ -13,6 +14,21 @@
 using namespace std;
 typedef long long LL;
 const int N = 1e5 + 21;
+
+namespace golitter {
+namespace conclusion {
+
+/**
+ * 四面八方：y = -x + b , y = x + b , y = b, x = a 的结论
+ * 恒有： y + x === ;
+ *       y - x === ;
+ *        b  === ;
+ *        a  === ;
+ * url: https://codeforces.com/contest/1850/problem/G
+*/
+
+}}
+
 namespace golitter {
 namespace gcd {
 int gcd(int a, int b) {

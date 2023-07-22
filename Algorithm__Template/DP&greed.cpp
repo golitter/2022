@@ -3,6 +3,7 @@
  * 能用动态规划解决的问题，需要满足三个条件：最优子结构，无后效性和子问题重叠。
  * 
  * 
+ * 线性DP： linear
  * 
  * 区间DP：interval
  * 
@@ -36,6 +37,30 @@ typedef pair<int,int> PII;
 
 const int INF = 0x3f3f3f3f;
 const int N = 1e2 + 21;
+
+
+namespace golitter {
+namespace linear {
+const int N = 1e5 + 21;
+int a[N];
+// 最长上升子序列 
+int LIS()
+{
+    int n; cin>>n;
+    for(int i = 1; i <= n; ++i) cin>>a[i]; 
+    vector<int> f;
+    for(int i = 1; i <= n; ++i)  {
+        auto pos = lower_bound(f.begin(), f.end(), a[i]);
+        if(pos == f.end()) {
+            f.push_back(a[i]);
+        } else *pos = a[i];
+    }
+    cout<<f.size();
+
+    return 0;
+}
+
+}}
 
 namespace golitter {
 namespace interval {

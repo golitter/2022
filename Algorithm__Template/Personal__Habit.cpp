@@ -20,7 +20,9 @@
 #include <algorithm>
 using namespace std;
 
-// #define codeforces_Multiple_groups_of_examples
+// #define Multiple_groups_of_examples
+#define dbgnb(a) std::cout << #a << " = " << a << endl
+#define dbgtt cout<<" !!!test!!! "<<endl;
 #define rep(i,x,n) for(int i = x; i <= n; i++)
 
 #define vf first
@@ -31,7 +33,13 @@ typedef pair<int,int> PII;
 
 const int INF = 0x3f3f3f3f;
 const int N = 2e5 + 21;
-
+const int MOD = 1e9 + 7; 
+/** 
+ *  注意取模要注意，容易犯错，保险一点： (a + b % MOD) % MOD ==> ( (a + b % MOD) % MOD + MOD) % MOD
+ *  这是因为 如果 -b > a 的话取模是负数，再次取模即可
+ * e.g. ( -5 % 3 + 3) % 3 == 1
+ *          -2 + 3 ==> 1 % 3 == 1
+ */
 // #define int long long
 
 
@@ -72,7 +80,7 @@ void solve() {
 }
 int main() // signed main()
 {
-    #ifdef codeforces_Multiple_groups_of_examples
+    #ifdef Multiple_groups_of_examples
     int T; cin>>T;
     while(T--)
     #endif
