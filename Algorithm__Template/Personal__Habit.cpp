@@ -1,5 +1,6 @@
 /**
- * 
+ * cf中不要轻易使用memset
+ * t = 1e5 n 永远等于 1 -> G
  * 
  * 
 */
@@ -46,9 +47,20 @@ inline int fread() // 快读
     return x * f;
 }
 
+void numeric() { // 数学
+    LL k = 1e17;
+    // cmath库里的数学尽量先乘个 1.0
+    double d = sqrt(k * k); // × 会爆 原因：k*k 计算完转double，但是LL超了，因此是计算错误
+    double d = sqrt(1.0 * k * k); // √
+    // 同理LL
+    int ik = 3;
+    LL l = (LL)ik * ik; // 麻烦
+    LL l = 1LL * ik * ik; // 敲代码好敲些
+}
 
 void inpfile();
 void solve() {
+    
     map<int,int> mii;
     unordered_map<int,int> umii;
     set<int> si;

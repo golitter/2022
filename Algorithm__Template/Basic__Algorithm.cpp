@@ -157,6 +157,16 @@ void Queue() {
      * front()
      * pop()
     */
+
+    /**
+     * deque<int> dq; // https://blog.csdn.net/mataojie/article/details/122310752?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522168994535816800192227446%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=168994535816800192227446&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-122310752-null-null.142^v90^insert_down1,239^v3^control&utm_term=deque&spm=1018.2226.3001.4187
+     * size()
+     * empty()
+     * front() back()
+     * push_front() push_back()
+     * pop_front() pop_back()
+     * 可以数组下标访问
+    */
 }
 void Priority_queue() {
     /**
@@ -186,6 +196,20 @@ void Map() {
      * 
      * ** multimap不支持 [] 操作。** *
     */
+   struct custom_hash { // 防止卡umap
+	static uint64_t splitmix64(uint64_t x) {
+		x += 0x9e3779b97f4a7c15;
+		x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+		x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+		return x ^ (x >> 31);
+	}
+	
+	size_t operator()(uint64_t x) const {
+		static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count(); // <chrono>
+		return splitmix64(x + FIXED_RANDOM);
+	}
+    unordered_map<int,int,custom_hash> umii; 
+};
 }
 void Set() {
     /**
