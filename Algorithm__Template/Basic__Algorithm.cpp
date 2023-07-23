@@ -232,6 +232,10 @@ void Map() {
      * count()    find()
      * 
      * ** multimap不支持 [] 操作。** *
+     * 
+     * map 和 unordered_map 比较：
+     *              unordered_map最坏O(n)，会被卡
+     *              # cf 有专门卡umap的
     */
    struct custom_hash { // 防止卡umap
 	static uint64_t splitmix64(uint64_t x) {

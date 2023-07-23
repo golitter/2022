@@ -21,14 +21,17 @@
 using namespace std;
 
 // #define Multiple_groups_of_examples
-#define dbgnb(a) std::cout << #a << " = " << a << endl
+#define dbgnb(a) std::cout << #a << " = " << a << '\n';
+#define IOS std::cout.tie(0);std::cin.tie(0)->sync_with_stdio(false);
 #define dbgtt cout<<" !!!test!!! "<<endl;
 #define rep(i,x,n) for(int i = x; i <= n; i++)
 
+#define all(x) (x).begin(),(x).end()
 #define vf first
 #define vs second
 
 typedef long long LL;
+// #define int long long  // 需要在LL定义之后
 typedef pair<int,int> PII;
 
 const int INF = 0x3f3f3f3f;
@@ -40,7 +43,6 @@ const int MOD = 1e9 + 7;
  * e.g. ( -5 % 3 + 3) % 3 == 1
  *          -2 + 3 ==> 1 % 3 == 1
  */
-// #define int long long
 
 
 // 当输入数据大于 1e6 时用快读
@@ -77,6 +79,11 @@ void solve() {
     vector<int> vi(n);
     vector<PII> vpi(n);
     vector<vector<int>> f(n, vector<int>(2,0));
+
+    // lambda表达式
+    auto lam = [&](int a, int b) -> int {
+        return a > b ? a : b;
+    }; // 注意 逗号
 }
 int main() // signed main()
 {

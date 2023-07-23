@@ -87,7 +87,7 @@ namespace hash_ {
 */
 typedef unsigned long long ULL;
 ULL h[N], p[N],n; // h[k]存储字符串前k个字母的哈希值, p[k]存储 P^k mod 2^64
-ULL P = 1e9 + 7;
+ULL P = 111451; // 质数即可
 char str[N];
 void init() {
     // 初始化
@@ -102,6 +102,39 @@ void init() {
 ULL get(int l, int r) {
     return h[r] - h[l - 1] * p[r - l + 1];
 }
+// C++ lambda
+auto get_pre = [&](int l, int r) -> ULL {
+    return h[r] - h[l - 1] * p[r - l + 1];
+}; // lambda注意 逗号
+
+// 封装
+// https://ac.nowcoder.com/acm/contest/view-submission?submissionId=62962241
+class strHash {
+	typedef unsigned long long ULL;
+public:
+	strHash(const string& s) {
+		this->str = "^" + s;
+		dispose();
+	}
+	ULL get(int l, int r) {
+		return h[r] - h[l - 1] * p[r - l + 1];
+	}
+private:
+	void dispose() {
+		len = str.size();
+		h.assign(len + 1, 0); p.assign(len + 1, 0);
+		h[0] = p[0] = 1;
+		for(int i = 1; i <= len; ++i) {
+			h[i] = h[i-1] * P + str[i];
+			p[i] = p[i - 1] * P;
+		}
+	}
+
+	const ULL P = 11451;
+	string str;
+	ULL len;
+	vector<ULL> h,p;
+};
 
 }}
 

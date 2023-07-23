@@ -17,8 +17,10 @@ const int N = 1e5 + 21;
 
 namespace golitter {
 namespace conclusion {
-
+    // y = x + b函数性质
+    // 调和级数 harmonic_progression  时间复杂度 O( nlog(n))
 /**
+ * y = x + b函数性质
  * 四面八方：y = -x + b , y = x + b , y = b, x = a 的结论
  * 恒有： y + x === ;
  *       y - x === ;
@@ -26,6 +28,31 @@ namespace conclusion {
  *        a  === ;
  * url: https://codeforces.com/contest/1850/problem/G
 */
+
+/**
+ * 调和级数 https://www.zhihu.com/search?hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A%22645232342%22%7D&hybrid_search_source=Entity&q=%E8%B0%83%E5%92%8C%E7%BA%A7%E6%95%B0&search_source=Entity&type=content
+ * 时间复杂度为 O(nlog(n))
+ * 1 + 1/2 + 1/3 + 1/4 + 1/5 + 1/6 + 1/7 + 1/8 ... + 1/n
+ * n = 1e6时, O(16.7 * n == 1e7 )
+ * n =  1e8时 O(21.3 * n == 2e7)
+ * ** 赛时想到了这种解法，但是直觉感觉是 O(n*n) ，赛后看证明调和级数发现是 O(nlog(n))
+ * ** 反直觉
+*/
+void harmonic_progression() { // https://codeforces.com/contest/1850/problem/F
+	int n; cin>>n;
+	vector<LL> ans(n+1), cnt(n+1);
+	for(int i = 0; i < n; ++i) {
+		int a; cin>>a;
+		if(a <= n) cnt[a]++;
+	}
+	for(int i = 1; i <= n; ++i) {
+		for(int j = i; j <= n; j += i) {
+			ans[j] += cnt[i];
+		}
+	}
+	cout<<*max_element(ans.begin(), ans.end())<<endl;
+
+}
 
 }}
 

@@ -174,6 +174,8 @@ namespace DisjointSet {
 
 const int N = 234;
 int fa[N];
+
+// 朴素并查集
 int find(int x) {
     return fa[x] == x ? x : fa[x] = find(fa[x]);
 }
@@ -191,6 +193,66 @@ void solve() {
             } else puts("No");
         }
     }
+}
+// url: https://blog.csdn.net/m0_63794226/article/details/126697871
+// 维护size的并查集 | 按秩合并
+int fa[N], size[N],n;
+// p[]存储每个点的祖宗节点, size[]只有祖宗节点的有意义，表示祖宗节点所在集合中的点的数量
+
+// 返回x的祖宗节点
+int find(int x) {
+    if(fa[x] != x) fa[x] = find(fa[x]);
+    return fa[x];
+}
+// 初始化，假定节点编号是1~n
+void init() {
+    for(int i = 1; i <= n; ++i) fa[i] = i, size[i] = 1;
+}
+// 合并a和b所在的两个集合
+// 合并时的小优化 -- 将一棵点数与深度都较小的集合树连接到一棵更大的集合树下。
+// 在实际代码中，即便不使用启发式合并，代码也能够在规定时间内完成任务。
+void merge(int a, int b) {
+    int pa = find(a), pb = find(b);
+    if(pa == pb) return ;
+    if(size[pa] > size[pb]) swap(pa, pb); // 保证小的合到大的里
+    fa[pa] = pb;
+    size[pb] += size[pa];
+}
+
+// 维护祖先节点距离的并查集 | 带权并查集
+// problem: https://codeforces.com/contest/1850/problem/H
+int fa[N], d[N];
+//p[]存储每个点的祖宗节点, d[x]存储x到p[x]的距离
+// 返回x的祖宗节点   
+int find(int x) {
+    if(fa[x] != x) {
+        int r = find(fa[x]);
+        d[x] += d[fa[x]];
+        fa[x] = r;
+    }
+    return fa[x];
+}
+// 初始化，假定节点编号是1~n
+void init() {
+    for(int i = 1; i <= n; ++i) fa[i] = i, d[i] = 0;
+}
+// 合并a和b所在的两个集合
+int distance;
+void merge(int a, int b, int t) {
+    int pa = find(a), pb = find(b);
+    fa[pa] = pb;
+    d[pa] = d[b] - d[a] + t;
+    /**
+     * 解释：
+     *  a .. pa         b .. pb
+     * a ---> pa       b ---> pb
+     * a -->pa  --> pb
+     *          b --|
+     * dist(pa -> pb) == d[b] + t - dist(a -> pa) = d[a];
+     * d[pa] = d[b] - d[a] + t;
+    */
+    // fa[find(a)] = find(b);
+    // d[find(a)] = distance; // 根据具体问题，初始化find(a)的偏移量
 }
 
 /**
