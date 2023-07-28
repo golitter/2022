@@ -3,6 +3,7 @@
  * 二分         binary
  * 离散化       discretization
  * 进制转换     conversion
+ * 高精度       high_precision
  * 搜索         Bfs_Dfs
  * STL
 */
@@ -149,6 +150,37 @@ void conversion_from_baseA_2_baseB(int A_base, int A_value, int B_base, int& B_v
     // cout<<"进制: "<<A_base<<" 的数 ( "<<A_value<<" ) 转为 ==> 进制: "<<B_base<<" 的数 ( "<<B_value<<" )"<<endl;
 }
 
+// 由m进制转换成n进制
+string conversion(string num, int m, int n){
+    int l = num.size(), k = 0;
+    string ans = "";
+    for(int i = 0; i < l; ){
+        k = 0;
+        // k是 a/b 的余数，因为在 a/b 的过程中我们要不断更新商的值，所以要不断更新 num[j]
+        // 单纯求余数的话我们 k * m + num[j] 计算若干次就够了
+        for(int j = i; j < l; j ++){
+            int t = (k * m + num[j] - '0') % n;
+            num[j] = (k * m + num[j] - '0') / n + '0';
+            k = t;
+        }
+        ans += (k + '0');
+        // 如果 num[i] == 0 说明商在该位上没有值，比如 0001，那值就是 1，跳过去就好了
+        while(num[i] == '0') i ++;
+    }
+    return ans; // 反转即可
+}
+
+
+}}
+
+namespace golitter {
+namespace high_precision {
+/**
+ * 使用python char a = 'a'; ord(a) == 97 将字符转为对应的ASCII码
+ *                          chr(97) == 'a' 将ascii码转为对应的字符
+*/
+
+
 }}
 
 
@@ -199,13 +231,42 @@ void Queue() {
      * pop_front() pop_back()
      * 可以数组下标访问
     */
+
+   // 单调队列
+// 常见模型：找出滑动窗口中的最大值/最小值
+// int hh = 0, tt = -1;
+// for (int i = 0; i < n; i ++ )
+// {
+//     while (hh <= tt && check_out(q[hh])) hh ++ ;  // 判断队头是否滑出窗口
+//     while (hh <= tt && check(q[tt], i)) tt -- ;
+//     q[ ++ tt] = i;
+// }
 }
 void Priority_queue() {
     /**
-     * priority_queue<int> heap 大顶堆 [大的在上面]
+     * priority_queue<int> heap 大顶堆 [大的在上面] 默认大顶堆
      * priority_queue<int, vector<int>, greater<int>> q; 小顶堆 [小的在上面]
      * size()    push()     pop()     top()
     */
+}
+// 用priority_queue 自定义堆 http://www.cbww.cn/news/37826.shtml
+//      要重载 < 操作符 ，注意两个const才可以通过编译
+// 方法一 重载运算符<
+struct adt { // 小顶堆
+    int a;
+    bool operator<(const adt& rhs) const { // 优先队列的><与sort的><相反.
+        return a > rhs.a; // 这里 从大到小进行排序，队列从最右边开始，所以是小顶堆
+    }
+};
+// 方法二 使用lambda表达式
+void test_priority_queue() {
+    auto cmp = [](int pre, int suf) { return pre > suf; }; // 小顶堆
+    priority_queue<int,vector<int>, decltype(cmp)> pq(cmp); // decltype 类型说明符
+
+    // 实现自定义PII堆结构
+    auto pii_cmp = [](PII pre, PII suf) {return pre.vf < suf.vf; };
+    priority_queue<PII, vector<PII>, decltype(pii_cmp)> heap(pii_cmp);
+
 }
 void Stack() {
     /**
@@ -216,6 +277,17 @@ void Stack() {
      * pop()
      * top()
     */
+   // 单调栈
+
+// 常见模型：找出每个数左边离它最近的比它大/小的数
+// auto linear_stack = [&]() {
+//     int tt = 0;
+//     for (int i = 1; i <= n; i ++ )
+//     {
+//         while (tt && check(stk[tt], i)) tt -- ;
+//         stk[ ++ tt] = i;
+//     }    
+// }
 }
 void Map() {
     /**

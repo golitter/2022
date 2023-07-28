@@ -136,6 +136,51 @@ private:
 	vector<ULL> h,p;
 };
 
+typedef long long LL;
+/**
+ * 二维哈希板子
+ * 注意：一定记得初始化 init()
+*/
+const int B[] = {223333333, 773333333}; // P1 P2
+const int P = 1000002233;
+
+LL *p[2];
+
+void init(int N) { // 初始化
+    p[0] = new LL [N];
+    p[1] = new LL [N];
+    p[0][0] = p[1][0] = 1;
+    for (int i = 1; i < N; i++) {
+        p[0][i] = p[0][i - 1] * B[0] % P;
+        p[1][i] = p[1][i - 1] * B[1] % P;
+    }
+}
+
+struct StringHash2D { // 字符串二维哈希 板子来源：https://ac.nowcoder.com/acm/contest/view-submission?submissionId=63032157
+    using LL = long long;
+    int n, m;// n * m 
+    vector<vector<LL>> h;
+    StringHash2D(const vector<string> &a) {
+        n = a.size(); 
+        m = (n == 0 ? 0 : a[0].size());
+        h.assign(n + 1, {});
+        for (int i = 0; i <= n; i++) { // 分配 n * m 
+            h[i].assign(m + 1, 0);
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) { // 二维哈希
+                h[i + 1][j + 1] = (h[i][j + 1] * B[0] % P + h[i + 1][j] * B[1] % P + 
+                    (P - h[i][j]) * B[0] % P * B[1] % P + a[i][j]) % P; 
+            }
+        }
+    }
+
+    LL get(int x1, int y1, int x2, int y2) { // p1 = (x1, y1), p2 = (x2, y2) [p1, p2)
+        return (h[x2][y2] + h[x1][y1] * p[0][x2 - x1] % P * p[1][y2 - y1] % P + 
+            (P - h[x1][y2]) * p[0][x2 - x1] % P + (P - h[x2][y1]) * p[1][y2 - y1] % P) % P;
+    } 
+};
+
 }}
 
 namespace golitter {
