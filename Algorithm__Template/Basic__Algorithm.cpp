@@ -230,6 +230,7 @@ void Queue() {
      * push_front() push_back()
      * pop_front() pop_back()
      * 可以数组下标访问
+     * 可以排序
     */
 
    // 单调队列

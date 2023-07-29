@@ -56,12 +56,13 @@ void String_Transform() {
 }}
 
 namespace golitter {
-namespace KMP {
+namespace KMP { // https://ac.nowcoder.com/acm/contest/57358/A
+                // https://oi-wiki.org/string/kmp/
 /**
  * 
  * 给定一个长度为 n 的字符串 s，其 前缀函数 被定义为一个长度为 n 的数组 nxt。 其中 nxt[i] 的定义是：
 * 如果子串 s[i] 有一对相等的真前缀与真后缀：s[k-1] 和 s[i - (k - 1)i]，那么 nxt[i] 就是这个相等的真前缀（或者真后缀，因为它们相等））的长度，也就是 nxt[i]=k；
-* 如果不止有一对相等的，那么 pi[i] 就是其中最长的那一对的长度；
+* 如果不止有一对相等的，那么 nxt[i] 就是其中最长的那一对的长度；
 * 如果没有相等的，那么 nxt[i]=0。
 * 简单来说 nxt[i] 就是，子串 s[i] 最长的相等的真前缀与真后缀的长度。
 */
@@ -75,6 +76,18 @@ vector<int> prefix_function(string s) {
     nxt[i] = j;
   }
   return nxt;
+}
+// 在字符串text中查找pattern字符串
+vector<int> find_occurrences(string text, string pattern) {
+  string cur = pattern + '#' + text; // 加一个两个字符串中不存在的字符，表示最长前缀为n咯
+  int sz1 = text.size(), sz2 = pattern.size();
+  vector<int> v;
+  vector<int> lps = prefix_function(cur);
+  for (int i = sz2 + 1; i <= sz1 + sz2; i++) {
+    if (lps[i] == sz2)
+      v.push_back(i - 2 * sz2);
+  }
+  return v;
 }
 
 }}
