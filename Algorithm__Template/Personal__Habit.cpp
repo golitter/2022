@@ -1,6 +1,10 @@
 /**
- * cf中不要轻易使用memset
- * t = 1e5 n 永远等于 1 -> G
+ * cf中不要轻易使用memset，尽量使用 for(int i = 0; i < n; ++i) 重置
+ *      t = 1e5 n 永远等于 1 -> G
+ * 
+ * n * m 等，如果n和m不相同等情况，多加考虑n和m，按n/m考虑
+ * 
+ * https://www.cnblogs.com/lipoicyclic/p/12311394.html
  * 
  * 
 */
@@ -19,6 +23,13 @@
 #include <stdio.h>
 #include <algorithm>
 using namespace std;
+    /**
+     * 浮点数读入：
+     *      double，少用float  
+     *      scanf("%.lf",&d);
+     *      printf("%.f",d);
+     *          --- 语句说的 2023年8月4日
+    */
 
 // #define Multiple_groups_of_examples
 #define dbgnb(a) std::cout << #a << " = " << a << '\n';

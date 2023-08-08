@@ -60,7 +60,7 @@ void solve() {
     {
         // 最小值最大
         while(l < r ) {
-            int mid = (l + r + 1) >> 1;
+            int mid = (l + r + 1) >> 1; // [2, 2]; --> 
             if(check(mid)) l = mid;
             else r = mid - 1;
         } // output: l
@@ -246,6 +246,7 @@ void Queue() {
 void Priority_queue() {
     /**
      * priority_queue<int> heap 大顶堆 [大的在上面] 默认大顶堆
+     *      等价于 priority_queue<int,vector<int>,less<int>> heap 大顶堆
      * priority_queue<int, vector<int>, greater<int>> q; 小顶堆 [小的在上面]
      * size()    push()     pop()     top()
     */
@@ -255,7 +256,7 @@ void Priority_queue() {
 // 方法一 重载运算符<
 struct adt { // 小顶堆
     int a;
-    bool operator<(const adt& rhs) const { // 优先队列的><与sort的><相反.
+    bool operator<(const adt& rhs) const { // 优先队列的><与sort的><相反. ** 没有const会报错
         return a > rhs.a; // 这里 从大到小进行排序，队列从最右边开始，所以是小顶堆
     }
 };
@@ -292,6 +293,9 @@ void Stack() {
 }
 void Map() {
     /**
+     * 
+     *  map 自带大常数，但是卡不掉map，
+     * stl 里 套 stl会很慢 ***
      * size()   clear()
      *     
      * map:
