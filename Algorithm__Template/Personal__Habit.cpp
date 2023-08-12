@@ -18,6 +18,7 @@
 #include <queue>
 #include <ctime>
 #include <random>
+#include <bitset> // 是由int型拼接的， e.g. 1000位bitset 操作时间复杂度 O( 1000 / (大于等于 32))
 #include <sstream>
 #include <numeric>
 #include <stdio.h>
@@ -89,7 +90,7 @@ void solve() {
     int n; cin>>n;
     vector<int> vi(n);
     vector<PII> vpi(n);
-    vector<vector<int>> f(n, vector<int>(2,0));
+    vector<vector<int>> f(n, vector<int>(2,0)); // c++14 auto dfs中用vector数组不行，（或者我现在的编译器不支持
 
     // lambda表达式
     auto lam = [&](int a, int b) -> int {

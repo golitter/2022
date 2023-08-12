@@ -1,5 +1,6 @@
 /**
  * 链式前向星  basic
+ * 拓扑序 topo
  * 树的直径： DT
  * 最短路：shortest_path
  *          https://www.acwing.com/blog/content/462/
@@ -16,6 +17,7 @@
 #include <queue>
 #include <algorithm>
 #include <numeric>
+#include <bitset>
 
 const int N = 1e3;
 const int INF = 0x3f3f3f3f;
@@ -61,6 +63,45 @@ void dfs(int u) {
     vis[u] = true;
     for(int i = 0; i < adj[u].size(); ++i) {
         dfs(adj[u][i]);
+    }
+}
+
+}}
+
+namespace golitter {
+namespace topo {
+
+int e[N], ne[N], h[N],idx;
+int in[N];
+bool vis[N];
+void inpfile();
+void add(int u, int v) {
+    e[idx] = v, ne[idx] = h[u], h[u] = idx++;
+}
+void solve() {
+    memset(h, -1, sizeof(h));
+    int n; cin>>n;
+    for(int i = 1; i <= n; ++i) {
+        int k; 
+        while(cin>>k, k != 0) {
+            add(i,k);
+            in[k]++;
+        }
+    }
+    queue<int> q;
+    for(int i = 1; i <= n; ++i) {
+        if(!in[i]) q.push(i);
+    }
+    while(q.size()) {
+        auto tmp = q.front(); q.pop();
+        if(vis[tmp]) continue;
+        cout<<tmp<<" ";
+        vis[tmp] = 1;
+        for(int i = h[tmp]; ~i; i = ne[i]) {
+            int y = e[i];
+            in[y]--;
+            if(!in[y]) q.push(y);
+        }
     }
 }
 
@@ -262,7 +303,6 @@ void Bellman_Ford() {
         int a, b, w;
         cin>>a>>b>>w;
         edges[i] = {a,b,w};
-
     }
     // start Bellman-ford;
     int t = BellmanFord();
@@ -272,6 +312,7 @@ void Bellman_Ford() {
 }
 
 // SPFA
+    // 随机数据可用，一般会被卡
 int SPFA() {
     // 根据三角不等式
     // bfs 将变小的入队，更新以其为起始点的其他边
@@ -332,6 +373,7 @@ bool Is_SPFA_ECli() { // 都遍历一遍
 
 // 多源最短路 不能有负权回路
     // 动态规划
+// floyd算法主要作用有：1.找最短路   2.求传递闭包   3.找最小环   4.求出恰好经过k条边的最短路
 int d[N][N], n, m, Q;
 void floyd() {
     cin>>n>>m>>Q; 
@@ -364,6 +406,28 @@ void floyd() {
         int a, b;
         cin>>a>>b;
         cout<<d[a][b];
+    }
+}
+    // 2. 求传递闭包
+/**
+ * 在交际网络中，给定若干个元素和若干对二元关系，且关系具有传递性。通过传递性推导出尽量多的元素之间的关系的问题被成为传递闭包
+*/
+void floyd_transitive_closure() {
+    // 多一层循环 k, 若 i -> k 可以，j -> i 可以， 则 j -> k 可以
+    int f[N][N];
+    for(int k = 1; k <= n; ++k) {
+        for(int i = 1; i <= n; ++i) {
+            for(int j = 1; j <= n; ++j) {
+                f[i][j] = f[i][j] || (f[i][k] && f[k][j]);
+            }
+        }
+    }
+    // https://www.luogu.com.cn/problem/P2881
+    bitset<N> bf[N];
+    for(int k = 1; k <= n; ++k) {
+        for(int j = 1; j <= n; ++j) {
+            if(bf[j][k]) bf[j] |= bf[k]; // j 可以到k，则k可以到的点j都可以到，或一下即可
+        }
     }
 }
 
