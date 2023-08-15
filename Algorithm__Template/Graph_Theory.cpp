@@ -532,10 +532,10 @@ namespace bipartite_graph {
 
 // 二分图： 当且仅当图中不含奇数环；
 
-	// 染色法判断二分图
+	// 染色法判断二分图 https://www.acwing.com/problem/content/862/
 int n, h[N],e[N],ne[N],idx,color[N];
 void add(int a, int b) {
-	e[idx] = b, ne[idx] = h[a], h[a] = ++idx;
+	e[idx] = b, ne[idx] = h[a], h[a] = idx++;
 }
 bool dfs(int u, int c) { // 不矛盾 返回 true
 	color[u] = c;
@@ -577,7 +577,7 @@ const int M = 34343;
 struct Edge{int u,v; }edge[M];
 bool check(int n, int m) {
 	ckst cs(n*2);
-	for(int i = 1; i <= m; ++i) { // 合并两个边上的点
+	for(int i = 1; i <= n; ++i) { // 合并两个边上的点
 		int u = edge[i].u, v = edge[i].v;
 		cs.uni(u,v+n), cs.uni(u+n,v);
 	}
@@ -586,6 +586,55 @@ bool check(int n, int m) {
 		if(cs.same(i,n+i)) return false;
 	}
 	return true;
+}
+
+// 二分图的最大匹配
+
+namespace 二分图匹配 {
+
+namespace 匈牙利 {
+        // 时间复杂度 O(n * m)
+		// https://www.acwing.com/problem/content/description/863/
+int e[N], ne[N], h[N], w[N], idx;
+int match[N]; // 存储第二个集合中的每个点当前匹配的第一个集合中的点是哪个
+bool vis[N]; // 表示第二个集合中的每个点是否已经被遍历过
+void add(int u, int v) {
+	e[idx] = v, ne[idx] = h[u], h[u] = idx++;
+}
+int n1,n2; // n1表示第一个集合中的点数，n2表示第二个集合中的点数
+bool find(int x) {
+	for(int i = h[x]; ~i; i = ne[i]) {
+		int y = e[i];
+		if(vis[y]) continue;
+		vis[y] = true;
+		if(match[y] == 0 || find(match[y])) {
+			match[y] = x;
+			return true;
+		}
+	}
+	return false;
+}
+void inpfile();
+void solve() {
+	int m;
+	memset(h, -1, sizeof(h));
+	cin>>n1>>n2>>m;
+	for(int i = 0; i < m; ++i) {
+		int u,v; cin>>u>>v;
+		add(u,v);
+		// add(v,u); #  // 保存图，因为只从一遍找另一边，所以该无向图只需要存储一个方向
+	}
+	int res = 0;
+	// 求最大匹配数，依次枚举第一个集合中的每个点能否匹配第二个集合中的点
+	for(int i = 1; i <= n1; ++i) {
+		memset(vis, 0, sizeof(vis));
+		if(find(i)) res++;
+	}
+	cout<<res;
+}
+
+}
+
 }
 
 
