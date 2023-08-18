@@ -431,6 +431,15 @@ void floyd_transitive_closure() {
     }
 }
 
+// 差分约束：
+/**
+ *  ** url: https://zhuanlan.zhihu.com/p/104764488
+ * 差分约束系统是下面这种形式的多元一次不等式组
+ * 原理：图论的三角形不等式 dist[b] <= dist[a] + c，表示此时，a -- c --> b 已经是最短路了。
+ * 
+ * 超级源点建图即可。
+*/
+
 }}
 
 namespace golitter {

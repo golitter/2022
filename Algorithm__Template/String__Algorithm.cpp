@@ -4,11 +4,13 @@
  * 字符串哈希        hash
  * trie      字典树 trie
  * manacher 马拉车 manacher
+ * 序列自动机   fakeac
 */
 
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 using namespace std;
 
 namespace golitter {
@@ -297,6 +299,37 @@ vector<int> manacher(string &a) {// max(vector<int> P.size() ) - 1;
     }
     a = b;
     return hw;
+}
+
+}}
+
+namespace golitter {
+namespace fakeac { // 序列自动机
+
+int fake[N][27];
+char s[N], t[N];
+void NC23053() { // https://ac.nowcoder.com/acm/problem/23053
+    cin>>s + 1;
+    int n; cin>>n;
+    int len = strlen(s + 1);
+    for(int i = len; i >= 0; --i) {
+        for(int j = 0; j < 26; ++j) fake[i][j] = fake[i+1][j];
+        if(i < len) fake[i][s[i+1] - 'a'] = i + 1;
+    }
+    while(n--) {
+        cin>>t + 1;
+        int tlen = strlen(t + 1);
+        bool fg = false;
+        int pos = 0;
+        for(int i = 1; i <= tlen; ++i) {
+            if(fake[pos][t[i] - 'a']) pos = fake[pos][t[i] - 'a'];
+            else {
+                fg = true;
+                break;
+            }
+        }
+    puts(!fg ? "Yes" : "No");
+    }
 }
 
 }}
