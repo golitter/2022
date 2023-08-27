@@ -88,6 +88,8 @@ namespace SegTree {
  * 解题步骤： 建树，
 */
 
+namespace plain{
+
 int w[N],n,m; // 注意 w[N] 开LL ( https://www.luogu.com.cn/problem/P2357
 struct adt {
     int l,r;
@@ -170,6 +172,90 @@ void solve() {
  * query时 向下回溯要先对左右节点进行更新
  * 
 */
+}
+
+namespace seg_merge {
+
+const int N = 2e5 + 21;
+struct SegTree {
+    int l,r,cover; // cover统计该区间的覆盖次数
+}tr[N << 2];
+inline int ls(int u) { return u << 1; }
+inline int rs(int u) { return u << 1 | 1; }
+void pushup(int u) {
+    int mi = min(tr[ls(u)].cover, tr[rs(u)].cover);
+    tr[ls(u)].cover -= mi; tr[rs(u)].cover -= mi;
+    tr[u].cover += mi;
+}
+void pushdown(int u) {
+    auto &root = tr[u], &right = tr[rs(u)], &left = tr[ls(u)];
+    if(root.cover) {
+        left.cover += root.cover;
+        right.cover += root.cover;
+        root.cover = 0;
+    }
+}
+void build(int u, int l, int r) {
+    if(l == r) tr[u] = {l,r,0};
+    else {
+        int mid = l + r >> 1;
+        tr[u] = {l,r};
+        build(ls(u), l, mid), build(rs(u), mid + 1, r);
+        pushup(u);
+    }
+}
+void modify(int u, int l, int r, int k) {
+    if(tr[u].l >= l && tr[u].r <= r) {
+        tr[u].cover += k;
+        return ;
+    }
+    pushdown(u);
+    int mid = tr[u].l + tr[u].r >> 1;
+    if(l <= mid) modify(ls(u), l, r, k);
+    if(r > mid) modify(rs(u), l, r, k);
+    pushup(u);
+}
+int query(int u, int l, int r) {
+    LL res = 0;
+    if(tr[u].l >= l && tr[u].r <= r) {
+        if(tr[u].cover > 0) {
+            res += tr[u].r - tr[u].l + 1;
+        } else if(l != r) {
+            int mid = tr[u].l + tr[u].r >> 1;
+            pushdown(u);
+            if(l <= mid) res += query(ls(u),l,mid);
+            if(r > mid) res += query(rs(u),mid+1,r);
+        }
+        return res;
+    } else {
+        int mid = tr[u].l + tr[u].r >> 1;
+        pushdown(u);
+        if(l <= mid) res += query(ls(u),l,r);
+        if(r > mid) res += query(rs(u),l,r);
+        return res;
+    }
+}
+void inpfile();
+void solve() {
+    int n,L; cin>>n>>L;
+    build(1,1,L);
+    set<PII> s;
+    while(n--) {
+        int opt,l,r; cin>>opt>>l>>r;
+        if(opt == 1) {
+            if(s.find({l,r}) != s.end()) continue;
+            s.insert({l,r});
+            modify(1,l,r,1);
+        } else if(opt == 2) {
+            if(s.find({l,r}) == s.end()) continue;
+            s.erase({l,r});
+            modify(1,l,r,-1);
+        } else if(opt == 3) {
+            cout<<query(1,1,L)<<endl;
+        }
+    }
+}
+}
 
 namespace mul_and_add {
 
@@ -460,8 +546,6 @@ void solve() {
 
 
 
-
-
 namespace golitter {
 namespace DisjointSet {
 #include <unordered_map>
@@ -699,6 +783,7 @@ void solve() {
 }
 
 namespace golitter {
+/// @brief 换根操作 https://www.luogu.com.cn/blog/Farkas/guan-yu-shu-lian-pou-fen-huan-gen-cao-zuo-bi-ji
 namespace TCS { // 树链剖分
 
 /**
@@ -727,7 +812,6 @@ const int N = 2e6 + 21;
 
 int fa[N], dep[N], siz[N], son[N], top[N], dfn[N], rnk[N];
 int h[N], e[N], ne[N], w[N], dist[N], idx,cnt;
-int p;
 void inpfile();
 
 void add(int u, int v) {
@@ -909,6 +993,298 @@ void solve() {
             cin>>x;
             // 求以 x 为根节点的子树内所有的节点值之和
             cout<<query(1, dfn[x], dfn[x] + siz[x] - 1) % p<<endl;
+        }
+    }
+}
+}
+
+namespace change_root {
+
+/**
+ * url: https://www.luogu.com.cn/problem/solution/P3384
+ * 树链剖分的思想是:对于两个不在同一重链内的节点,让他们不断地跳,使得他们处于同一重链上
+ * 
+ * 如何跳：
+ *  用第二次dfs中记录的top数组，** x 到 top[x] 中的节点在线段树上是连续的。
+ * 结合dep数组即可。
+ * 
+ * 选择x 和 y点dep较大的点开始跳（假设较大点是x），让x节点直接跳到 top[x]，然后在线段树上更新。
+ * 最后两个节点一定是处于同一条重链的，再直接在线段树上处理即可。
+ * 
+ * 
+*/
+/* ---------------------------------------------------------------------------------------------- */
+const int N = 5e5 + 21;
+
+// - `fa(x)`：表示节点`x`在树上的父亲
+// - `dep(x)`：表示节点`x`在树上的深度
+// - `siz(x)`：表示节点`x`的子树的节点个数
+// - `son(x)`：表示节点`x`的重儿子
+// - `top(x)`：表示节点`x`所在**重链**的顶部节点（深度最小
+// - `dfn(x)`：表示节点`x`的**DFS序**，也是其在线段树中的编号
+// - `rnk(x)`：表示DFS序所对应的节点编号，有`rnk(dfn(x)) = x`
+
+int fa[N], dep[N], siz[N], son[N], top[N], dfn[N], rnk[N];
+int h[N], e[N], ne[N], w[N], dist[N], idx,cnt;
+int p;
+void inpfile();
+
+void add(int u, int v) {
+    e[idx] = v, ne[idx] = h[u], h[u] = idx++;
+}
+/* -------------------- 树链剖分 两次dfs -----------------------------------------------------------*/
+
+// 找出 fa dep siz son
+void dfs1(int u) {
+    // if(dep[u]) 
+    son[u] = -1; // 重儿子设置为-1
+    siz[u] = 1; // 当前u节点大小为1（它本身
+    for(int i = h[u]; ~i; i = ne[i]) {
+        int y = e[i];
+        if(y == fa[u]) continue; // ** 
+        if(!dep[ y]) { // 如果深度没有，则可以接着往下遍历
+            dep[ y] = dep[u] + 1; // 求出深度
+            fa[ y] = u; // 为y设置父亲节点
+            dfs1(y); // 递归 y
+            siz[u] += siz[ y]; // 当前节点u增加子节点个数
+            if(son[u] == -1 || siz[ y] > siz[ son[u]]) son[u] = y; // 更新重儿子
+        }
+    }
+}
+
+// 求出 top dfn rnk
+void dfs2(int u, int t) {
+
+    top[u] = t; // 设置节点u的顶部节点为t
+    cnt++;
+    dfn[u] = cnt; // 在线段树中的编号
+    rnk[cnt] = u; // DFS序对应的节点编号
+    if(son[u] == -1) return ; // 如果son[u] = -1，表示是叶子节点
+    dfs2(son[u], t); // 优先对重儿子进行DFS，保证同一条重链上的点DFS序连续
+    for(int i = h[u]; ~i; i = ne[i]) {
+        int y = e[i];
+        // 当不是u的重儿子，也不是u的父亲节点
+        // 那就是新的重链
+        if(y != son[u] && y != fa[u]) dfs2(y, y); 
+    }
+}
+
+// 求lca
+int lca(int u, int v) {
+    // 当两个点的重链顶点不一样时，表示是两个不同的重链
+    // 深度大的向上跳
+    // 跳到重链顶点的父亲节点
+    while(top[u] != top[v]) {
+        if(dep[ top[u]] > dep[ top[v]]) {
+            u = fa[ top[u]];
+        } else {
+            v = fa[ top[v]];
+        }
+    }
+    return dep[u] > dep[v] ? v : u;
+}
+
+/* -------------------- 线段树 [ 区间修改 区间求和 板子 ] --------------------------------------------------*/
+// （ 裸线段树：树中点映射到线段树重
+struct SegTree {
+    int l,r;
+    LL sum, add;
+}tr[N << 2];
+inline int ls(int u) {return u << 1; }
+inline int rs(int u) {return u << 1 | 1; }
+void pushup(int u) {
+    tr[u].sum = tr[ls(u)].sum + tr[rs(u)].sum;
+}
+void pushdown(int u) {
+    auto &root = tr[u], &left = tr[ls(u)], &right = tr[rs(u)];
+    if(root.add) {
+        left.add += root.add; left.sum += (left.r - left.l + 1) * root.add;
+        right.add += root.add; right.sum += (right.r - right.l + 1) * root.add;
+        root.add = 0;
+    }
+}
+void build(int u, int l, int r) {
+    if(l == r) tr[u] = {l,r,w[r],0};
+    else {
+        tr[u] = {l,r};
+        int mid = l + r >> 1;
+        build(ls(u), l, mid), build(rs(u), mid + 1, r);
+        pushup(u);
+    }
+}
+void modify(int u, int l, int r, int k) {
+    if(tr[u].l >= l && tr[u].r <= r) {
+        tr[u].add += k;
+        tr[u].sum += (tr[u].r - tr[u].l + 1) * k;
+        return ;
+    }
+    pushdown(u);
+    int mid = tr[u].l + tr[u].r >> 1;
+    if(l <= mid) modify(ls(u),l,r,k);
+    if(r > mid) modify(rs(u), l, r,k);
+    pushup(u);
+}
+LL query(int u, int l, int r) {
+    if(tr[u].l >= l && tr[u].r <= r) {
+        return tr[u].sum;
+    }
+    int mid = tr[u].l + tr[u].r >> 1;
+    LL sum = 0;
+    pushdown(u);
+    if(l <= mid) sum = query(ls(u), l,r);
+    if(r > mid) sum += query(rs(u),l,r);
+    return sum;
+}
+/* -------------------- 树链剖分 ------------------------------------------------------------------------*/
+// 求树 从 x 到 y 结点最短路径上所有节点的值之和
+LL treesum(int x, int y) {
+    LL ans = 0;
+    // 如果x 和 y两个点对应重链顶点不一样，就向上跳
+    while(top[x] != top[y]) { 
+        // 让 x 向上跳
+        if(dep[ top[x]] < dep[ top[y]]) swap(x,y);
+        // 查询这条重链的和
+        // dfn -- 对应 树中点在线段树中的映射
+        // top -- 对应重链顶点
+        ans = (ans + query(1,dfn[ top[x]], dfn[x]));
+        // 让 x等于它重链顶点的父亲节点
+        x = fa[ top[x]];
+    }
+    // 让 x 在左边
+    if(dep[x] > dep[y]) swap(x,y);
+    // 处理 x 和 y 在同一条重链的区间和
+    ans = (ans + query(1, dfn[x], dfn[y]));
+    return ans;
+}
+
+// 将树从 x 到 y 结点 最短路径上所有节点的值都加上k
+// 同上 treeadd
+void treeadd(int x, int y, int k) { 
+    while(top[x] != top[y]) {
+        if(dep[ top[x]] < dep[ top[y]]) swap(x,y);
+        modify(1, dfn[ top[x]], dfn[x], k);
+        x = fa[ top[x]];
+    }
+    if(dep[x] > dep[y]) swap(x,y);
+    modify(1, dfn[x], dfn[y], k);
+}
+/*----------------------------- 换根操作 ------------------------------------------------------------*/
+int root, n,m;
+
+/*--------------------------------- 在以root为根的lca -----------------------------------------------*/
+// https://www.luogu.com.cn/blog/Farkas/guan-yu-shu-lian-pou-fen-huan-gen-cao-zuo-bi-ji
+int LCA(int x, int y) {
+    if(dep[x] > dep[y]) swap(x,y);
+    int xr = lca(x,root), yr = lca(y,root), xy = lca(x,y);
+    if(xy == x) { // 当 lca(x,y) == x时
+        if(xr == x) {
+            // 情况1：root 在x的子树中，也在y的子树中，即
+                // lca(x,root) == x && lca(y,root) == y 此时 LCA(x,y)是y
+            if(yr == y) return y;
+            // 情况2：root在x的子树中，但不在y的子树中，即lca(x,root)，此时 LCA(x,y) 是 lca(y,root)
+            return yr;
+        }
+        // 情况3：是x
+        return x;
+    }
+    if(xr == x) {
+        return x;
+    }
+    if(yr == y) {
+        return y;
+    }
+    if(xr == root && xy == yr || (yr == root && xy == xy)) {
+        return root;
+    }
+    if(xr == yr) return xy;
+    if(xy != xr) return xr;
+    return yr;
+}
+/*--------------------------------以root为根的增添，查询 ----------------------------------------------*/
+// u 到 root路径上 与u相挨着的节点v的子树
+int find_adj(int u, int rt) {
+    // 从深度大的开始跳，往上跳
+    while(top[u] != top[rt]) {
+        if(dep[ top[u]] < dep[ top[rt]]) swap(u,rt);
+        // 如果 root是u所在重链的父亲节点，那么直接返回即可
+        if(fa[ top[u]] == rt) return top[u];
+        u = fa[ top[u]];
+    }
+    // 让root深度最浅
+    if(dep[u] < dep[rt]) swap(u, rt);
+    return son[rt];
+}
+
+
+// 设u为要查的子树的根节点。
+// - 如果root = u，那么子树即为整棵树
+// - 设lca为root和u的LCA。如果 `lca != u`，那么对于查询没有影响
+// - 如果 `lca = u`，那么u节点的子树就是整棵树减去u - root这个路径上与u相挨着的节点v的子树即可。
+void nodeadd(int u, int k) {
+    if(root == u) modify(1,1,n, k); // 子树就是整树
+    else {
+        int lac = lca(u, root);
+        if(lac != u) modify(1, dfn[u], dfn[u] + siz[u] - 1, k); // 对查询没有影响
+        else {
+            // 否则就是  u节点的子树就是整棵树减去u - root这个路径上与u相挨着的节点v的子树
+            int adju = find_adj(u, root);
+            modify(1,1,n, k);
+          modify(1, dfn[adju], dfn[adju] + siz[adju] - 1, -k);
+        }
+    }
+}
+// 同上
+LL nodesum(int u) {
+    if(root == u) return query(1,1,n);
+    else {
+        int lac = lca(u, root);
+        if(lac != u) return query(1, dfn[u], dfn[u] + siz[u] - 1);
+        else {
+            int adju = find_adj(u, root);
+            return query(1, 1,n) - query(1, dfn[adju], dfn[adju] + siz[adju] - 1);
+        }
+    }
+}
+int a[N];
+void solve() {
+    memset(h, -1, sizeof(h));
+    cin>>n;
+    root = 1;
+    for(int i = 1; i <= n; ++i) cin>>a[i];
+    for(int i = 1; i < n; ++i) {
+        int u; cin>>u;
+        add(u,i+1); add(i+1,u);
+    }
+    // cin>>m;
+    // dbgtt
+    /* ------- dfs * 2-------------------------------------*/
+    dfs1(1);
+    dfs2(1,1);
+    /* ------- 将对应的在线段树中的位置和值进行设置 ---------*/
+    for(int i = 1; i <= n; ++i) w[ dfn[i]] = a[i];
+    // for(int i = 1; i <= n; ++i) cout<<dfn[i]<<endl;
+    /* ------- 建树 ---------*/
+    build(1,1,n);
+    /* --------- 查询 -----------------------------------*/
+    cin>>m;
+    while(m--) {
+        int opt; cin>>opt;
+        int x,y,z;
+        if(opt == 1) {
+            cin>>x;
+            root = x;
+        } else if(opt == 2) {
+            cin>>x>>y>>z;
+            treeadd(x,y,z);
+        } else if(opt == 3) {
+            cin>>x>>z;
+            nodeadd(x,z);
+        } else if(opt == 4) {
+            cin>>x>>y;
+            cout<<treesum(x,y)<<endl;
+        } else {
+            cin>>x; 
+            cout<<nodesum(x)<<endl;
         }
     }
 }

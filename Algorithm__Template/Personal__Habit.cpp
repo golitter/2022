@@ -6,6 +6,8 @@
  * 
  * https://www.cnblogs.com/lipoicyclic/p/12311394.html
  * 
+ * 对拍
+ * https://blog.csdn.net/weixin_50624971/article/details/121185941
  * fast_OI 超级快读
 */
 #include <iostream>
