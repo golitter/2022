@@ -2,7 +2,7 @@
  * cf中不要轻易使用memset，尽量使用 for(int i = 0; i < n; ++i) 重置
  *      t = 1e5 n 永远等于 1 -> G
  * 
- * n * m 等，如果n和m不相同等情况，多加考虑n和m，按n/m考虑
+ * n * m 等，如果n和m不相同等情况，多加考虑n和m，按n或m考虑
  * 
  * https://www.cnblogs.com/lipoicyclic/p/12311394.html
  * 

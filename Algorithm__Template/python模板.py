@@ -12,6 +12,9 @@ try:
 except:
     pass
 
+# 翻转
+s[::-1]
+
 # 读取n,m，再读取n个数，m行
 n, m = (int(_) for _ in input().strip().split(" "))
 a = [int(_) for _ in input().strip().split(" ")]

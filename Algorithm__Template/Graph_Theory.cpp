@@ -2,6 +2,7 @@
  * 链式前向星  basic
  * 拓扑序 topo
  * 树的直径： DT
+ * 基环树： Base_Ring_Tree
  * 最短路：shortest_path
  *          https://www.acwing.com/blog/content/462/
  * 
@@ -175,6 +176,17 @@ void solve() {
     }
     cout<<ans;
 }
+
+}}
+
+namespace golitter {
+namespace Base_Ring_Tree {
+/**
+ * 基环树 https://www.luogu.com.cn/blog/user52918/qian-tan-ji-huan-shu
+ * 基环树就是有n个点n条边的图，由于比树只出现了一个环，那么就称之为基环树了。
+*/
+    // https://codeforces.com/contest/1872/problem/F
+    // https://codeforces.com/contest/1867/problem/D
 
 }}
 
