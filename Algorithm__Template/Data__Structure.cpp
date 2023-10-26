@@ -76,6 +76,73 @@ void solve() {
     }
 }
 
+namespace class__ {
+
+class BIT {
+private:
+    int N = 0;
+    vector<int> tr;
+    int lowbit(int x) {return x & -x; }
+public:
+    BIT() {;}
+    BIT(int sz) {
+        sz = sz + 121;
+        N = sz;
+        assign(sz);
+    }
+    void assign(int sz) {
+        tr.assign(sz,0);
+    }
+    void add(int x, int c) {
+        for(; x < N; x += lowbit(x)) tr[x] += c;
+    }
+    int sum(int x) {
+        int res = 0;
+        for(; x; x -= lowbit(x)) res += tr[x];
+        return res;
+    }
+    int sum(int l, int r) {
+        return sum(r) - sum(l - 1);
+    }
+};
+
+class BIT2d {
+private:
+    vector<vector<int>> tr;
+    // int N;
+    int n,m;
+    int lowbit(int x) {return x & -x; }
+public:
+    BIT2d() {; }
+    BIT2d(int nn, int mm) {
+        assign(nn,mm);
+    }
+    void assign(int nn, int mm) {
+        n = nn, m = mm;
+        tr.assign(n + 1, vector<int> (m + 1));
+    }
+    void add(int x, int y, int d) {
+        for(int i = x; i <= n; i += lowbit(i)) {
+            for(int j = y; j <= m; j += lowbit(j)) tr[i][j] += d;
+        }
+    }
+    int query(int x, int y) {
+        int res = 0;
+        for(int i = x; i; i -= lowbit(i)) {
+            for(int j = y; j; j -= lowbit(j)) {
+                res += tr[i][j];
+            }
+        }
+        return res;
+    }
+    int query(int x1, int y1, int x2, int y2) {
+        return query(x2, y2) - query(x1 - 1, y2) - query(x2, y1 - 1) + query(x1 - 1, y1 - 1);
+    }
+};
+
+
+}
+
 }}
 
 namespace golitter {
@@ -172,6 +239,87 @@ void solve() {
  * query时 向下回溯要先对左右节点进行更新
  * 
 */
+}
+
+
+namespace xor_template {
+
+// 更新 2023年10月17日 21点30分
+
+struct Adt {
+    int l,r;
+    int sum,lz;
+};
+
+class SegTree {
+private:
+    vector<int> w;
+    vector<Adt> tr;
+    inline int ls(int p) {return p << 1; }
+    inline int rs(int p) {return p << 1 | 1; }
+    
+    void pushup(int u) {
+        tr[u].sum = tr[ls(u)].sum + tr[rs(u)].sum;
+    }
+    void pushdown(int u) {
+        auto &root = tr[u], &right = tr[rs(u)], &left = tr[ls(u)];
+        if(root.lz) {
+            right.lz ^= 1; right.sum = (right.r - right.l + 1 - right.sum);
+            left.lz ^= 1; left.sum = (left.r - left.l + 1 - left.sum);
+            root.lz = 0;
+        }
+    }
+public:
+    SegTree() {
+        ;
+    }
+    SegTree(int N) {
+        assign(N);
+    }
+    void assign(int N) {
+        N = N + 21;
+        int wn = N;
+        tr.assign(N << 2, Adt{});
+        w.assign(wn + 1, 0);
+    }
+    void atw(int idx, int val) {
+        w[idx] = val;
+    }
+    void build(int u, int l, int r) {
+        if(l == r) tr[u] = {l,r,w[r],0};
+        else {
+            tr[u] = {l,r};
+            int mid = l + r >> 1;
+            build(ls(u), l, mid), build(rs(u), mid + 1, r);
+            pushup(u);
+        }
+    }
+    void modify(int u, int l, int r, int d) {
+        if(tr[u].l >= l && tr[u].r <= r) {
+            tr[u].lz ^= 1;
+            tr[u].sum = (tr[u].r - tr[u].l + 1 - tr[u].sum);
+        } else {
+            pushdown(u);
+            int mid = tr[u].l + tr[u].r >> 1;
+            if(l <= mid) modify(ls(u), l, r,d);
+            if(r > mid) modify(rs(u), l,  r, d);
+            pushup(u);
+        }
+    }
+    int query(int u, int l, int r) {
+        if(tr[u].l >= l && tr[u].r <= r) {
+            return tr[u].sum;
+        } else {
+            pushdown(u);
+            int mid = tr[u].l + tr[u].r >> 1;
+            int ans = 0;
+            if(l <= mid) ans = query(ls(u), l, r);
+            if(r > mid) ans += query(rs(u), l, r);
+            return ans;
+        }
+    }
+};
+
 }
 
 namespace seg_merge {
@@ -574,7 +722,7 @@ void solve() {
 }
 // url: https://blog.csdn.net/m0_63794226/article/details/126697871
 // 维护size的并查集 | 按秩合并
-int fa[N], size[N],n;
+int fa[N], sz[N],n;
 // p[]存储每个点的祖宗节点, size[]只有祖宗节点的有意义，表示祖宗节点所在集合中的点的数量
 
 // 返回x的祖宗节点
@@ -584,7 +732,7 @@ int find(int x) {
 }
 // 初始化，假定节点编号是1~n
 void init() {
-    for(int i = 1; i <= n; ++i) fa[i] = i, size[i] = 1;
+    for(int i = 1; i <= n; ++i) fa[i] = i, sz[i] = 1;
 }
 // 合并a和b所在的两个集合
 // 合并时的小优化 -- 将一棵点数与深度都较小的集合树连接到一棵更大的集合树下。
@@ -592,9 +740,9 @@ void init() {
 void merge(int a, int b) {
     int pa = find(a), pb = find(b);
     if(pa == pb) return ;
-    if(size[pa] > size[pb]) swap(pa, pb); // 保证小的合到大的里
+    if(sz[pa] > sz[pb]) swap(pa, pb); // 保证小的合到大的里
     fa[pa] = pb;
-    size[pb] += size[pa];
+    sz[pb] += sz[pa];
 }
 
 // 维护祖先节点距离的并查集 | 带权并查集
@@ -782,6 +930,52 @@ void solve() {
 }
 }
 
+// 重剖和长剖唯一不同的是：重链剖分中一个点的重儿子是子树最大（管辖节点最多）的儿子，而长链剖分选择的是 子树深度最大的那个儿子（子树深度：一个点的子树中深度最大的点的深度）。
+// https://blog.csdn.net/weixin_34138521/article/details/94081891?ops_request_misc=&request_id=&biz_id=102&utm_term=%E9%87%8D%E9%93%BE%20%E9%95%BF%E9%93%BE%20%E7%AE%97%E6%B3%95&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-2-94081891.142^v94^chatsearchT3_1&spm=1018.2226.3001.4187
+
+namespace golitter {
+namespace LCS { // 长链剖分
+        // https://codeforces.com/gym/104077/problem/L
+
+// 树链剖分改
+int fa[N], dep[N], siz[N], son[N], top[N], dfn[N], rnk[N];
+int h[N], e[N], ne[N], w[N], dist[N], idx,cnt;
+void inpfile();
+vector<int> lgh;
+void add(int u, int v) {
+    e[idx] = v, ne[idx] = h[u], h[u] = idx++;
+}
+void dfs1(int u) {
+    siz[u] = 1; // 当前u节点大小为1（它本身
+    for(int i = h[u]; ~i; i = ne[i]) {
+        int y = e[i];
+        if(y == fa[u]) continue; // ** 
+        if(!dep[ y]) { // 如果深度没有，则可以接着往下遍历
+            fa[y] = u;
+            dfs1(y); // 递归 y
+            siz[u] += siz[ y]; // 当前节点u增加子节点个数
+            if(dep[ y] > dep[ son[u]]) son[u] = y; // 更新重儿子
+        }
+    }
+    dep[u] = dep[son[u]] + 1;
+}
+
+void dfs2(int u, int len) {
+
+    if(son[u] == 0) {
+        lgh.push_back(len);
+        return ;
+    } // 如果son[u] = -1，表示是叶子节点
+    dfs2(son[u], len+1); // 优先对重儿子进行DFS，保证同一条重链上的点DFS序连续
+    for(int i = h[u]; ~i; i = ne[i]) {
+        int y = e[i];
+        // 当不是u的重儿子，也不是u的父亲节点
+        // 那就是新的重链
+        if(y != son[u] && y != fa[u]) dfs2(y, 1); 
+    }
+}
+
+}}
 namespace golitter {
 /// @brief 换根操作 https://www.luogu.com.cn/blog/Farkas/guan-yu-shu-lian-pou-fen-huan-gen-cao-zuo-bi-ji
 namespace TCS { // 树链剖分

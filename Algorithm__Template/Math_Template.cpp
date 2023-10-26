@@ -84,6 +84,9 @@ int gcd(int a, int b) {
 
 namespace golitter {
 namespace inv {
+
+// https://www.cnblogs.com/chy-2003/p/9656801.html
+// 只能互质，且 x < mod才行
 LL mod = 131;
 // A / B % mod == A * inv(B, mod) % mod;
 LL inv(LL a) {
@@ -92,8 +95,35 @@ LL inv(LL a) {
 }
 LL inv(LL x, LL mod) {
     if(x == 0 || x == 1) return x;
-    return (mod - mod/x) * inv(mod % x) % mod;
+    return (mod - mod/x) * inv(mod % x, mod) % mod;
 }
+
+// 无限制逆元
+// 欧几里得拓展,x是a对于mod b的逆元 [O(logN)]
+LL exgcd(LL a, LL b, LL &x, LL &y) {
+    if (b == 0) {
+        x = 1;
+        y = 0;
+        return a;
+    }
+    LL d = exgcd(b, a % b, y, x);
+    y = y - a / b * x;
+    return d;
+}
+ 
+// 求解最小正整数解
+LL inv(LL b, LL mod) {
+    LL x, y;
+    LL gcd = exgcd(b, mod, x, y);
+    if (gcd != 1)
+        return -1;
+    else {
+        LL tb = mod / gcd;
+        LL minX = (x % tb + tb) % tb;
+        return minX;
+    }
+}
+ 
 }}
 
 namespace golitter {

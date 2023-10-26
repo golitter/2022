@@ -69,27 +69,27 @@ namespace KMP { // https://ac.nowcoder.com/acm/contest/57358/A
 * 简单来说 nxt[i] 就是，子串 s[i] 最长的相等的真前缀与真后缀的长度。
 */
 vector<int> prefix_function(string s) { 
-  int n = (int)s.length();
-  vector<int> nxt(n);
-  for (int i = 1; i < n; i++) {
-    int j = nxt[i - 1];
-    while (j > 0 && s[i] != s[j]) j = nxt[j - 1];
-    if (s[i] == s[j]) j++;
-    nxt[i] = j;
-  }
-  return nxt;
+    int n = (int)s.length();
+    vector<int> nxt(n);
+    for (int i = 1; i < n; i++) {
+        int j = nxt[i - 1];
+        while (j > 0 && s[i] != s[j]) j = nxt[j - 1];
+        if (s[i] == s[j]) j++;
+        nxt[i] = j;
+    }
+    return nxt;
 }
 // 在字符串text中查找pattern字符串
 vector<int> find_occurrences(string text, string pattern) {
-  string cur = pattern + '#' + text; // 加一个两个字符串中不存在的字符，表示最长前缀为n咯
-  int sz1 = text.size(), sz2 = pattern.size();
-  vector<int> v;
-  vector<int> lps = prefix_function(cur);
-  for (int i = sz2 + 1; i <= sz1 + sz2; i++) {
-    if (lps[i] == sz2)
-      v.push_back(i - 2 * sz2);
-  }
-  return v;
+    string cur = pattern + '#' + text; // 加一个两个字符串中不存在的字符，表示最长前缀为n咯
+    int sz1 = text.size(), sz2 = pattern.size();
+    vector<int> v;
+    vector<int> lps = prefix_function(cur);
+    for (int i = sz2 + 1; i <= sz1 + sz2; i++) {
+        if (lps[i] == sz2)
+        v.push_back(i - 2 * sz2);
+    }
+    return v;
 }
 
 }}
@@ -331,5 +331,76 @@ void NC23053() { // https://ac.nowcoder.com/acm/problem/23053
     puts(!fg ? "Yes" : "No");
     }
 }
+
+}}
+
+namespace golitter {
+namespace ACAM {
+// https://www.luogu.com.cn/problem/P5357
+// https://zhuanlan.zhihu.com/p/546999184
+struct acam {
+    static const int M = 300005;
+    struct node {
+        int fail;
+        int ch[28] = {0};
+    }tr[M];
+    int cnt = 0;
+    map<int,int> ref;
+    vector<int> g[M];
+    int ans[M];
+    void insert(string &s, int id) {
+        int u = 0;
+        for(auto c: s) {
+            int last = c == '_' ? 26 : c - 'a';
+            if(!tr[u].ch[last]) {
+                tr[u].ch[last] = ++cnt;
+            }
+            u = tr[u].ch[last];
+        }
+        ref[id] = u;
+    }
+    void build() {
+        queue<int> que;
+        for(int i = 0; i < 27; ++i) {
+            if(tr[0].ch[i]) que.push(tr[0].ch[i]);
+        }
+        while(que.size()) {
+            int u = que.front(); que.pop();
+            for(int i = 0; i < 27; ++i) {
+                if(tr[u].ch[i]) {
+                    tr[tr[u].ch[i]].fail = tr[tr[u].fail].ch[i];
+                    que.push(tr[u].ch[i]);
+                } else tr[u].ch[i] = tr[tr[u].fail].ch[i];
+            }
+        }
+        for(int i = 1; i <= cnt; ++i) g[tr[i].fail].push_back(i);
+    }
+    void query(string &S) {
+        int u = 0;
+        for(auto c: S) {
+            int last = c == '_' ? 26 : c - 'a';
+            u = tr[u].ch[last];
+            ans[u]++;
+        }
+    }
+    void get_ans() {
+        dfs(0);
+    }
+    void dfs(int u) {
+        for(auto y: g[u]) {
+            dfs(y);
+            ans[u] += ans[y];
+        }
+    }
+    void clear() {
+        for(int i = 0; i < M; ++i) {
+            tr[i] = {};
+            g[i].clear();
+            ans[i] = 0;
+        }
+        ref.clear();
+        cnt = 0;
+    }
+}trie;
 
 }}
