@@ -70,6 +70,15 @@ inline int fread() // 快读
     }
     return x * f;
 }
+
+namespace direction {
+namespace d8 {
+vector<int> fx({0, 0, 1, 1, 1, -1, -1, -1}), fy({1, -1, 1, 0, -1, 1, 0, -1});
+}
+namespace d4 {
+vector<int> fx({0,0,1,-1}), fy({1,-1,0,0});
+}
+}
 namespace fast_IO {
     inline char read() {
         return getchar();

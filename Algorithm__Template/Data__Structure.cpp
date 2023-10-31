@@ -5,6 +5,7 @@
  * 最近公共祖先 LCA
  * 分块 block
  * ST表 st
+ * 平衡树 Splay
  * 
 */
 #include <iostream>
@@ -30,7 +31,7 @@ typedef pair<int,int> PII;
 const int INF = 0x3f3f3f3f;
 const int N = 1e5 + 21;
 
-namespace golitter {
+namespace golitter { // 树状数组
 namespace BIT {
     /**  url: https://ac.nowcoder.com/acm/contest/61132/L
         底部确定，顶部无穷大
@@ -45,6 +46,8 @@ namespace BIT {
             将询问的区间按照右端点小在前排序
 
     */
+// 非封装
+namespace plain {
 const int N = 5e5 + 21;
 int n,m;
 int tr[N];
@@ -76,6 +79,43 @@ void solve() {
     }
 }
 
+}
+// 算竞常用封装
+namespace Fenwick{
+template <class T>
+struct Fenwick {
+    int n;
+    vector<T> a;
+    Fenwick(const int &n = 0) : n(n), a(n, T()) {}
+    void modify(int i, T x) {
+        for (i++; i <= n; i += i & -i) {
+            a[i - 1] += x;
+        }
+    }
+    T get(int i) {
+        T res = T();
+        for (; i > 0; i -= i & -i) {
+            res += a[i - 1];
+        }
+        return res;
+    }
+    T sum(int l, int r) { // [l, r)
+        return get(r) - get(l);
+    }
+    int kth(T k) {
+        int x = 0;
+        for (int i = 1 << __lg(n); i; i >>= 1) {
+            if (x + i <= n && k >= a[x + i - 1]) {
+                x += i;
+                k -= a[x - 1];
+            }
+        }
+        return x;
+    }
+};
+}
+
+// 个人封装
 namespace class__ {
 
 class BIT {
@@ -145,7 +185,7 @@ public:
 
 }}
 
-namespace golitter {
+namespace golitter { // 线段树
 namespace SegTree {
     /**
  * 小区间的值更新大区间的值
@@ -154,6 +194,75 @@ namespace SegTree {
  *      
  * 解题步骤： 建树，
 */
+
+// 区间查询，线段树简单封装版
+namespace SG {
+
+struct SegTree {
+    static const int N = 2e5 + 21;
+    struct node {
+        int l, r, mi;
+        LL sum,add;
+    }tr[N << 2];
+    int w[N];
+    // 左子树
+    inline int ls(int p) {return p<<1; }
+    // 右子树
+    inline int rs(int p) {return p<<1|1; }
+    // 向上更新
+    void pushup(int u) {
+        tr[u].sum = tr[ls(u)].sum + tr[rs(u)].sum;
+        tr[u].mi = min(tr[ls(u)].mi, tr[rs(u)].mi);
+    }
+    // 向下回溯时，先进行更新
+    void pushdown(int u) { // 懒标记，该节点曾经被修改，但其子节点尚未被更新。
+        auto &root = tr[u], &right = tr[rs(u)], &left = tr[ls(u)];
+        if(root.add) {
+            right.add += root.add; right.sum += (LL)(right.r - right.l + 1)*root.add; right.mi -= root.add;
+            left.add += root.add; left.sum += (LL)(left.r - left.l + 1)*root.add; left.mi -= root.add;
+            root.add = 0;
+        }
+
+    }
+    // 建树
+    void build(int u, int l, int r) {
+        if(l == r) tr[u] = {l, r, w[r], w[r], 0};
+        else {
+            tr[u] = {l,r}; // 容易忘
+            int mid = l + r >> 1;
+            build(ls(u), l, mid), build(rs(u), mid + 1, r);
+            pushup(u);
+        }
+    }
+    // 修改
+    void modify(int u, int l, int r, int d) {
+        if(tr[u].l >= l && tr[u].r <= r) {
+            tr[u].sum += (LL)(tr[u].r - tr[u].l + 1)*d;
+            tr[u].add += d;
+        }
+        else {
+            pushdown(u);
+            int mid = tr[u].l + tr[u].r >> 1;
+            if(l <= mid) modify(ls(u), l ,r, d);
+            if(r > mid) modify(rs(u), l, r, d);
+            pushup(u);
+        }
+    }
+    // 查询
+    LL query(int u, int l, int r) {
+        if(tr[u].l >= l && tr[u].r <= r) {
+            return tr[u].mi;
+        }
+        pushdown(u);
+        int mid = tr[u].l + tr[u].r >> 1;
+        LL sum = INF;
+        if(l <= mid) sum = query(ls(u), l, r);
+        if(r > mid ) sum = min(sum, query(rs(u), l, r));
+        return sum;
+    }
+}tree;
+
+}
 
 namespace plain{
 
@@ -694,7 +803,7 @@ void solve() {
 
 
 
-namespace golitter {
+namespace golitter { // 并查集
 namespace DisjointSet {
 #include <unordered_map>
 
@@ -795,7 +904,7 @@ void merge(int a, int b, int t) {
 
 
 
-namespace golitter {
+namespace golitter { // LCA
 namespace LCA { // https://www.luogu.com.cn/problem/P8805#submit 加前缀和 求树上两点之间距离
 // 板子
 // https://www.acwing.com/problem/content/1173/
@@ -933,7 +1042,37 @@ void solve() {
 // 重剖和长剖唯一不同的是：重链剖分中一个点的重儿子是子树最大（管辖节点最多）的儿子，而长链剖分选择的是 子树深度最大的那个儿子（子树深度：一个点的子树中深度最大的点的深度）。
 // https://blog.csdn.net/weixin_34138521/article/details/94081891?ops_request_misc=&request_id=&biz_id=102&utm_term=%E9%87%8D%E9%93%BE%20%E9%95%BF%E9%93%BE%20%E7%AE%97%E6%B3%95&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-2-94081891.142^v94^chatsearchT3_1&spm=1018.2226.3001.4187
 
-namespace golitter {
+namespace golitter { // 链剖分
+namespace dfn { // dfs序建立
+// https://ac.nowcoder.com/acm/problem/204871
+// https://ac.nowcoder.com/acm/problem/23051?&headNav=acm
+// https://codeforces.com/contest/1891/problem/F
+void build() {
+
+    vector<vector<int>> g(n+1);
+    for(int i = 1; i < n; ++i) {
+        // u,v 建图
+        int u,v; u = fread(); v = fread();
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+    // dfs序的左右端点
+    // 表示以x为根的子树的左右端点位置
+    vector<int> l(n + 1), r(n + 1);
+    int cnt = 0;
+    // 一个dfs找dfs序
+    auto dfs = [&](auto &&self, int u, int fa) -> void {
+        l[u] = ++cnt;
+        for(auto y: g[u]) {
+            if(y == fa) continue;
+            self(self, y,u);
+        }
+        r[u] = cnt;
+    };
+    dfs(dfs, k,-1);
+}
+}
+
 namespace LCS { // 长链剖分
         // https://codeforces.com/gym/104077/problem/L
 
@@ -1485,7 +1624,7 @@ void solve() {
 }
 
 }
-namespace golitter {
+namespace golitter { // 分块
 namespace block {
 /**
  * 
@@ -1512,7 +1651,34 @@ void build() {
 
 }}
 
-namespace golitter {
+namespace golitter { // st表
+// 算竞常用封装
+namespace SparseTable {
+template <class T>
+struct SparseTable {
+    int n;
+    vector<vector<T>> a;
+    function<T(T, T)> func = [](const T &a, const T &b) { // 套模板时修改此函数 代表查询的性质
+        return dis[a]<dis[b]?a:b;
+    };
+    SparseTable(const vector<T> &init) : n(init.size()) {
+        int lg = __lg(n);
+        a.assign(lg + 1, vector<T>(n));
+        a[0] = init;
+        for (int i = 1; i <= lg; i++) {
+            for (int j = 0; j <= n - (1 << i); j++) {
+                a[i][j] = func(a[i - 1][j], a[i - 1][(1 << (i - 1)) + j]);
+            }
+        }
+    }
+    T get(int l, int r) { // [l, r) 下标从0开始
+        if(l > r)swap(l,r);
+        r++;
+        int lg = __lg(r - l);
+        return func(a[lg][l], a[lg][r - (1 << lg)]);
+    }
+};
+}
 namespace st {
 
 const int N = 1e5 + 21;
@@ -1543,3 +1709,251 @@ int st_query(int l, int r) {
 }
 
 }}
+
+
+namespace golitter { // splay
+// 普通Splay
+namespace Splay {
+// https://zhuanlan.zhihu.com/p/556896902
+// https://www.luogu.com.cn/problem/P3369
+// https://www.luogu.com.cn/problem/P5076
+// https://www.luogu.com.cn/problem/P1168
+// https://www.luogu.com.cn/problem/P1801
+struct Splay {
+    static const int N = 200005;
+    int rt, tot, fa[N], ch[N][2], val[N], cnt[N], siz[N];
+
+    void push_up(int x) { siz[x] = siz[ch[x][0]] + siz[ch[x][1]] + cnt[x]; }
+
+    bool get(int x) { return x == ch[fa[x]][1]; }
+
+    void clear(int x) {
+        ch[x][0] = ch[x][1] = fa[x] = val[x] = siz[x] = cnt[x] = 0;
+    }
+
+    void rotate(int x) {
+        int y = fa[x], z = fa[y], chk = get(x); ch[y][chk] = ch[x][chk ^ 1]; 
+        if (ch[x][chk ^ 1]) fa[ch[x][chk ^ 1]] = y; 
+        ch[x][chk ^ 1] = y; fa[y] = x; fa[x] = z; if (z) ch[z][y == ch[z][1]] = x; push_up(y);
+    }
+
+    void splay(int x,int goal) {
+        for (int f = fa[x]; (f = fa[x]) != goal; rotate(x))
+            if (fa[f] != goal) rotate(get(x) == get(f) ? f : x);
+        if(goal == 0)rt = x;
+    }
+
+    void splay(int x) {
+        splay(x, 0);
+    }
+
+    void ins(int k) {
+        if (!rt) {
+            val[++tot] = k; cnt[tot]++; rt = tot; push_up(rt);
+            return;
+        }
+        int cur = rt, f = 0;
+        while (1) {
+            if (val[cur] == k) {
+                cnt[cur]++; push_up(cur); push_up(f); splay(cur); break;
+            }
+            f = cur; cur = ch[cur][val[cur] < k];
+            if (!cur) {
+                val[++tot] = k; cnt[tot]++; fa[tot] = f; ch[f][val[f] < k] = tot; push_up(tot); push_up(f); splay(tot);
+                break;
+            }
+        }
+    }
+
+    int rk(int k) {
+        int res = 0, cur = rt;
+        while (1) {
+            if (k < val[cur]) {
+                cur = ch[cur][0];
+            }
+            else {
+                res += siz[ch[cur][0]];
+                if (k == val[cur]) {
+                    splay(cur); return res + 1;
+                }
+                res += cnt[cur]; cur = ch[cur][1];
+            }
+        }
+    }
+
+    int kth(int k) {
+        int cur = rt;
+        while (1) {
+            if (ch[cur][0] && k <= siz[ch[cur][0]]) {
+                cur = ch[cur][0];
+            }
+            else {
+                k -= cnt[cur] + siz[ch[cur][0]];
+                if (k <= 0) {
+                    splay(cur); return val[cur];
+                }
+                cur = ch[cur][1];
+            }
+        }
+    }
+
+    int pre() {
+        int cur = ch[rt][0];
+        if (!cur) return cur;
+        while (ch[cur][1]) cur = ch[cur][1];
+        splay(cur); return cur;
+    }
+
+    int nxt() {
+        int cur = ch[rt][1];
+        if (!cur) return cur;
+        while (ch[cur][0]) cur = ch[cur][0];
+        splay(cur); return cur;
+    }
+
+    void del(int k) {
+        rk(k);
+        if (cnt[rt] > 1) {
+            cnt[rt]--; push_up(rt); return;
+        }
+        if (!ch[rt][0] && !ch[rt][1]) {
+            clear(rt); rt = 0; return;
+        }
+        if (!ch[rt][0]) {
+            int cur = rt; rt = ch[rt][1]; fa[rt] = 0; clear(cur); return;
+        }
+        if (!ch[rt][1]) {
+            int cur = rt; rt = ch[rt][0]; fa[rt] = 0; clear(cur); return;
+        }
+        int cur = rt; int x = pre(); fa[ch[cur][1]] = x; ch[x][1] = ch[cur][1]; clear(cur); push_up(rt);
+    }
+} tree;
+
+void solve() {
+    int n; cin >> n;
+    for (int i = 1; i <= n; i++) {
+        int opt, x; cin >> opt >> x;
+        if (opt == 1)
+            tree.ins(x); // 插入x
+        else if (opt == 2)
+            tree.del(x); // 删除x
+        else if (opt == 3)
+            tree.ins(x), printf("%d\n", tree.rk(x)), tree.del(x); // 查询 x 数的排名(排名定义为比当前数小的数的个数
+        else if (opt == 4)
+            printf("%d\n", tree.kth(x)); // 查询排名为x的数 (从小到大排)
+        else if (opt == 5)
+            tree.ins(x), printf("%d\n", tree.val[tree.pre()]), tree.del(x); // 求 x 的前驱（小于x的最大数
+        else
+            tree.ins(x), printf("%d\n", tree.val[tree.nxt()]), tree.del(x); // 求 x 的后继（大于x的最小数
+    }
+}
+
+}
+// 区间翻转的板子
+namespace RevSplay {
+// https://www.luogu.com.cn/problem/P3391
+// https://codeforces.com/contest/1878/problem/D
+struct Splay {
+    static const int N = 2e5 + 21;
+    int rt, tot, fa[N], ch[N][2], val[N], cnt[N], siz[N],n;
+    int tag[N];
+    void push_up(int x) {
+        siz[x] = siz[ch[x][0]] + siz[ch[x][1]] + cnt[x];
+    }
+    void init(int len, int root) {n = len; rt = root; }
+    void push_down(int x) {
+        if (x && tag[x]) {
+            if (ch[x][0])tag[ch[x][0]] ^= 1;
+            if (ch[x][1])tag[ch[x][1]] ^= 1;
+            swap(ch[x][0], ch[x][1]);
+            tag[x] = 0;
+        }
+    }
+    bool get(int x) { return x == ch[fa[x]][1]; }
+    void clear(int x) {
+        ch[x][0] = ch[x][1] = fa[x] = val[x] = siz[x] = cnt[x] = tag[x] = tot = rt = 0;
+    }
+
+    void rotate(int x) {
+        int y = fa[x], z = fa[y], chk = get(x);
+        push_down(x);
+        push_down(y);
+        ch[y][chk] = ch[x][chk ^ 1];
+        if (ch[x][chk ^ 1]) fa[ch[x][chk ^ 1]] = y;
+        ch[x][chk ^ 1] = y;
+        fa[y] = x;
+        fa[x] = z;
+        if (z) ch[z][y == ch[z][1]] = x;
+        push_up(y);
+    }
+    void splay(int x, int goal) {
+        for (int f = fa[x]; (f = fa[x]) != goal; rotate(x))
+            if (fa[f] != goal) rotate(get(x) == get(f) ? f : x);
+        if (goal == 0)rt = x;
+    }
+    void splay(int x) {
+        splay(x, 0);
+    }
+    int kth(int k) {
+
+        int cur = rt;
+        while (1) {
+            push_down(cur);
+            if (ch[cur][0] && k <= siz[ch[cur][0]]) {
+                cur = ch[cur][0];
+            }
+            else {
+                k -= cnt[cur] + siz[ch[cur][0]];
+                if (k <= 0) {
+                    splay(cur);
+                    return cur;
+                }
+                cur = ch[cur][1];
+            }
+        }
+    }
+    int find(int x) {
+        return kth(x + 1);
+    }
+    int build(int L, int R, int father) {
+        if (L > R) { return 0; }
+        int x = ++tot;
+        int mid = (L + R) / 2;
+        fa[x] = father;
+        cnt[x] = 1;
+        val[x] = mid;
+        ch[x][0] = build(L, mid - 1, x);
+        ch[x][1] = build(mid + 1, R, x);
+        push_up(x);
+        return x;
+    }
+    void rev(int L, int R) {
+        int fl = find(L - 1);
+        int fr = find(R + 1);
+        splay(fl, 0);
+        splay(fr, fl);
+        int pos = ch[rt][1]; pos = ch[pos][0];
+        tag[pos] ^= 1;
+    }
+    void dfs(int x) {
+        push_down(x);
+        if (ch[x][0])dfs(ch[x][0]);
+        if (val[x] != 0 && val[x] != (n + 1))cout << val[x] << " ";
+        if (ch[x][1])dfs(ch[x][1]);
+    }
+} tree;
+
+void solve() {
+    int n,m; cin>>n>>m;
+    tree.init(n,1);
+    tree.build(0,n + 1, 0);
+    while(m--) {
+        int l, r; cin>>l>>r;
+        tree.rev(l, r);
+    }
+    tree.dfs(tree.rt);
+}
+
+}
+
+}
