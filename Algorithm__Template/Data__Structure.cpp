@@ -80,10 +80,11 @@ void solve() {
 }
 
 }
-// 算竞常用封装
-namespace Fenwick{
+// 算竞常用封装，下标从0开始，很不熟悉，使用体验：不如自己封装的
+    // update：这个板子是越来越适用了（
+namespace Fenwick_class{
 template <class T>
-struct Fenwick {
+struct Fenwick { 
     int n;
     vector<T> a;
     Fenwick(const int &n = 0) : n(n), a(n, T()) {}
@@ -99,8 +100,8 @@ struct Fenwick {
         }
         return res;
     }
-    T sum(int l, int r) { // [l, r)
-        return get(r) - get(l);
+    T sum(int l, int r) { // [l, r] *这里已经改过
+        return get(r + 1) - get(l);
     }
     int kth(T k) {
         int x = 0;
