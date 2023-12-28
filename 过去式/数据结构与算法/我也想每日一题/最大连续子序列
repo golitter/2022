@@ -1,0 +1,61 @@
+/**
+ * @file Untitled-9
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-21
+ * 
+ * @copyright Copyright (c) 2022
+ * Originally, this is only my method about at last test;
+ * I must write annotation;;; It is very significant for me to correct answer correct questions;
+ * Come on! 
+ */
+#include <bits/stdc++.h>
+using namespace std;
+int f[10001];
+int FlagPre, FlagSuf, TravSum;
+int pre, suf, flag;
+int Max, Min;
+int main()
+{
+    int n;
+    while(~scanf("%d",&n)) {
+        if(n == 0) return 0;
+        for(int i = 0; i < n; i++) {
+            cin>>f[i];
+            if(i == 0) pre = f[i];
+            if(i == n-1) suf = f[i]; 
+            if(f[i] >= 0) {
+                flag = 1;
+            }
+        }
+        if(flag != 1) {
+            cout<<"0 "<<pre<<" "<<suf<<endl;
+        }
+        else {
+            int tag = 0;
+            int tmp;
+            Max = INT_MIN;
+            for(int i = 0; i < n; i++) {
+                TravSum += f[i];
+                if(tag == 0) {
+                    tmp = f[i];
+                    tag = 1;
+                }
+                if(TravSum > Max) {
+                    Max = TravSum;
+                    FlagSuf = f[i];
+                    FlagPre = tmp;
+                }
+                if (TravSum < 0) {
+                    TravSum = 0;
+                    tag = 0;
+                }
+            }
+            cout<<Max<<" "<<FlagPre<<" "<<FlagSuf<<endl;
+            FlagPre = 0; FlagSuf = 0; TravSum = 0;flag = 0;
+            tmp = 0;
+        }
+    }
+
+}

@@ -1,0 +1,34 @@
+/**
+ * @brief 
+ * 两个数组的交集Ⅱ:::::::=;
+ * 
+ *  先排序；
+ *  双指针遍历；
+ *  < --> 
+ *  > -->
+ *  = -->
+ */
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        sort(nums1.begin(), nums1.end());
+        sort(nums2.begin(), nums2.end());
+        int nu1 = nums1.size(), nu2 = nums2.size();
+        int i = 0, j = 0;
+        vector<int> vea;
+        while(i < nu1 && j < nu2) {
+            if(nums1.at(i) < nums2.at(j)) {
+                i++;
+            }
+            else if(nums1.at(i) > nums2.at(j)) {
+                j++;
+            }
+            else if(nums1.at(i) == nums2.at(j)) {
+                vea.push_back(nums1.at(i));
+                i++;
+                j++;
+            }
+        }
+        return vea;
+    }
+};

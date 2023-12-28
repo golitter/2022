@@ -1,0 +1,171 @@
+#include <iostream>
+#include <set>
+#include <map>
+#include <algorithm>
+#include <string>
+using namespace std;
+void printfSet(set<int> &a) {
+    for(auto &t: a) cout<<t<<" ";
+    puts("");
+}
+void set_test() {
+    // set 关联容器
+    // 只能用 insert 插入
+    set<int> se;
+    se.insert(1), se.insert(2), se.insert(3), se.insert(4);se.insert(3);
+    // set 特点：所有元素插入时候自动被排序
+    // set 容器不允许插入重复值
+    printfSet(se);
+    set<int> s1(se);
+    printfSet(s1);
+    set<int> s2;
+    s2 = se;
+    printfSet(s2);
+    // others empty size
+    s2.insert(45);
+    s2.insert(54);
+    s1.swap(s2);
+    printfSet(s1);
+    // erase;
+    s1.erase(s1.begin());
+    printfSet(s1);
+    s1.erase(45);
+    printfSet(s1);
+    // clear
+    s1.clear();
+    printfSet(se);
+    set<int>::iterator pos = se.find(2);
+    if(pos != se.end()) {
+        cout<<"Oh, find it"<<" "<<" and the elem is "<<*pos<<endl;
+    } else {
+        cout<<"Not find it!!!"<<endl;
+    }
+    cout<<se.count(45)<<endl;
+
+    // set and multiset
+    // set has judge
+    pair<set<int>::iterator,bool> ret = se.insert(5);
+    if(ret.second) {
+        cout<<"成功"<<endl;
+    } else {
+        cout<<"失败"<<endl;
+    }
+    multiset<int> mls;
+    mls.insert(1), mls.insert(1), mls.insert(1);
+    for(auto &a: mls) cout<<a<<" ";
+    puts("");
+}
+// pair
+void pair__test() {
+    // the first situation
+    pair<string,int> p("Tom",34);
+    cout<<"name: "<<p.first<<" age: "<<p.second<<endl;
+    // the second situation
+    pair<string,int> pa = make_pair("Jerry",30);
+    cout<<pa.first<<" "<<pa.second<<endl;
+
+}
+// set sort anti-self
+class MyCompare{
+public:
+    bool operator() (int a, int b) {
+        return a > b;
+    }
+};
+class CA{
+public:
+    bool operator() (const CA&a, const CA&b) {
+        // 按年龄排序
+        return a.m_age < b.m_age;
+    }
+    CA(string s, int a) {
+        this->m_age = a;
+        this->m_name = s;
+    }
+    string m_name;
+    int m_age;
+
+};
+void set1() {
+    set<int> se;
+    se.insert(1), se.insert(2), se.insert(3), se.insert(4);
+    printfSet(se);
+    // 指定排序规则为从大到小
+    set<int,MyCompare> se2;
+    // set<int, MyCompare>::iterator it = se2.begin()
+    // 自定义的数据类型，都要指定排序范围
+    set<CA> sc;
+
+}
+// map 
+// map中所有元素都是pair
+// pair中第一个元素key是键值，起到索引作用，第二个元素为value，为实值
+// 所有元素都会根据元素的键值自动排序。
+// 关联容器， key不允许重复
+void printMap(map<int,int>& m) {
+    for(auto &a: m) {
+        cout<<"key is "<<a.first<<"  value is "<<a.second<<" "<<endl;
+    }
+}
+class MyComparee{
+public:
+    bool operator()(int v1, int v2) {
+        // 降序
+        return v1 > v2;
+    }
+};
+void map1() {
+    map<int,int> m;
+    m.insert(pair<int,int>(1,19));
+    m.insert(pair<int,int>(3,45));
+    printMap(m);
+    // construction
+    map<int,int> m21(m);
+    printMap(m21);
+    // copy
+    map<int,int> m2;
+    m2 = m;
+    printMap(m2);
+    //
+    //swap s.swap; s.size() and s.empty()
+
+    // insert and rease clear
+    m.insert(pair<int,int>(45564,3));
+    // two
+    m.insert(make_pair(12,12121212));
+    // three;
+    m.insert(map<int,int>::value_type(18,1));
+    // four // 不建议插入，用途，可以利用key访问到value
+    m[5656] = 5;
+    printMap(m);
+    system("cls");
+    cout<<"cls"<<endl;
+    printMap(m);
+    m.erase(m.begin()); printMap(m);
+    m.erase(3); printMap(m);
+    //m.erase(m.begin(), m.begin()+2); printMap(m);
+    m.clear();
+    // m.find(key), count(key);
+    m.insert(pair<int,int>(1,3));
+    if(m.find(1) != m.end()) {
+        cout<<"Find"<<endl;
+    }
+    set<int> se; se.insert(3);
+    if(se.find(3) != se.end()) {
+        cout<<"findddd"<<endl;
+    }
+    string ss = "dklfj";
+    if(ss.find('f') != -1) cout<<"dlkfjdlskfj"<<endl;
+    vector<int> as;
+    as.push_back(1);
+    if(find(as.begin(),as.end(),1) != as.end()) cout<<"1111111111111"<<endl;
+    map<int,int,MyComparee> me;
+    me.insert(make_pair(1,23));
+    me.insert(make_pair(3,34));
+    for(auto &a: me) cout<<a.first<<" "<<a.second<<endl;
+    
+}
+int main()
+{
+    map1();
+}

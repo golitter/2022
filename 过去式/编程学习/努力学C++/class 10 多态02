@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+using namespace std;
+
+// 虚构造 和 纯虚构造；
+
+class Animal {
+public:
+	// 纯虚函数
+	Animal() {
+		cout<<"Animal 构造函数调用"<<endl;
+	}
+	// 利用虚析构可以解决 父类指针释放子类对象时不干净的问题;
+	virtual ~Animal() {
+		cout<<"Animal 析构函数调用"<<endl;
+	}
+	// 纯虚析构; 拥有纯虚析构的类 也是抽象类呀
+	// virtual ~Animal = 0; part 1;
+
+	virtual void speak() = 0;
+};
+// Part 2;
+// Animal::~Animal() {cout<<"content"<<endl;}
+
+
+class Cat: public Animal {
+public:
+	Cat(string nn) {
+		cout<<"Cat构造函数调用"<<endl;
+		m_Name = new string(nn);
+	}
+	virtual void speak() {
+		cout<<*m_Name<<" "<<"小猫在说话"<<endl;
+	}
+	virtual ~Cat() {
+		if(m_Name != NULL) {
+			delete m_Name;
+			cout<<"Cat析构函数调用"<<endl;
+			m_Name = NULL;
+		}
+	}
+	string * m_Name;
+};
+
+void test1() {
+	Animal *animal = new Cat("aldkjf1"); 
+	animal->speak();
+	// 父类指针在析构时候，不会调用子类中析构函数，导致子类如果有堆区属性，出现内存泄漏；
+
+	delete animal;
+}
+
+int main()
+{
+
+	test1();
+	return 0;
+}

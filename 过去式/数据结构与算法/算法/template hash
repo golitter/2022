@@ -1,0 +1,103 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+using namespace std;
+typedef unsigned long long ULL;
+const int N = 100003;
+//NOTICE: scanf 字符 和 字符串 ：尽量读取字符串， 因为读取字符串会自动把空格，回车，制表符忽略掉。
+// NOTICE: memset(address, bit, sizeof) bit 0 or -1 or 0x3f ... bit 必须是字节
+int h[N], e[N], ne[N],idx;
+int null = 0x3f3f3f3f;
+// 哈希表 ： 存储结构 
+    //1，开放寻址法 
+
+int find(int x) {
+    int k = (x%N + N)%N;
+    while(h[k] != null && h[k] != x) {
+        k++;
+        if(k == N) k = 0;
+    }
+    return k;
+}
+void hash2() {
+    int n;
+    cin>>n;
+    memset(h, 0x3f, sizeof(h));
+    while(n--) {
+        char op[2];
+        int x;
+        scanf("%s %d",op,&x);
+        if(*op == 'I') {
+            int k = find(x);
+            h[k] = x;
+        }
+        else {
+            int k = find(x);
+            if(h[k] != null) puts("Yes");
+            else puts("No");
+        }
+    }
+}
+    //2，拉链法
+void insert(int x) {
+    int k = (x%N + N)%N;
+    e[idx] = x; // 头插法
+    ne[idx] = h[k];
+    h[k] = idx++;
+}
+bool find(int x) {
+    int k = (x%N + N)%N;
+    for(int i = h[k]; i != -1; i = ne[i]) {
+        if(e[i] == x) {
+            return true;
+        }
+    }
+    return false;
+}
+void hash1() {
+    int n;
+    cin>>n;
+    memset(h, -1, sizeof(h));
+    while(n--) {
+        char op[2];
+        int x;
+        scanf("%s %d",op,&x);
+        if(*op == 'I') insert(x);
+        else {
+            if(find(x)) puts("Yes");
+            else puts("No");
+        }
+    }
+}
+// 字符串哈希方式
+// 不能映射成 0；
+// Rp 足够大，不存在冲突
+char str[N];
+int P = 131;
+ULL h[N], p[N]; 
+ULL get(int l, int r) {
+    return h[r] - h[l-1]*p[r - l + 1];
+}
+void hashString() {
+    int n, m;
+    cin>>n>>m>>str+1;
+    p[0] = 1;
+    for(int i = 1; i <= n; ++i) {
+        p[i] = p[i - 1] * P;
+        h[i] = h[i-1]*P + str[i];
+    }
+    while(m--) {
+        int l1, r1, l2, r2;
+        cin>>l1>>r1>>l2>>r2;
+        if(get(l1, r1) == get(l2, r2)) puts("Y");
+        else puts("N");
+    }
+}
+
+int main()
+{
+
+    return 0;
+}

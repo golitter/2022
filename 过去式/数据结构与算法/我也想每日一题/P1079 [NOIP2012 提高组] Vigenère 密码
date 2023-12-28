@@ -1,0 +1,78 @@
+/**
+ * @file Untitled-6
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-30
+ * 
+ * @copyright Copyright (c) 2022
+ * it's easy,
+ *  I think the core code is trans ; 
+ * and this quesetion has some stuffs, maybe wuzzle,
+ * 
+ */
+#include <iostream>
+#include <cstring>
+#include <ctype.h>
+#include <algorithm>
+using namespace std;
+char Graph[26][26];
+void trans() 
+{
+    int cur = 0;
+    for(int i = 0; i < 26; i++) {
+        int now = cur;
+        char bi = 'a';
+        int se = 26 - now;
+        for(int j =26 - now; j < 26; j++) {
+            Graph[i][j] = bi++;
+        }
+        for(int j = 0; j < se; j++) {
+            Graph[i][j] = bi++;
+        }
+        cur++;
+    }
+}
+int main()
+{
+    trans();
+    string key, secteaa;
+    cin>>key>>secteaa;
+    int kesize = key.size();
+    int sectsize = secteaa.size();
+    int nowlong = 0;
+    int tag = 0;
+    transform(key.begin(), key.end(), key.begin(), ::tolower);
+    for(int i = 0; i < sectsize; i++) {
+        if(nowlong == kesize) {
+            nowlong = 0;
+        }
+        // 判断大小写;
+        int x;
+        if(isupper(secteaa[i])) {
+            tag = 1;
+            x = secteaa[i] - 65;
+        } else {
+            x = secteaa[i] - 97;
+        }
+        int y = key[nowlong] - 97;
+        char cur = Graph[key[nowlong] - 97][x];
+        char sectwriter = 'a' + x;
+        char rig;
+        for(int j = 0; j < 26; j++) {
+            if(sectwriter == Graph[j][y]) {
+                rig = 'a' + j;
+                break;
+            }
+        }
+        if(tag == 1) {
+            rig = toupper(rig);
+            cout<<rig;
+        } else {
+            cout<<rig;
+        }
+        tag = 0;
+        nowlong++;
+    }
+
+}

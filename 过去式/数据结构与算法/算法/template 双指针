@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+using namespace std;
+void testDoublePointer() {
+    int i, j;
+    for(i = 0, j = 0; i < n; ++i) {
+        while(j < i && check(i, j)) ++j;
+        // 每一题的具体逻辑;
+    }
+    // e.g.
+    /**
+     * @brief 
+     * 
+     *      // 打印每一个字母;
+     *      for(int i = 0; i < size; ++i) {
+     *          int j = i;
+     *          while(j < size && str[j] != ' ') ++j;
+     *          for(int k = i; k < j; ++k) cout<<str[k];
+     *              cout<<endl;
+     *          i = j;         
+     * }
+     * 
+     *      // 最长不连续子列;
+     * for(int i = 0, j = 0; i < n; ++i) {
+     *      while(j <= i && check(j, i)) {++j;}
+     *      res = max(res, i - j + 1);
+     * }
+     * 
+     */
+}
+
+int main()
+{
+
+    return 0;
+}

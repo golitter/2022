@@ -1,0 +1,65 @@
+/**
+ * @file Untitled-3
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-17
+ * 
+ * @copyright Copyright (c) 2022
+ * Because the 1e9 too big, so do not use uaual bag questions;
+ * When I first look at this question, I felt I can use Heap storage;, it can define too big arrary;
+ * But I also wrong; dont add 1e9 arrary;;
+ * Finally, I found I can convert weight and value ,;
+ * So I conert N-Weight to N-Value;
+ * that is:
+ * Process: first: Work out the total value;
+ *          Second: use similar N-Value form to do; Notice: dp[0] = 0; find out the min dp[item];
+ *          third: Traverse 0 value to the total value; If dp[item] <= Bag Weight, comparsion: ans = max(ans, item);
+ *                      // itinal ans is INT_MIN; and dp[NOT ZERO] = INT_MAX;
+ * 
+ * e.g.:
+ * n = 3 ; ;m = 8;
+ *  v  w :
+ * 30  3;
+ * 50  4;
+ * 60  5;
+ * value: 0 1 2 3 4 5 6 7 8 9 10 ... 30 ..50 .. 60 .. 80 ... 90 ... 110 ..140;
+ * 3:                                3 INT_MAX...
+ * 4:                                      4 .........7 INT_MAX...
+ * 5:                                           5  . INT_MAX.8      9.     12 INT_MAX..// not all write,so  bland is INT_MAX;
+ * then, Traverse 0 to 140; if it is less than eight, comprasion max(ans, i);
+ * It is different in approach but equally satisfactory in result with N-Value;
+ *   
+ */
+#include <bits/stdc++.h>
+using namespace std;
+struct Ka{
+    int w;
+    int v;
+}Bag[101];
+int main()
+{
+    int n, m;
+    cin>>n>>m;
+    for(int i = 1; i <= n; i++) {
+        cin>>Bag[i].w>>Bag[i].v;
+    }
+    int Sum_value = 0;
+    for(int i = 1; i <= n; i++) {
+        Sum_value += Bag[i].v;
+    }
+    vector<long long>dp(Sum_value+1, INT_MAX);
+    dp[0] = 0;
+    for(long long  i = 1; i <= n; i++) {
+        for(int j = Sum_value - Bag[i].v; j >= 0; j--) {
+            dp[j + Bag[i].v] = min(dp[j + Bag[i].v], dp[j] + Bag[i].w);
+        }
+    }
+    long long ans = INT_MIN;
+    for(long long i = 0; i <= Sum_value; i++) {
+        if(dp[i] <= m) {
+            ans = max(ans, i);
+        } 
+    }
+    cout<<ans;
+}

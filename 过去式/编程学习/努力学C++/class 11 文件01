@@ -1,0 +1,112 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+#include <fstream>
+using namespace std;
+
+// <fstream>
+// ofstream -- 写入 ifstream -- 读入 fstream -- 可读可写
+/**
+ * @brief 
+ * 
+ *  		文件操作 // #include <fstream>
+ * 				创建流对象 ofstream ofs;
+ * 				打开文件 ofs.open("文件路径", 打开方式);
+ * 				写数据 ofs<<"写入的数据"
+ * 				关闭文件 ofs.close();
+ * 
+ * 文件打开方式
+ * 			ios::in  -- 为读文件而打开文件
+ * 			ios::out --   写...
+ * 			ios::ate -- 初始位置：文件尾
+ * 			ios::app -- 追加方式写文件
+ * 			ios::trunc -- 如果文件存在先删除，再创建
+ * 			ios::binary -- 二进制方式;
+ * 		** 可以配合使用，利用 '|' 
+ * 	e.g. ios::binary|ios::out 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * @return int 
+ */
+
+class Person {
+public:
+	char m_Name[64];
+	int m_Age;
+};
+
+
+
+void test11() {
+	ifstream ifs;
+	ifs.open("test.txt", ios::in);
+	if(!ifs.is_open()) {
+		cout<<"文件打开失败！"<<endl;
+		return ;
+
+	}
+	// 读数据 
+	//\\\/ 1
+	char buf[1024] = {0};
+	while(ifs >> buf) { // 
+		cout<< buf <<endl; // 可以打印...
+	}
+	cout<<buf<<endl;
+	ifs.close();
+	system("cls");
+	ifs.open("test.txt", ios::in);
+	// 第二种;
+	while(ifs.getline(buf, sizeof(buf))) {
+		cout<<buf<<endl;
+	}
+	ifs.close();
+	system("cls");
+	// 第三种;
+	ifs.open("test.txt", ios::in);
+
+	string buf1;
+	while(getline(ifs, buf1)) {
+		cout<<buf1;
+	}
+	ifs.close();
+
+	// 第四种;
+	ifs.open("test.txt", ios::in);
+	char c;
+	while( c = ifs.get() != EOF) { // EOF is end of file;
+		cout<<c;
+	}
+
+
+}
+
+void test22() {
+	Person p = {"张三", 34};
+	ofstream ofs("newperson.txt", ios::out | ios::binary);
+	ofs.write( (const char*)&p, sizeof(Person));
+	ofs.close();
+	ifstream ifs("newperson.txt", ios::in | ios::binary);
+	if(!ifs.is_open()) {
+		cout<<"error for opening the file"<<endl;
+		return ;
+	}
+	Person pp;
+	ifs.read( ( char*)&pp, sizeof(Person));
+	cout<<"姓名"<<pp.m_Name<<"年龄"<<pp.m_Age<<endl;
+	ifs.close();
+
+}
+int main()
+{
+
+	test11();
+	test22();
+	return 0;
+}

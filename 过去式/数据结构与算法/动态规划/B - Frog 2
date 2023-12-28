@@ -1,0 +1,34 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int M=5e5+3;
+int l[M];
+int dp[M];
+int main()
+{
+  int n,m;
+  cin>>n>>m;
+  for(int i = 1; i <= n; i++) cin>>l[i];
+  for(int i = 1; i <= m; i++) dp[i] = abs(l[i]-l[1]);
+  for(int i = m+1; i <= n; i++) {
+     int j=i-1;
+     int mina=INT_MAX;
+     int e=m;
+     while(e--) {
+        mina=min(dp[j]+abs(l[i]-l[j]),mina);
+        j--;
+     }
+     dp[i]=mina;
+       } 
+  cout<<dp[n];
+}
+
+/*
+  这一题是上一个的强化吧；原来有两种前进方法，现在有m种方法；
+  有了上一个题的锤炼，我已经掌握了一点dp的思路，窍门；
+  但是还是遇到了一些问题；
+  一 ：1到m-1的min数我刚开始没明白，想着，找到第二个min数，去找第三个min数的时候，
+  下意识判断路径（1->2->3）与路径（1->3）之间哪个最小。
+  而实际上m-1内min数为（i的值-1的值 的绝对值） （这点也许第一个也没清楚，感觉有点思维定势哦，要加强 ）
+  二：刚开始推完一轮后，发现第二轮难推，因为又变了，后来才找到j这个量来表示变化；
+  总结：dp二三四；
+*/

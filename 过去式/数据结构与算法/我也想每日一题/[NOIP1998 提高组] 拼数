@@ -1,0 +1,53 @@
+/**
+ * @file one.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-04-05
+ * 
+ * @copyright Copyright (c) 2022
+ * When I firstly look at this question, I felt I can slowly write the code, and bless not has errors
+ * Then I judged digital digits and reversed numbers and compared the size;
+ * and use bubble sort;
+ * BUT that was so close, I find it has so many situations, this is weird;
+ * I thought and thought, finally I felt the string can do it, because 
+ * string type cand strcat and perfectly compared the size;
+ * then I use string, and found it is so easy;
+ * the method is easy and easy to understand;
+ * 
+ */
+#include <iostream>
+#include <cstring>
+using namespace std;
+string a[23];
+bool ab_ba(string a, string b) {
+    string ab, ba;
+    ab = a + b; ba = b + a;
+    for(int i = 0; i < ab.size(); i++) {
+        int abnum = ab[i] - '0', banum = ba[i] - '0';
+        if(abnum > banum) {
+            return false;
+         } else if(abnum < banum) {
+            return true;
+         }
+    }
+    return true;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    for(int i = 0; i < n; i++) {
+        cin>>a[i];
+    }
+    for(int i = 0; i < n-1; i++) {
+        for(int j = 0; j < n-1-i; j++) {
+            if(!ab_ba(a[j+1], a[j])) {
+                swap(a[j+1], a[j]);
+            }
+        }
+    }
+    for(int i = 0; i < n; i++) {
+        cout<<a[i];
+    }
+}

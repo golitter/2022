@@ -1,0 +1,84 @@
+/**
+ * @file Untitled-2
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-04-05
+ * 
+ * @copyright Copyright (c) 2022
+ * use the stack, then is so easy 
+ * NOTICE: the model essay also change;(I donot know);
+ * APPROACH: use stack , restore the item, and if ch == <, pop, or not push;
+ * and then reverse the stack;
+ * comaprison; Finally : AC!!!
+ */
+#include <iostream>
+#include <stack>
+#include <cstdio>
+#include <queue>
+#include <cstring>
+using namespace std;
+stack<char> ans[10001], ANS[10001], ess[10001], ESS[10001];
+int n, m;
+int main()
+{
+    char ch;
+    while(++n) {
+        string s;
+        getline(cin, s);
+        if(s == "EOF") {
+            break;
+        } else {
+            for(int i = 0; i < s.size(); i++) {
+                if(s[i] == '<') {
+                    if(!ess[n].empty()) {
+                        ess[n].pop();
+                    }
+                } else {
+                    ess[n].push(s[i]);
+                }
+            }
+        }
+    }
+    while(++m) {
+        string s;
+        getline(cin,s);
+        if(s == "EOF") {
+            break;
+        } else {
+            for(int i = 0; i < s.size(); i++) {
+                if(s[i] == '<') {
+                    if(!ans[m].empty()) {
+                        ans[m].pop();
+                    }
+                } else {
+                    ans[m].push(s[i]);
+                }
+            }
+        }
+    }
+    int kmp;
+    cin>>kmp;
+    for(int i = 1; i < n; i++) {
+        while(!ans[i].empty()) {
+            ANS[i].push(ans[i].top());
+            ans[i].pop();
+        }
+    }
+    for(int i = 1; i < n; i++) {
+        while(!ess[i].empty()) {
+            ESS[i].push(ess[i].top());
+            ess[i].pop();
+        }
+    }
+    int count = 0;
+    for(int i = 1; i < n; i++) {
+        while(!ESS[i].empty() && !ANS[i].empty()) {
+            if(ESS[i].top() == ANS[i].top()) {
+                count++;
+            }
+            ESS[i].pop(), ANS[i].pop();
+        }
+    }
+    printf("%.0lf",(double)count/kmp*60);   
+}

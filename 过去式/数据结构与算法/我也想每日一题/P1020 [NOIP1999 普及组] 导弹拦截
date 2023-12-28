@@ -1,0 +1,57 @@
+/**
+ * @file Untitled-3
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-22
+ * 
+ * @copyright Copyright (c) 2022
+ * today I want to learn a lot of dynamic programming, but I only correct one question.
+ * and I am foolish.
+ * 
+ * LIS: longest increasing subqueue;
+ * LCS: longest common subqueue;
+ * Approach: two part, one: 第一个数字表示这套系统最多能拦截多少导弹 ; two: 如果要拦截所有导弹最少要配备多少套这种导弹拦截系统。
+ * for one part: use a array, and if(ini[i] <= d1[len]) just add the i value of ini array to d1 array;
+ *                              else :insert the i value of ini array to d1 array;// need to descending order;
+ * for two part: same as one part;but it is not descending order, it is ascending order
+ * 
+ * STL algorithm: 
+ *  lower_bound(a+1,a+2,x): from a[1] to a[2] find bigger than x or equal to x;
+ *  upper_bound(a+1,a+2,x): same as lower_bound(), but not equal to x;
+ *  about they, use dichotomy; and if dont add instructions, incrementhing by default;
+ *  Meanwhile they likely to sort( , , tmp) : can use tmp; such 
+ * or greater<int>();
+ * 
+ */
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+using namespace std;
+const int M = 100003;
+int des1[M], des2[M], init[M]; // for sloveing the first question, the second question, initial arrary;
+int n;// how many elem;
+int main()
+{
+    n = 1;
+    while(cin>>init[n]) {n++;};// because dont give the N;
+    n--;
+    des1[1] = init[1];
+    des2[1] = init[1];
+    int len1 = 1, len2 = 1;
+    for(int i = 2; i <= n; i++) {
+        if(des1[len1] >= init[i]) { // the longest descending order;
+            des1[++len1] = init[i];
+        } else {
+            int tm = upper_bound(des1+1,des1+1+len1,init[i],greater<int>()) - des1; // why need to this step?
+            des1[tm] = init[i];                                                    //because such as, 10 8 6 9 34 or 10 8 6 4 5 4;
+        }
+        if(init[i] > des2[len2]) {
+            des2[++len2] = init[i];
+        } else {
+            int tn = lower_bound(des2+1,des2+1+len2,init[i]) - des2;
+            des2[tn] = init[i];
+        }
+    }
+    cout<<len1<<endl<<len2; // perfect1;
+}

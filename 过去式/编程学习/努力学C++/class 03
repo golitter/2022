@@ -1,0 +1,91 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <algorithm>
+using namespace std;
+
+/**
+ * @brief 
+ * 
+ * 初始化列表;
+ * Person():A(elem),B(elem),C(elem) {
+ *          ;
+ *      }
+ * @return int 
+ */
+
+
+
+
+
+
+
+/**
+ * @brief 
+ *  类对象作为类成员;
+ * 构造：
+ *  当其他类对象作为本类对象时，构造先构造类对象，再构造自身；
+ *  析构：
+ *      与构造函数相反;
+ */
+class Phone {
+public:
+Phone(string s): phnum(s) {
+    cout<<"Phone有参构造函数调用"<<endl;
+}
+string phnum;
+
+};
+
+class Person {
+public:
+    Person(string n, string nkd):name(n),phone(nkd) {;} // Phone phone == nkd; // 隐式转换;
+    string name;
+    Phone phone;
+};
+
+// 静态成员变量;
+class Per {
+public:
+    // 所有对象都共享同一份数据;
+    // 编译阶段就分配内存
+    // 类内声明，类外初始化操作;
+    static int _AA;
+    // 静态函数;
+    static void func() {
+        _DD = 3434;
+        cout<<"Per静态函数访问"<<endl;
+    }
+    static int _DD;
+private:
+    static int _BB;
+};
+// 两种访问方法：
+    // 1，通过对象进行访问; Per a; cout<<a._AA;
+    // 2，通过类名进行访问; Per::_AA;
+// 静态成员变量也是有访问权限的;
+
+// 静态成员函数
+// 所有对象共享同一个函数；
+// 静态成员函数只能访问静态成员变量；
+// 不能访问非静态成员变量; 无法区分到底是哪个对象的_AA属性;
+
+// 两种访问方式:
+ // 同上, 不过不需要进行类外初始化;
+// 类外不能访问私有的;
+int Per::_AA = 34;
+int Per::_DD = 343434;
+int main()
+{
+    Per sb;
+    cout<<sb._AA;
+    sb._AA = 3434;
+    cout<<sb._AA;
+    cout<<endl;
+    Per aa;
+    cout<<aa._AA<<endl;
+    Per::func();
+    aa.func();
+    return 0;
+}

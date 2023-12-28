@@ -1,0 +1,74 @@
+
+### 讲义：acwing
+
+// 语法基础 Java
+// 定义变量 与C类似，但是没有赋值的变量不能进行操作
+
+// 内置数据类型
+    // 1 byte = 8 bit
+    // byte 字节
+    // byte 1
+    // short 2
+    // int 4
+    // long 8 
+    // float 4
+    // double 8
+    // char 2
+    // boolean
+
+// 常量
+    // final int N = 1021; yes
+    // const int N = 1021; yes
+ 
+// 显行转化
+    // int x = (int)'A';
+// 隐式转换
+    // double d = 34;
+    // 范围小的 优先转换为 范围大的
+
+
+// 与C相似
+
+// 输入
+import java.util.Scanner;
+// 1e5以上时
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+// 输入 System.out.println 有回车
+//               .print 无回车
+//               .printf 格式化 与C相似， java只有f，not lf
+// 输出
+    // 需要刷新一下
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+public class Main {
+    public static void main(String [] args) throws Exception{
+        System.out.println("Hello World!");
+        int a = 1;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        // 读入一个字符串
+        System.out.println(str);
+        // 读入一行字符串
+        String strline = sc.nextLine();
+        System.out.println(strline);
+        int k = sc.nextInt(), b = sc.nextInt();
+        System.out.println(k+b);
+        char c = 'a';
+        System.out.println(c);
+        // this is 有换行的
+        int x = Integer.parseInt(br.readLine());
+        int y = Integer.parseInt(br.readLine());
+        // 无换行
+        String[] inp = br.readLine().split(" ");
+        int xx = Integer.parseInt(inp[0]);
+        int yy = Integer.parseInt(inp[1]);
+        System.out.println(xx+yy);
+        System.out.println(x+y);
+        System.out.printf("%.2f",1.222);
+        bw.write("hello wrold");
+        bw.flush();
+    }
+}

@@ -1,0 +1,39 @@
+//思考L and *L LinkList...
+// 思考L and *L List ...
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct Lnode{
+    int data;
+    struct Lnode* Next;
+}List,*LinkList;
+void str(LinkList *a) {
+    LinkList  p = *a;
+   // p = *a;// p == a == &head; *p == *a == head;
+    printf("%p\n",p);
+}
+void str2(LinkList a) {
+    printf("%p\n",a);
+}
+int main(){
+    LinkList head;
+    head = (LinkList)malloc(sizeof(List));
+    printf("%p\n",head);//062FE10
+    LinkList*p = &head;
+    printf("%p\n",p);      //062FE10
+    LinkList ** pr = &p;
+    List hhea ;
+    printf("%p\n",hhea);//062FDD0
+    List* hh;
+    hh = &hhea;
+    printf("%p\n",hh);// 062FDE0
+    int a = 34;//
+
+
+    //
+    str(&head);
+
+    printf("%p\n",&head); //NO;
+    printf("%p\n",head);// common
+    str2(head);// common
+    
+}

@@ -1,0 +1,219 @@
+#include <iostream>
+// STL 广义上分为：容器，算法，迭代器
+// STL大体分为六大件：容器，算法，迭代器，仿函数，适配器，空间配置器
+// 序列式，关联式容器
+// 算法：质变，非质变算法
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+// vector
+void myPrint(int val)
+{
+    cout << val << " ";
+}
+void test__vector()
+{
+
+    vector<int> v;
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+    v.push_back(49);
+    // iterator
+    vector<int>::iterator itBegin = v.begin();
+    vector<int>::iterator itEnd = v.end();
+    // ergo1
+    while (itBegin != itEnd)
+    {
+        cout << *itBegin << " ";
+        itBegin++;
+    }
+    puts("");
+    // ergo2
+    for (vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+    {
+        cout << *it << " ";
+    }
+    puts("");
+    // ergo3 STL提供的遍历算法
+    for_each(v.begin(), v.end(), myPrint);
+}
+class Person
+{
+public:
+    Person(string name, int age)
+    {
+        this->m_name = name;
+        this->m_age = age;
+    }
+    void Info() {
+        cout<<m_name<<" "<<m_age<<endl;
+    }
+    string m_name;
+    int m_age;
+};
+void test_vector1()
+{
+    vector<Person> v;
+    Person p1("aaa", 10);
+    Person p2("bbb", 20);
+    Person p3("ccc", 30);
+    Person p4("ddd", 40);
+    v.push_back(p1);
+    v.push_back(p2);
+    v.push_back(p3);
+    v.push_back(p4);
+    // ergo
+    for(vector<Person>::iterator it = v.begin(); it != v.end(); ++it) {
+        it->Info();
+    }
+}
+void test_vector2() {
+    vector<Person*> v;
+    Person p1("aaa", 10);
+    Person p2("bbb", 20);
+    Person p3("ccc", 30);
+    Person p4("ddd", 40);
+    v.push_back(&p1);
+    v.push_back(&p2);
+    v.push_back(&p3);
+    v.push_back(&p4);
+    // ergo
+    for(vector<Person*>::iterator it = v.begin(); it != v.end(); ++it) {
+        cout<<(*it)->m_name<<(*it)->m_age<<" ";
+    }
+    puts("");
+}
+void test_vector3() {
+    // 容器嵌套
+    vector<vector<int> >v;
+    vector<int> v1;
+    vector<int> v2;
+    vector<int> v3;
+    vector<int> v4;
+    
+    for(int i = 0; i < 4; ++i) {
+        v1.push_back(i+1);
+        v2.push_back(i+2);
+        v3.push_back(i+3);
+        v4.push_back(i+4);
+    }
+    v.push_back(v1);
+    v.push_back(v2);
+    v.push_back(v3);
+    v.push_back(v4);
+    for(vector<vector<int> >::iterator it = v.begin(); it != v.end(); ++it) {
+        // (*it); ==vector<int>
+        for(vector<int>::iterator vit = (*it).begin(); vit != (*it).end(); ++vit) {
+            cout<<*vit<<" ";
+        }
+        puts("");
+    }
+}
+// string 的构造函数
+// string 本质是个类
+void test_string() {
+    string s1; // default;
+    const char * str = "hello world";
+    string s2(str);
+    cout<<"s2 = "<<s2<<endl;
+    string s3(s2);
+    cout<<"s3 = "<<s3<<endl;
+    string s4(10,'a');
+    cout<<s4<<endl;
+    // 赋值
+    string str1 = str;
+    cout<<str1<<endl;
+    string str2 = str1;
+    cout<<str2<<endl;
+    string str3;
+    str3 = 'a';
+    cout<<str3<<endl;
+    string str4;
+    str4.assign("he");
+    cout<<str4<<endl;
+    string str5;
+     str5.assign("HELLO C++", 5);
+    cout<<str5<<endl;
+    string str6;
+    str6.assign(str5);
+    cout<<str6<<endl;
+    string str7;
+    str7.assign(10,'b');
+    cout<<str7<<endl;
+}
+void test_string1() {
+    string str1 = "我";
+    str1 += "爱玩游戏";
+    str1 += ":";
+    string str2 = "LOL DNF";
+    str1 += str2;
+    cout<<str1<<endl;
+    string str3 = "I";
+    str3.append("LOVE you",4,4);
+    str3.append("and YOU hhhhhh",7);
+    str3.clear();
+    str3 = "I";
+    str3.append("LOVE");
+    str3.append("LOL DNF", 3,4); // 从哪个位置开始截取，截取几个
+    cout<<str3<<endl;
+}
+void test_stringFind() {
+    string str1 = "abcdefgde";
+    int pos = str1.find('k');
+    if(pos == -1) cout<<" wu"<<endl;
+    else cout<<pos<<endl;
+    int pos1 = str1.rfind("de");
+    cout<<pos1<<endl;
+    str1.replace(1,3,"1111"); // 从1号位置开始起，三个字符位置代替为"1111";
+    cout<<str1<<endl;
+}
+void test_stringComp() {
+    string str1 = "xello";
+    string str2 = "hello";
+    if(str1.compare(str2) == 0) {
+        cout<<"===="<<endl;
+    } else if(str1.compare(str2) > 0) {
+        cout<<"  >  "<<endl;
+    }
+}
+void test_stringtx() {
+    string str = "hello";
+    for(int i = 0; i < str.size(); ++i) {
+        cout<<str[i];
+    }
+    puts("");
+    for(int i = 0; i < str.size(); ++i) {
+        cout<<str.at(i);
+    }
+    puts("");
+    // 修改
+    str[0] = 'a';
+    cout<<str<<endl;
+    
+}
+void test_stringIN() {
+    string str = "abcdef"; // 插入删除，起始都是从0开始
+    str.insert(1,"111");
+    cout<<str<<endl;
+    str.erase(1,3);
+    cout<<str<<endl;
+    string subSTR = str.substr(1,3);
+    cout<<subSTR<<endl;
+    // 实用操作
+    string email = "hello@sina.com";
+    // 获取用户名
+    cout<<email.substr(0,5);
+    int pos = email.find("@");
+    cout<<pos<<endl;
+    string user = email.substr(0,pos);
+    cout<<user<<endl;
+
+}
+int main()
+{
+    test_stringIN();
+
+    return 0;
+}

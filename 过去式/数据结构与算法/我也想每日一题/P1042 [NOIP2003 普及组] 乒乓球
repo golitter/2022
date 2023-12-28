@@ -1,0 +1,53 @@
+// this question is interesting ;
+// and by this question, I know messages about rules of PingPang game
+// also learn cin>>a inset circulation;
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int WorL[63343];
+
+int main()
+{
+    char c;
+    int i = 0;
+    while(cin>>c && c != 'E') { // just lik it
+        if(c == 'W') {
+            WorL[i++] = 1;
+        } else {
+            WorL[i++] = 2;
+        }
+    }
+    int MyWin = 0; int YourWin = 0;
+    for(int j = 0; j <= i; j++) {
+        if(WorL[j] == 1) {
+            MyWin++;
+        } else if(WorL[j] == 2) {
+            YourWin++;
+        } else {
+            // after j = i:
+            cout<<MyWin<<":"<<YourWin<<endl;
+            MyWin = 0; YourWin = 0;
+        }
+        if(abs(MyWin - YourWin) >= 2 && (MyWin >= 11 || YourWin >= 11)) {
+            cout<<MyWin<<":"<<YourWin<<endl;
+            MyWin = 0; YourWin = 0;
+        }
+    }
+    cout<<endl;
+    for(int j = 0; j <= i; j++) {
+        if(WorL[j] == 1) {
+            MyWin++;
+        } else if(WorL[j] == 2) {
+            YourWin++;
+        } else {
+            // after j = i:
+            cout<<MyWin<<":"<<YourWin<<endl;
+            MyWin = 0; YourWin = 0;
+        }
+        if(abs(MyWin - YourWin) >= 2 && (MyWin >= 21 || YourWin >= 21)) {
+            cout<<MyWin<<":"<<YourWin<<endl;
+            MyWin = 0; YourWin = 0;
+        }
+    }
+}

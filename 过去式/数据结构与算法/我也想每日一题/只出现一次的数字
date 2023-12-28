@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+/**
+ * @brief 
+ * 
+ * 用 异或 // ( ఠൠఠ )ﾉ；
+1. 归零律：a xor a = 0
+2. 恒等律：a xor 0 = a
+3. 交换律： a xor b = b xor a
+4. 结合律：a xor b xor c = a xor (b xor c) = (a xor b) xor c
+5. 自反：a xor b xor a = b;
+ * @return int 
+ */
+int main()
+{
+    vector<int> nums;
+    int ans = 0;
+    for(auto &i: nums) {
+        ans ^= i;
+    }
+    // then return ans;
+    return 0;
+}
