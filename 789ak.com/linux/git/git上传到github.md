@@ -16,6 +16,8 @@ git remote add 仓库别名 仓库地址
 
 ```
 git remote add origin git@github.com:golitter/SUST_UC_CS.git
+
+
 ```
 
 ```bash
@@ -23,4 +25,6 @@ git add .
 git commit -m "上传"
 git push -u origin master
 ```
+
+
 
